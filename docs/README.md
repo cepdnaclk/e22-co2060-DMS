@@ -45,7 +45,7 @@ A HTML template integrated with the given GitHub repository templates, based on 
 
 ## Introduction
 
-Description of the real world problem and solution, impact
+The Debate Management System (DMS) is a comprehensive software solution developed as part of the CO2060 Software Systems Design course. This web-based platform aims to digitize and streamline the traditional manual processes involved in organizing debate tournaments. Key features include an automated registration system for teams and adjudicators, a dynamic scheduling algorithm to generate match-ups, and a real-time scoring interface that ensures transparency and immediate result processing. By replacing paper-based scoring sheets and manual tabulation, the DMS reduces human error and administrative burden. The system is designed with a user-friendly interface to accommodate various user roles, including administrators, judges, and participants, ensuring a smooth flow of events from preliminary rounds to the finals. This project highlights the practical application of software engineering principles to solve real-world logistical challenges in academic competitions.
 
 
 ## Solution Architecture

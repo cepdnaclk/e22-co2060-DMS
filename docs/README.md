@@ -21,7 +21,7 @@ A HTML template integrated with the given GitHub repository templates, based on 
 
 # Project Title
 
----
+Debate Management System
 
 ## Team
 -  E22271, P.Pathimilan, [email](e22271@eng.pdn.ac.lk)

@@ -3,8 +3,8 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and project title
-repository-name: eYY-co2060-project-template
-title: Project Template
+repository-name: eYY-co2060-DMS
+title: Debate Management System
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template, and add more information required for your own project"
@@ -24,9 +24,10 @@ A HTML template integrated with the given GitHub repository templates, based on 
 ---
 
 ## Team
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+-  E22271, P.Pathimilan, [email](e22271@eng.pdn.ac.lk)
+-  E22051, K.Bhaveenthan, [email](e22051@eng.pdn.ac.lk)
+-  E22176, A.L.Jeyanth, [email](e22176@eng.pdn.ac.lk)
+-  E22227, P.Manojh, [email](e22227@eng.pdn.ac.lk)
 
 <!-- Image (photo/drawing of the final hardware) should be here -->
 

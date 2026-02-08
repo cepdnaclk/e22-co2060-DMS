@@ -1,5 +1,5 @@
 ___
-**Project Introduction**
+### **Project Introduction**
 ___
 The Debate Tournament Management System is a web-based application designed to streamline the organization, management, and evaluation of debate tournaments. Traditional debate tournaments often rely on manual processes for scheduling, judging, scoring, and result compilation, which can be time-consuming and error-prone. This project aims to address these challenges by providing a centralized, role-based digital platform.
 
@@ -8,7 +8,7 @@ The system supports multiple user roles including Admin, Organizer, Judge, and P
 This project is developed as part of the CO2060 – Second Year Software Engineering Project and follows standard software engineering practices, including requirements specification, system design, implementation, testing, and deployment.
 
 ___
-**Tech Stack**
+### **Tech Stack**
 ___
 
 -Frontend: React + TypeScript
@@ -22,7 +22,7 @@ ___
 -Authentication: JWT-based role authentication
 
 ___
-**Project Goals**
+### **Project Goals**
 ___
 
 -Provide an efficient and reliable platform for managing debate tournaments

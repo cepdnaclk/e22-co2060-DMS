@@ -10,10 +10,15 @@ This project is developed as part of the CO2060 – Second Year Software Enginee
 ___
 **Tech Stack**
 ___
+
 -Frontend: React + TypeScript
+
 -Backend: Spring Boot (REST APIs)
+
 -Database: PostgreSQL
+
 -Styling: Tailwind CSS
+
 -Authentication: JWT-based role authentication
 
 ___

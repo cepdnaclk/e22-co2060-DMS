@@ -24,13 +24,17 @@ ___
 ___
 **Project Goals**
 ___
+
 -Provide an efficient and reliable platform for managing debate tournaments
+
 -Ensure fair and structured judging and scoring
+
 -Improve accessibility and transparency for all stakeholders
+
 -Apply real-world software engineering principles in a full-stack application
 
+___
 
-![image](https://user-images.githubusercontent.com/11540782/98789936-028d3600-2429-11eb-84be-aaba665fdc75.png)
 
 ### Special Configurations
 
@@ -72,6 +76,3 @@ These projects will be automatically added into [https://projects.ce.pdn.ac.lk](
 
 Once you filled this _index.json_ file, please verify the syntax is correct. (You can use [this](https://jsonlint.com/) tool).
 
-### Page Theme
-
-A custom theme integrated with this GitHub Page, which is based on [github.com/cepdnaclk/eYY-project-theme](https://github.com/cepdnaclk/eYY-project-theme). If you like to remove this default theme, you can remove the file, _docs/\_config.yml_ and use HTML based website.

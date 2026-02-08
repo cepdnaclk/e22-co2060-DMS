@@ -1,14 +1,29 @@
 ___
-# DELETE THIS INSTRUCTIONS AND ADD AN INTRODUCTION ABOUT YOUR PROJECT
+**Project Introduction**
 ___
+The Debate Tournament Management System is a web-based application designed to streamline the organization, management, and evaluation of debate tournaments. Traditional debate tournaments often rely on manual processes for scheduling, judging, scoring, and result compilation, which can be time-consuming and error-prone. This project aims to address these challenges by providing a centralized, role-based digital platform.
 
-# eYY-co2060-project-template
+The system supports multiple user roles including Admin, Organizer, Judge, and Participant, each with dedicated functionalities. Organizers can create and manage tournaments, rounds, and matches; judges can submit ballots and scores; and participants can view fixtures, results, and leaderboards. The application automatically processes scores and generates results, ensuring accuracy and transparency.
 
-This is a sample repository you can use for your Software Systems Design Project. Once you followed these instructions, remove the text and add a brief introduction to here.
+This project is developed as part of the CO2060 – Second Year Software Engineering Project and follows standard software engineering practices, including requirements specification, system design, implementation, testing, and deployment.
 
-### Enable GitHub Pages
+___
+**Tech Stack**
+___
+-Frontend: React + TypeScript
+-Backend: Spring Boot (REST APIs)
+-Database: PostgreSQL
+-Styling: Tailwind CSS
+-Authentication: JWT-based role authentication
 
-You can put the things to be shown in GitHub pages into the _docs/_ folder. Both html and md file formats are supported. You need to go to settings and enable GitHub pages and select _main_ branch and _docs_ folder from the dropdowns, as shown in the below image.
+___
+**Project Goals**
+___
+-Provide an efficient and reliable platform for managing debate tournaments
+-Ensure fair and structured judging and scoring
+-Improve accessibility and transparency for all stakeholders
+-Apply real-world software engineering principles in a full-stack application
+
 
 ![image](https://user-images.githubusercontent.com/11540782/98789936-028d3600-2429-11eb-84be-aaba665fdc75.png)
 

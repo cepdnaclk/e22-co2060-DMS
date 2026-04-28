@@ -1,6 +1,8 @@
 # Debate Management System (DMS)
 
-A full-stack web application for managing debate tournaments, matches, scoring, and participants.
+**CO2060 – Second Year Software Engineering Project**
+
+A full-stack web application designed to streamline the organization, management, and evaluation of debate tournaments. Traditional debate tournaments rely on manual processes for scheduling, judging, scoring, and result compilation — this platform addresses all of that with a centralized, role-based digital system.
 
 ---
 
@@ -26,7 +28,6 @@ A full-stack web application for managing debate tournaments, matches, scoring, 
 ### 1. Database Setup
 
 ```bash
-# Create PostgreSQL database
 psql -U postgres
 CREATE DATABASE dms_db;
 \q
@@ -40,9 +41,7 @@ cd backend
 # Copy environment config
 cp src/main/resources/application.properties.example src/main/resources/application.properties
 
-# Update application.properties with your PostgreSQL credentials
-
-# Run the application (this will auto-create tables and seed data)
+# Edit application.properties with your PostgreSQL credentials, then:
 mvn spring-boot:run
 ```
 
@@ -52,14 +51,8 @@ Backend runs on: `http://localhost:8080`
 
 ```bash
 cd frontend
-
-# Copy environment config
 cp .env.example .env
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
 
@@ -69,13 +62,21 @@ Frontend runs on: `http://localhost:5173`
 
 ## Sample Users (from seed data)
 
-| Role       | Username       | Password   |
-|------------|----------------|------------|
-| Organizer  | organizer1     | password123|
-| Debater    | debater1       | password123|
-| Debater    | debater2       | password123|
-| Judge      | judge1         | password123|
-| Judge      | judge2         | password123|
+| Role       | Username    | Password    |
+|------------|-------------|-------------|
+| Organizer  | organizer1  | password123 |
+| Debater    | debater1    | password123 |
+| Debater    | debater2    | password123 |
+| Judge      | judge1      | password123 |
+| Judge      | judge2      | password123 |
+
+---
+
+## User Roles
+
+- **Organizer** — Create & manage tournaments, set up score sheets, assign judges, generate match rounds
+- **Judge** — View assigned matches, submit digital score sheets, select best speaker
+- **Debater** — Track personal stats, join tournament discussions, view match history
 
 ---
 
@@ -102,12 +103,7 @@ Base URL: `http://localhost:8080/api`
 - `GET /api/tournaments` — List all tournaments
 - `GET /api/tournaments/{id}` — Get tournament detail
 - `GET /api/tournaments/organizer/{organizerId}` — Get organizer's tournaments
-- `PUT /api/tournaments/{id}` — Update tournament
 - `DELETE /api/tournaments/{id}` — Delete tournament
-
-### Schools
-- `POST /api/schools` — Add school to tournament
-- `POST /api/schools/{schoolId}/debaters` — Add debater to school
 
 ### Judges
 - `POST /api/tournaments/{id}/judges` — Add judge to tournament
@@ -117,12 +113,10 @@ Base URL: `http://localhost:8080/api`
 - `POST /api/matches` — Create match
 - `GET /api/tournaments/{id}/matches` — Get tournament matches
 - `GET /api/matches/{id}` — Get match detail
-- `POST /api/matches/{id}/assign-judges` — Assign judges to match
-- `POST /api/matches/{id}/complete` — Mark match complete
 - `POST /api/tournaments/{id}/generate-next-round` — Generate next knockout round
 
 ### Score Sheets
-- `POST /api/score-templates` — Create score sheet template
+- `POST /api/score-templates` — Save score sheet template
 - `GET /api/score-templates/{tournamentId}` — Get template
 - `GET /api/score-sheets/{matchId}/{judgeId}` — Get score sheet
 - `POST /api/score-sheets/submit` — Submit score sheet
@@ -158,26 +152,35 @@ Base URL: `http://localhost:8080/api`
 
 ```
 DMS/
-├── backend/                  # Spring Boot application
+├── backend/                        # Spring Boot application
 │   ├── src/main/java/com/dms/
-│   │   ├── entity/           # JPA entities
-│   │   ├── dto/              # Data Transfer Objects
-│   │   ├── repository/       # JPA repositories
-│   │   ├── service/          # Business logic
-│   │   ├── controller/       # REST controllers
-│   │   ├── security/         # JWT & Spring Security
-│   │   ├── exception/        # Exception handling
-│   │   └── config/           # App configuration
+│   │   ├── entity/                 # JPA entities
+│   │   ├── dto/                    # Data Transfer Objects
+│   │   ├── repository/             # Spring Data JPA repos
+│   │   ├── service/                # Business logic layer
+│   │   ├── controller/             # REST API controllers
+│   │   ├── security/               # JWT filter & util
+│   │   ├── exception/              # Global exception handler
+│   │   └── config/                 # Security & CORS config
 │   └── src/main/resources/
-│       ├── application.properties
-│       └── data.sql           # Seed data
-└── frontend/                 # React application
+│       ├── application.properties  # DB & JWT config
+│       └── data.sql                # Seed data
+└── frontend/                       # React application
     └── src/
-        ├── components/       # Reusable components
-        ├── pages/            # Route pages
-        ├── context/          # React Context (Auth)
-        ├── api/              # API layer (Axios)
-        ├── hooks/            # Custom hooks
-        ├── types/            # TypeScript interfaces
-        └── utils/            # Utility functions
+        ├── components/
+        │   ├── layout/             # Navbar, Footer, PublicLayout
+        │   └── common/             # Avatar, Toast, SearchBar, Spinner
+        ├── pages/
+        │   ├── public/             # Home, Scoring, News, About, Search
+        │   ├── auth/               # RoleSelect, Login, Signup
+        │   ├── dashboard/          # Debater, Judge, Organizer dashboards
+        │   ├── tournament/         # Tournament page, CreateWizard, ScoreSheet
+        │   └── shared/             # Notifications, Calendar, Settings, Profile
+        ├── context/                # AuthContext (JWT + user state)
+        ├── api/                    # Axios instance + all API calls
+        └── types/                  # TypeScript interfaces
 ```
+
+---
+
+For more details: [https://projects.ce.pdn.ac.lk](https://projects.ce.pdn.ac.lk)

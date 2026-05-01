@@ -21,7 +21,7 @@ export default function AboutUsPage() {
       <div className="max-w-5xl mx-auto">
         {/* Hero */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">About DebateMS</h1>
+          <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">About VIVAATHI</h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             Building the infrastructure for the next generation of competitive debate.
           </p>
@@ -40,13 +40,13 @@ export default function AboutUsPage() {
               icon: Lightbulb,
               title: 'Why We Started',
               color: 'from-violet-500 to-purple-500',
-              content: 'Managing debate tournaments manually was chaotic — spreadsheets, paper score sheets, WhatsApp chains. We believed debaters deserved better. DebateMS was born to bring the same digital sophistication to debate that exists in other competitive sports.',
+              content: 'Managing debate tournaments manually was chaotic — spreadsheets, paper score sheets, WhatsApp chains. We believed debaters deserved better. VIVAATHI was born to bring the same digital sophistication to debate that exists in other competitive sports.',
             },
             {
               icon: Globe,
               title: 'What We Do',
               color: 'from-emerald-500 to-teal-500',
-              content: 'From tournament creation to final results, DebateMS handles everything. Organizers create tournaments, judges submit digital score sheets, and debaters track their progress — all in real time, all in one place.',
+              content: 'From tournament creation to final results, VIVAATHI handles everything. Organizers create tournaments, judges submit digital score sheets, and debaters track their progress — all in real time, all in one place.',
             },
           ].map(item => (
             <div key={item.title} className="card">
@@ -103,7 +103,7 @@ export default function AboutUsPage() {
             <h2 className="text-2xl font-bold text-white mb-6">Get In Touch</h2>
             <div className="space-y-4 mb-8">
               {[
-                { icon: Mail, label: 'Email', value: 'support@debatems.com' },
+                { icon: Mail, label: 'Email', value: 'support@vivaathi.com' },
                 { icon: MapPin, label: 'Location', value: 'Colombo, Sri Lanka' },
                 { icon: Phone, label: 'Phone', value: '+94 11 234 5678' },
               ].map(c => (

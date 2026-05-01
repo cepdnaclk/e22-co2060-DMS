@@ -1,6 +1,7 @@
 import { LogOut, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import logo from '../../assets/logo.png';
 
 interface Props {
   isOpen: boolean;
@@ -29,6 +30,7 @@ export default function LogoutModal({ isOpen, onClose }: Props) {
         </button>
 
         <div className="flex flex-col items-center text-center gap-4">
+          <img src={logo} alt="VIVAATHI logo" className="w-16 h-16 rounded-2xl object-cover shadow-lg" />
           <div className="w-14 h-14 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center">
             <LogOut className="w-7 h-7 text-red-400" />
           </div>

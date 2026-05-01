@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, UserPlus, Swords } from 'lucide-react';
+import { Eye, EyeOff, UserPlus } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { authAPI } from '../../api';
 import { useToast } from '../../components/common/Toast';
 import type { Role } from '../../types';
+import logo from '../../assets/logo.png';
 
 const roles: Role[] = ['DEBATER', 'JUDGE', 'ORGANIZER'];
 const roleLabels: Record<Role, string> = {
@@ -79,10 +80,10 @@ export default function SignupPage() {
       <div className="w-full max-w-lg">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
-            <div className="w-11 h-11 bg-gradient-to-br from-blue-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-xl">
-              <Swords className="w-6 h-6 text-white" />
-            </div>
-            <span className="font-black text-2xl text-white">DebateMS</span>
+            <img src={logo} alt="VIVAATHI logo" className="w-11 h-11 rounded-2xl object-cover shadow-xl" />
+            <span className="font-black text-3xl tracking-[0.2em] uppercase bg-gradient-to-r from-cyan-300 via-blue-300 to-violet-400 bg-clip-text text-transparent">
+              VIVAATHI
+            </span>
           </Link>
           <h1 className="text-2xl font-bold text-white">Create your account</h1>
         </div>

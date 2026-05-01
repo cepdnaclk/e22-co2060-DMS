@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Swords, Twitter, Github, Linkedin, Instagram, Mail, Send } from 'lucide-react';
+import { Twitter, Github, Linkedin, Instagram, Mail, Send } from 'lucide-react';
+import logo from '../../assets/logo.png';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -18,10 +19,8 @@ export default function Footer() {
           {/* Column 1: Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-violet-600 rounded-xl flex items-center justify-center">
-                <Swords className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-lg text-white">DebateMS</span>
+              <img src={logo} alt="VIVAATHI logo" className="w-9 h-9 rounded-xl object-cover" />
+              <span className="font-bold text-lg bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">VIVAATHI</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               The premier platform for managing debate tournaments, tracking scores, and building the next generation of great debaters.
@@ -73,9 +72,9 @@ export default function Footer() {
                 </li>
               ))}
               <li>
-                <a href="mailto:support@debatems.com"
+                <a href="mailto:support@vivaathi.com"
                   className="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors">
-                  <Mail className="w-3.5 h-3.5" /> support@debatems.com
+                  <Mail className="w-3.5 h-3.5" /> support@vivaathi.com
                 </a>
               </li>
             </ul>
@@ -111,7 +110,7 @@ export default function Footer() {
 
         <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">
-            © 2024 DebateMS. All rights reserved.
+            © 2024 VIVAATHI. All rights reserved.
           </p>
           <p className="text-gray-600 text-xs">
             Built for the debate community, by debaters.

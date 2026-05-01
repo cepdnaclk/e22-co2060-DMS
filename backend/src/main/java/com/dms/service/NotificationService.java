@@ -20,10 +20,15 @@ public class NotificationService {
     private final UserRepository userRepository;
 
     public void send(User user, String title, String message) {
+        send(user, title, message, null);
+    }
+
+    public void send(User user, String title, String message, String link) {
         Notification notification = Notification.builder()
             .user(user)
             .title(title)
             .message(message)
+            .link(link)
             .build();
         notificationRepository.save(notification);
     }

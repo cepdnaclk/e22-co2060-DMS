@@ -2,8 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Trophy, Search, Bell, Calendar, Settings, LogOut,
-  User, LayoutDashboard, ChevronDown, Menu, X, Swords
+  User, LayoutDashboard, ChevronDown, Menu, X
 } from 'lucide-react';
+
+import logo from '../../assets/logo.png';
 import { useAuth } from '../../context/AuthContext';
 import LogoutModal from '../common/LogoutModal';
 import SearchBar from '../common/SearchBar';
@@ -45,10 +47,14 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 gap-4">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
-              <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Swords className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-lg text-white hidden sm:block">DebateMS</span>
+              <img 
+                src={logo} 
+                alt="logo" 
+                className="w-10 h-10 object-cover rounded-full"
+              />
+             <span className="font-extrabold text-xl bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent hidden sm:block">
+                VIVAATHI
+              </span>
             </Link>
 
             {/* Search Bar - Center */}

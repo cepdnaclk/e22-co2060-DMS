@@ -63,18 +63,18 @@ export default function CreateMatchModal({ tournament, onClose, onCreated }: Pro
           <div>
             <label className="text-sm text-gray-400 mb-1 block">Proposition School *</label>
             <select value={propSchoolId} onChange={e => setPropSchoolId(e.target.value)} className="input-field">
-              <option value="">Select school</option>
+              <option className="bg-gray-800" value="">Select school</option>
               {tournament.schools?.map(s => (
-                <option key={s.id} value={s.id}>{s.name}</option>
+                <option className="bg-gray-800" key={s.id} value={s.id}>{s.name}</option>
               ))}
             </select>
           </div>
           <div>
             <label className="text-sm text-gray-400 mb-1 block">Opposition School *</label>
             <select value={oppSchoolId} onChange={e => setOppSchoolId(e.target.value)} className="input-field">
-              <option value="">Select school</option>
+              <option className="bg-gray-800" value="">Select school</option>
               {tournament.schools?.map(s => (
-                <option key={s.id} value={s.id}>{s.name}</option>
+                <option className="bg-gray-800" key={s.id} value={s.id}>{s.name}</option>
               ))}
             </select>
           </div>
@@ -89,14 +89,12 @@ export default function CreateMatchModal({ tournament, onClose, onCreated }: Pro
               {tournament.judges?.map(tj => (
                 <button key={tj.id} type="button"
                   onClick={() => toggleJudge(tj.judge.id)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-all ${
-                    selectedJudgeIds.includes(tj.judge.id)
-                      ? 'bg-blue-500/20 border-blue-500/50'
-                      : 'glass border-white/10 hover:border-white/20'
-                  }`}>
-                  <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${
-                    selectedJudgeIds.includes(tj.judge.id) ? 'bg-blue-500 border-blue-500' : 'border-white/30'
-                  }`}>
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-all ${selectedJudgeIds.includes(tj.judge.id)
+                    ? 'bg-blue-500/20 border-blue-500/50'
+                    : 'glass border-white/10 hover:border-white/20'
+                    }`}>
+                  <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${selectedJudgeIds.includes(tj.judge.id) ? 'bg-blue-500 border-blue-500' : 'border-white/30'
+                    }`}>
                     {selectedJudgeIds.includes(tj.judge.id) && (
                       <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />

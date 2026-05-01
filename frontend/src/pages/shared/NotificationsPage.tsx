@@ -73,8 +73,11 @@ export default function NotificationsPage() {
                   <p className="font-semibold text-white text-sm">{n.title}</p>
                   <p className="text-gray-400 text-sm mt-0.5">{n.message}</p>
                   {n.link && (
-                    <button 
-                      onClick={() => navigate(n.link)} 
+                    <button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        navigate(n.link as string);
+                      }}
                       className="inline-flex items-center gap-1 text-sm text-blue-300 hover:text-blue-200 mt-2 bg-transparent border-none cursor-pointer">
                       Open assignment <ExternalLink className="w-3.5 h-3.5" />
                     </button>

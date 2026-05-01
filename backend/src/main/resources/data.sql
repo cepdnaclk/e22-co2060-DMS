@@ -168,35 +168,3 @@ SELECT
   (SELECT id FROM users WHERE username = 'debater3' LIMIT 1),
   NOW() - INTERVAL '5 days'
 WHERE NOT EXISTS (SELECT 1 FROM news_posts WHERE title = 'How Our Debate Club Changed My Life');
-
--- ===================== SCHOOLS =====================
-INSERT INTO schools (name, location, established_year, created_at)
-SELECT 'University of Peradeniya', 'Peradeniya, Sri Lanka', 1942, NOW()
-WHERE NOT EXISTS (SELECT 1 FROM schools WHERE name = 'University of Peradeniya');
-
-INSERT INTO schools (name, location, established_year, created_at)
-SELECT 'University of Colombo', 'Colombo, Sri Lanka', 1921, NOW()
-WHERE NOT EXISTS (SELECT 1 FROM schools WHERE name = 'University of Colombo');
-
-INSERT INTO schools (name, location, established_year, created_at)
-SELECT 'University of Moratuwa', 'Moratuwa, Sri Lanka', 1972, NOW()
-WHERE NOT EXISTS (SELECT 1 FROM schools WHERE name = 'University of Moratuwa');
-
-INSERT INTO schools (name, location, established_year, created_at)
-SELECT 'University of Jaffna', 'Jaffna, Sri Lanka', 1974, NOW()
-WHERE NOT EXISTS (SELECT 1 FROM schools WHERE name = 'University of Jaffna');
-
--- ===================== TOURNAMENTS =====================
-INSERT INTO tournaments (title, description, format, start_date, end_date, status, organizer_id, created_at)
-SELECT 'Sri Lanka National Debate Championship 2024', 'The premier university debate tournament bringing together the best minds from across the island.', 'Asian Parliamentary', NOW() + INTERVAL '10 days', NOW() + INTERVAL '14 days', 'UPCOMING', (SELECT id FROM users WHERE username = 'organizer1'), NOW()
-WHERE NOT EXISTS (SELECT 1 FROM tournaments WHERE title = 'Sri Lanka National Debate Championship 2024');
-
-INSERT INTO tournaments (title, description, format, start_date, end_date, status, organizer_id, created_at)
-SELECT 'Inter-University Novice Cup', 'A special tournament designed strictly for first-year debaters to gain competitive experience.', 'British Parliamentary', NOW() - INTERVAL '30 days', NOW() - INTERVAL '28 days', 'COMPLETED', (SELECT id FROM users WHERE username = 'organizer2'), NOW()
-WHERE NOT EXISTS (SELECT 1 FROM tournaments WHERE title = 'Inter-University Novice Cup');
-
--- ===================== SCORE SHEET TEMPLATES =====================
--- Creating a template that matches your DebateMS frontend UI (180 Total)
-INSERT INTO score_sheet_templates (name, format, matter_max, manner_max, method_max, rebuttal_max, teamwork_max, total_max, created_at)
-SELECT 'Standard 180-Point Rubric', 'Asian Parliamentary', 40, 40, 40, 30, 30, 180, NOW()
-WHERE NOT EXISTS (SELECT 1 FROM score_sheet_templates WHERE name = 'Standard 180-Point Rubric');

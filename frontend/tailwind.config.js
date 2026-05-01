@@ -25,6 +25,7 @@ export default {
           600: '#7c3aed',
         },
         glass: 'rgba(255,255,255,0.1)',
+        border: 'rgba(255,255,255,0.1)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivaathi | Redefining Debate Management</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;900&display=swap"
+        rel="stylesheet">
+
+    <!-- AOS Library for Scroll Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Patterns Background for Hero -->
+    <div class="network-bg"></div>
+
+    <!-- Header / Branding -->
+    <header class="main-header" data-aos="fade-down" data-aos-duration="1000">
+        <div class="header-center">
+            <img src="screenshots/uop-logo.png" alt="University of Peradeniya Logo" class="header-logo">
+            <h1>University of Peradeniya</h1>
+            <span class="header-separator">|</span>
+            <h1>Department of Computer Engineering</h1>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="hero-content" data-aos="zoom-in" data-aos-duration="1200">
+                <h2 class="sub-title">Redefining Debate Management</h2>
+                <h1 class="vivaathi-title">Vivaathi</h1>
+                <p class="hero-intro">
+                    The ultimate digital transition for debate tournaments.<br>
+                    Move from cumbersome paper-based scoring to a seamless, real-time cloud experience.
+                </p>
+
+                <!-- Tech Stack Badges -->
+                <div class="tech-stack" data-aos="fade-up" data-aos-delay="400">
+                    <span class="badge"><i data-lucide="blocks"></i> React</span>
+                    <span class="badge"><i data-lucide="code"></i> TypeScript</span>
+                    <span class="badge"><i data-lucide="zap"></i> Vite</span>
+                    <span class="badge"><i data-lucide="palette"></i> Tailwind CSS</span>
+                    <span class="badge"><i data-lucide="server"></i> Spring Boot</span>
+                    <span class="badge"><i data-lucide="database"></i> PostgreSQL</span>
+                    <span class="badge"><i data-lucide="plug"></i> REST API</span>
+                    <span class="badge"><i data-lucide="send"></i> Axios / Fetch</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- App Showcase Section -->
+        <section id="showcase" class="showcase">
+            <div class="container">
+                <h2 class="section-heading" data-aos="fade-up">Application Walkthrough</h2>
+                <p class="section-sub" data-aos="fade-up" data-aos-delay="100">A step-by-step visual guide through the
+                    Vivaathi platform.</p>
+
+                <!-- Step 1: Role Selection -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <div class="step-text">
+                            <h3>Choose Your Role</h3>
+                            <p>Register by selecting your appropriate role — <strong>Debater</strong>,
+                                <strong>Judge</strong>, or <strong>Organizer</strong>. Each role unlocks a tailored
+                                experience with specific features and permissions designed for that participant type.
+                            </p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/role-selection.png"
+                                alt="Role Selection - Choose between Debater, Judge, or Organizer" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Registration -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">02</div>
+                    <div class="step-content reverse">
+                        <div class="step-text">
+                            <h3>Complete Registration</h3>
+                            <p>Fill in your profile details — full name, username, email, bio, location, and profile
+                                picture URL. The role-based toggle (Debater / Judge / Organizer) ensures the right
+                                fields and capabilities are assigned from the start.</p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/registration.png"
+                                alt="Registration form with role selection and profile fields" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Dashboard -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <div class="step-text">
+                            <h3>Personal Dashboard</h3>
+                            <p>Every user gets a personalized dashboard to keep track of their stats — matches played,
+                                wins, losses, win rate, player of the match awards, and best debater recognition. The
+                                dashboard also shows win/loss distribution charts and recent notifications.</p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/dashboard.png"
+                                alt="User dashboard showing statistics and notifications" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Create Tournament - Basic Details -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">04</div>
+                    <div class="step-content reverse">
+                        <div class="step-text">
+                            <h3>Start a New Tournament</h3>
+                            <p>Organizers can create tournaments step by step. Begin with <strong>Basic Details</strong>
+                                — set the tournament name and select the debate type (Traditional, Asian Parliamentary,
+                                British Parliamentary, Sulalum Sotpor, Vazhakaadu Mandram, or Other). A guided wizard
+                                with a 5-step progress bar ensures nothing is missed.</p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/tournament-step1.png"
+                                alt="Create Tournament - Step 1: Basic Details with tournament name and debate type"
+                                loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Tournament Type -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <div class="step-text">
+                            <h3>Select Tournament Format</h3>
+                            <p>Choose between <strong>Knockout</strong> (single elimination — winners advance, losers
+                                are eliminated) or <strong>League</strong> (round-robin style — all teams play multiple
+                                matches). The stepper tracks progress through Schools &amp; Debaters, Judges, and Score
+                                Sheet setup steps.</p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/tournament-step2.png"
+                                alt="Create Tournament - Step 2: Choose Knockout or League format" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Assign Judges -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">06</div>
+                    <div class="step-content reverse">
+                        <div class="step-text">
+                            <h3>Assign Judges</h3>
+                            <p>Search and add judges to the tournament. Each judge is assigned a unique ID (JUDGE-001,
+                                JUDGE-002, etc.). Manage the panel easily — add or remove judges with a single click
+                                before proceeding to score sheet configuration.</p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/tournament-judges.png"
+                                alt="Judges assignment - search and add judges to the tournament" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 7: Score Sheet Setup -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">07</div>
+                    <div class="step-content">
+                        <div class="step-text">
+                            <h3>Score Sheet Setup</h3>
+                            <p>Customize scoring criteria for the tournament. Define categories like
+                                <strong>Matter</strong>, <strong>Manner</strong>, <strong>Method</strong>,
+                                <strong>Rebuttal</strong>, and <strong>Teamwork</strong> — each with configurable max
+                                marks. Add or remove criteria to match your debate format. The total maximum marks are
+                                calculated automatically.
+                            </p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/tournament-scoresheet.png"
+                                alt="Score Sheet Setup with customizable criteria and max marks" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 8: Review & Create -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">08</div>
+                    <div class="step-content reverse">
+                        <div class="step-text">
+                            <h3>Review & Create</h3>
+                            <p>Review all tournament details before creation — tournament name, debate type, tournament
+                                type, schools, judges, and score criteria are all summarized. See the full list of
+                                participating schools with their debaters. Hit <strong>Create Tournament</strong> to
+                                finalize everything.</p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/tournament-review.png"
+                                alt="Review and Create - tournament summary before creation" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 9: Tournament Matches -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">09</div>
+                    <div class="step-content">
+                        <div class="step-text">
+                            <h3>Live Tournament Dashboard</h3>
+                            <p>Once created, the tournament goes <strong>ACTIVE</strong>. View all matches with their
+                                matchups, topics, and assigned judges. Create new matches, generate next rounds, and
+                                navigate through <strong>Leaderboard</strong>, <strong>Discussion</strong>,
+                                <strong>Score Sheet</strong>, <strong>Results</strong>, and <strong>Info</strong> tabs.
+                            </p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/tournament-matches.png"
+                                alt="Active tournament dashboard with matches, leaderboard, and navigation tabs"
+                                loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 10: Notifications -->
+                <div class="showcase-step" data-aos="fade-up">
+                    <div class="step-number">10</div>
+                    <div class="step-content reverse">
+                        <div class="step-text">
+                            <h3>Real-Time Notifications</h3>
+                            <p>Notifications are <strong>automatically sent to judges and debaters</strong> when matches
+                                are created. Judges receive assignment details with match IDs, tournament names, and
+                                organizing academy info — keeping everyone informed without manual coordination.</p>
+                        </div>
+                        <div class="step-image">
+                            <img src="screenshots/notifications.png"
+                                alt="Notifications - judges and debaters receive automatic match assignments"
+                                loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Team & Contribution Path -->
+        <section id="team" class="team">
+            <div class="container">
+                <h2 class="section-heading" data-aos="fade-up">The Engineering Team</h2>
+                <p class="section-sub" data-aos="fade-up" data-aos-delay="100">The core team behind the Vivaathi
+                    platform.</p>
+
+                <div class="team-container">
+
+                    <div class="team-grid">
+                        <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="avatar"><img src="screenshots/pathimilan.jpg" alt="P. Pathimilan"></div>
+                            <h4>P. Pathimilan</h4>
+                            <div class="socials">
+                                <a href="#" target="_blank" title="GitHub"><img src="screenshots/gtihub.png"
+                                        alt="GitHub"></a>
+                                <a href="#" target="_blank" title="LinkedIn"><img src="screenshots/linkedin.png"
+                                        alt="LinkedIn"></a>
+                                <a href="#" target="_blank" title="ePortfolio"><img src="screenshots/portfolio.png"
+                                        alt="ePortfolio"></a>
+                            </div>
+                        </div>
+                        <div class="team-card" data-aos="zoom-in" data-aos-delay="400">
+                            <div class="avatar"><img src="screenshots/bhaveenthan.jpg" alt="K. Bhaveenthan"></div>
+                            <h4>K. Bhaveenthan</h4>
+                            <div class="socials">
+                                <a href="#" target="_blank" title="GitHub"><img src="screenshots/gtihub.png"
+                                        alt="GitHub"></a>
+                                <a href="#" target="_blank" title="LinkedIn"><img src="screenshots/linkedin.png"
+                                        alt="LinkedIn"></a>
+                                <a href="#" target="_blank" title="ePortfolio"><img src="screenshots/portfolio.png"
+                                        alt="ePortfolio"></a>
+                            </div>
+                        </div>
+                        <div class="team-card" data-aos="zoom-in" data-aos-delay="600">
+                            <div class="avatar"><img src="screenshots/jeyanth.jpg" alt="A.L. Jeyanth"></div>
+                            <h4>A.L. Jeyanth</h4>
+                            <div class="socials">
+                                <a href="#" target="_blank" title="GitHub"><img src="screenshots/gtihub.png"
+                                        alt="GitHub"></a>
+                                <a href="#" target="_blank" title="LinkedIn"><img src="screenshots/linkedin.png"
+                                        alt="LinkedIn"></a>
+                                <a href="#" target="_blank" title="ePortfolio"><img src="screenshots/portfolio.png"
+                                        alt="ePortfolio"></a>
+                            </div>
+                        </div>
+                        <div class="team-card" data-aos="zoom-in" data-aos-delay="800">
+                            <div class="avatar"><img src="screenshots/Manojh.jpeg" alt="P. Manojh"></div>
+                            <h4>P. Manojh</h4>
+                            <div class="socials">
+                                <a href="#" target="_blank" title="GitHub"><img src="screenshots/gtihub.png"
+                                        alt="GitHub"></a>
+                                <a href="#" target="_blank" title="LinkedIn"><img src="screenshots/linkedin.png"
+                                        alt="LinkedIn"></a>
+                                <a href="#" target="_blank" title="ePortfolio"><img src="screenshots/portfolio.png"
+                                        alt="ePortfolio"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Commercialization -->
+        <section id="commercial" class="commercial">
+            <div class="container" data-aos="fade-up">
+                <div class="glass-card pro-card">
+                    <span class="coming-soon">Coming Soon Q4 2026</span>
+                    <h2>Vivaathi Pro</h2>
+                    <p>Bringing AI-driven feedback analysis and multi-room seamless streaming to premium institutional
+                        tournaments. Stay tuned as we scale debate infrastructure worldwide.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer" data-aos="fade-up">
+        <div class="footer-content container">
+            <h2>View Our Progress</h2>
+            <p>Check out the internal repository or see the system in action.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-outline"><i data-lucide="github"></i> GitHub Repository</a>
+                <a href="#" class="btn btn-primary"><i data-lucide="external-link"></i> Live Demo</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Vivaathi Project Team. Dept of Computer Engineering, UoP.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: false,
+            mirror: true,
+            offset: 100
+        });
+
+        // Animate SVG path on scroll
+        window.addEventListener('scroll', () => {
+            const path = document.getElementById('timeline-path');
+            if (path) {
+                const scrollPercentage = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+                const drawLength = 2000 * scrollPercentage * 2; // Arbitrary multiplier
+                path.style.strokeDashoffset = Math.max(0, 2000 - drawLength);
+            }
+        });
+    </script>
+</body>
+
+</html>

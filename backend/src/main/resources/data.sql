@@ -168,3 +168,75 @@ SELECT
   (SELECT id FROM users WHERE username = 'debater3' LIMIT 1),
   NOW() - INTERVAL '5 days'
 WHERE NOT EXISTS (SELECT 1 FROM news_posts WHERE title = 'How Our Debate Club Changed My Life');
+
+-- Tamil author users for news content
+INSERT INTO users (full_name, username, age, bio, location, email, password_hash, role, profile_picture_url, privacy_status, language, created_at)
+SELECT 'Bhaveenthan Thankajanikanth', 'bhaveenthank', 22, 'Debate enthusiast and tournament organizer from Jaffna. Passionate about growing the debate community in Northern Sri Lanka.', 'Jaffna, Sri Lanka', 'e22051@eng.pdn.ac.lk', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EH0xP5u/1Ksg4YVPC.Ja.', 'ORGANIZER', NULL, 'PUBLIC', 'en', NOW()
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'bhaveenthank');
+
+INSERT INTO users (full_name, username, age, bio, location, email, password_hash, role, profile_picture_url, privacy_status, language, created_at)
+SELECT 'Karthikeyan Murugan', 'karthikeyan_m', 28, 'Senior debate coach and journalist covering competitive debate circuits across South Asia.', 'Colombo, Sri Lanka', 'karthikeyan@dms.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EH0xP5u/1Ksg4YVPC.Ja.', 'ORGANIZER', NULL, 'PUBLIC', 'en', NOW()
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'karthikeyan_m');
+
+INSERT INTO users (full_name, username, age, bio, location, email, password_hash, role, profile_picture_url, privacy_status, language, created_at)
+SELECT 'Priyanka Selvam', 'priyanka_s', 25, 'Debate analyst and former national champion. Writes about debate strategy and tournament formats.', 'Kandy, Sri Lanka', 'priyanka@dms.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EH0xP5u/1Ksg4YVPC.Ja.', 'ORGANIZER', NULL, 'PUBLIC', 'en', NOW()
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'priyanka_s');
+
+INSERT INTO users (full_name, username, age, bio, location, email, password_hash, role, profile_picture_url, privacy_status, language, created_at)
+SELECT 'Aarav Subramaniam', 'aarav_sub', 31, 'Debate researcher and educator. Focuses on policy debate and its role in youth development.', 'Trincomalee, Sri Lanka', 'aarav@dms.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EH0xP5u/1Ksg4YVPC.Ja.', 'ORGANIZER', NULL, 'PUBLIC', 'en', NOW()
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'aarav_sub');
+
+INSERT INTO users (full_name, username, age, bio, location, email, password_hash, role, profile_picture_url, privacy_status, language, created_at)
+SELECT 'Meenakshi Ramasamy', 'meenakshi_r', 27, 'Tournament director and debate advocate. Has organized over 30 inter-school debate events.', 'Matara, Sri Lanka', 'meenakshi@dms.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EH0xP5u/1Ksg4YVPC.Ja.', 'ORGANIZER', NULL, 'PUBLIC', 'en', NOW()
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'meenakshi_r');
+
+-- Latest News (2026)
+INSERT INTO news_posts (title, category, content, image_url, author_id, created_at)
+SELECT
+  'Asia Pacific Debate Championship 2026 to Be Hosted in Colombo',
+  'LATEST_NEWS',
+  'Sri Lanka has been selected as the host nation for the Asia Pacific Debate Championship 2026, with Colombo set to welcome over 400 debaters from 28 countries this August. The University of Colombo will serve as the main venue. This marks the first time Sri Lanka has hosted the prestigious tournament, which will feature Asian Parliamentary, British Parliamentary, and World Schools formats across five days of intense competition. Organizers have confirmed that online registration opens on 15 February 2026.',
+  'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800',
+  (SELECT id FROM users WHERE username = 'bhaveenthank' LIMIT 1),
+  TIMESTAMP '2026-01-10 09:00:00'
+WHERE NOT EXISTS (SELECT 1 FROM news_posts WHERE title = 'Asia Pacific Debate Championship 2026 to Be Hosted in Colombo');
+
+INSERT INTO news_posts (title, category, content, image_url, author_id, created_at)
+SELECT
+  'Sri Lanka National Schools Debate League 2026 Announces Record 312 Registrations',
+  'LATEST_NEWS',
+  'The Sri Lanka National Schools Debate League has received a record 312 school registrations for its 2026 season, up from 240 last year. The league, which runs from March to November, will be divided into six regional divisions before culminating in a national final in Colombo. The Ministry of Education has officially endorsed the league this year, pledging to provide funding for transportation costs for schools from remote districts. The league director confirmed that Tamil-medium and Sinhala-medium debate streams will both be expanded.',
+  'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800',
+  (SELECT id FROM users WHERE username = 'karthikeyan_m' LIMIT 1),
+  TIMESTAMP '2026-02-03 11:30:00'
+WHERE NOT EXISTS (SELECT 1 FROM news_posts WHERE title = 'Sri Lanka National Schools Debate League 2026 Announces Record 312 Registrations');
+
+INSERT INTO news_posts (title, category, content, image_url, author_id, created_at)
+SELECT
+  'University of Peradeniya Wins South Asian Universities Debate Cup 2026',
+  'LATEST_NEWS',
+  'The University of Peradeniya debate team clinched the South Asian Universities Debate Cup 2026 held in Dhaka, Bangladesh, defeating the University of Delhi in a tightly contested final on the motion "This House Would introduce mandatory national service for university graduates." The Peradeniya team, comprising Nithyaa Krishnaswamy and Roshan Perera, received a standing ovation from the 600-strong audience. This is Peradeniya''s third SADC title. The best speaker award was jointly given to both finalists in recognition of an exceptionally high-quality final round.',
+  'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800',
+  (SELECT id FROM users WHERE username = 'priyanka_s' LIMIT 1),
+  TIMESTAMP '2026-02-21 14:00:00'
+WHERE NOT EXISTS (SELECT 1 FROM news_posts WHERE title = 'University of Peradeniya Wins South Asian Universities Debate Cup 2026');
+
+INSERT INTO news_posts (title, category, content, image_url, author_id, created_at)
+SELECT
+  'World Schools Debating Championships 2026 Motion List Released',
+  'LATEST_NEWS',
+  'The World Schools Debating Championships (WSDC) 2026, to be held in Cape Town, South Africa in July, has released its preparatory motion list covering seven key topic areas: climate justice, digital rights, economic inequality, health policy, conflict resolution, education reform, and democratic governance. Sri Lanka''s national team, selected through a rigorous four-round national trial held in January, will begin their coaching camp in March. The team is coached by former WSDC finalist Dr. Ananthan Sivakumar and has been allocated three international training scrimmages with teams from Australia, Canada, and Singapore.',
+  'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=800',
+  (SELECT id FROM users WHERE username = 'aarav_sub' LIMIT 1),
+  TIMESTAMP '2026-03-05 10:00:00'
+WHERE NOT EXISTS (SELECT 1 FROM news_posts WHERE title = 'World Schools Debating Championships 2026 Motion List Released');
+
+INSERT INTO news_posts (title, category, content, image_url, author_id, created_at)
+SELECT
+  'Debate Management System Launched to Modernize Tournament Administration Across Sri Lanka',
+  'LATEST_NEWS',
+  'A new digital Debate Management System (DMS) has been officially launched to streamline how debate tournaments are organized, judged, and scored across Sri Lanka. The platform, developed by students of the University of Peradeniya, replaces the traditional paper-based processes that have long slowed tournament operations. DMS supports role-based access for organizers, judges, and debaters, with features including automated round generation, digital score sheets, live leaderboards, and a built-in notification system. The platform has already been piloted at three tournaments with over 200 participants and received overwhelmingly positive feedback from tournament directors.',
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
+  (SELECT id FROM users WHERE username = 'meenakshi_r' LIMIT 1),
+  TIMESTAMP '2026-04-01 08:00:00'
+WHERE NOT EXISTS (SELECT 1 FROM news_posts WHERE title = 'Debate Management System Launched to Modernize Tournament Administration Across Sri Lanka');

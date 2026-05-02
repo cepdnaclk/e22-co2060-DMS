@@ -62,7 +62,8 @@ public class MatchService {
                 notificationService.send(judge,
                     "New Judging Assignment",
                     "You have been assigned as a judge for " + matchCode + " in " +
-                    tournament.getName() + " organised by " + tournament.getOrganizer().getFullName() + ".");
+                    tournament.getName() + " organised by " + tournament.getOrganizer().getFullName() + ".",
+                    link);
             }
         }
 

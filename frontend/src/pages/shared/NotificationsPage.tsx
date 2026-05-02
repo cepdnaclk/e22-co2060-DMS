@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Bell, CheckCheck, Loader2 } from 'lucide-react';
+import { Bell, CheckCheck, ExternalLink } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { notificationsAPI } from '../../api';
 import type { Notification } from '../../types';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -10,6 +11,7 @@ export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     notificationsAPI.getAll()
@@ -70,6 +72,16 @@ export default function NotificationsPage() {
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-white text-sm">{n.title}</p>
                   <p className="text-gray-400 text-sm mt-0.5">{n.message}</p>
+                  {n.link && (
+                    <button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        navigate(n.link as string);
+                      }}
+                      className="inline-flex items-center gap-1 text-sm text-blue-300 hover:text-blue-200 mt-2 bg-transparent border-none cursor-pointer">
+                      Open assignment <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                   <p className="text-xs text-gray-600 mt-1.5">
                     {n.createdAt ? format(new Date(n.createdAt), 'MMM d, yyyy · h:mm a') : ''}
                   </p>

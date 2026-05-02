@@ -10,7 +10,7 @@ A full-stack web application designed to streamline the organization, management
 
 **Frontend:** React + TypeScript + Vite + Tailwind CSS + React Router + Recharts  
 **Backend:** Spring Boot + Java + Spring Security (JWT) + JPA/Hibernate  
-**Database:** PostgreSQL
+**Database:** H2 (development) / PostgreSQL (production)
 
 ---
 
@@ -19,7 +19,7 @@ A full-stack web application designed to streamline the organization, management
 - Node.js >= 18
 - Java 17+
 - Maven 3.8+
-- PostgreSQL 14+
+- PostgreSQL 14+ (optional - only for production deployment)
 
 ---
 
@@ -27,6 +27,10 @@ A full-stack web application designed to streamline the organization, management
 
 ### 1. Database Setup
 
+**For Development (H2 - Recommended):**
+No setup required - H2 in-memory database will be used automatically.
+
+**For Production (PostgreSQL):**
 ```bash
 psql -U postgres
 CREATE DATABASE dms_db;
@@ -38,9 +42,12 @@ CREATE DATABASE dms_db;
 ```bash
 cd backend
 
+# For Development (H2):
+mvn spring-boot:run
+
+# For Production (PostgreSQL):
 # Copy environment config
 cp src/main/resources/application.properties.example src/main/resources/application.properties
-
 # Edit application.properties with your PostgreSQL credentials, then:
 mvn spring-boot:run
 ```

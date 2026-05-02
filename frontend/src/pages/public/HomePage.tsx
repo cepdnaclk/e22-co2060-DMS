@@ -278,7 +278,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-black text-white mb-3">Ready to Compete?</h2>
             <p className="text-gray-400 mb-8">Join thousands of debaters, judges, and organizers on the platform.</p>
             <Link to="/role-select" className="btn-primary text-base px-10 py-3 inline-flex items-center gap-2">
-              Join DebateMS <ArrowRight className="w-4 h-4" />
+              Join VIVAATHI <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

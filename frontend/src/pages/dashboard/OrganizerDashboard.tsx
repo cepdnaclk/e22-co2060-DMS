@@ -5,8 +5,9 @@ import { tournamentsAPI, notificationsAPI } from '../../api';
 import type { Tournament, Notification } from '../../types';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import EditProfileModal from '../../components/common/EditProfileModal';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
+import { getNotificationRoute } from '../../utils/notificationRouting';
 
 /* ────────────────────── SVG Donut Chart ────────────────────── */
 function DonutChart({ active, completed, total }: { active: number; completed: number; total: number }) {
@@ -57,6 +58,7 @@ function DonutChart({ active, completed, total }: { active: number; completed: n
 /* ────────────────────── Main Dashboard ────────────────────── */
 export default function OrganizerDashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
@@ -347,7 +349,19 @@ export default function OrganizerDashboard() {
                   <div className="space-y-2">
                     {notifications.map(n => (
                       <div key={n.id}
-                        className={`flex items-start gap-3 p-3 rounded-xl transition-colors ${n.readStatus ? 'bg-white/[0.02]' : 'bg-blue-500/[0.06] border border-blue-500/15'}`}>
+                        onClick={async () => {
+                          if (!n.readStatus) {
+                            try {
+                              await notificationsAPI.markRead(n.id);
+                              setNotifications(prev => prev.map(item => item.id === n.id ? { ...item, readStatus: true } : item));
+                            } catch { /* silent */ }
+                          }
+                          const route = getNotificationRoute(n);
+                          if (route) navigate(route);
+                        }}
+                        className={`flex items-start gap-3 p-3 rounded-xl transition-colors cursor-pointer ${
+                          n.readStatus ? 'bg-white/[0.02] hover:bg-white/[0.04]' : 'bg-blue-500/[0.06] border border-blue-500/15 hover:bg-blue-500/[0.10]'
+                        }`}>
                         <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${n.readStatus ? 'bg-gray-700' : 'bg-blue-400'}`} />
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-gray-200 truncate">{n.title}</p>

@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Bell, CheckCheck, Loader2 } from 'lucide-react';
 import { notificationsAPI } from '../../api';
 import type { Notification } from '../../types';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { format } from 'date-fns';
 import { useToast } from '../../components/common/Toast';
+import { getNotificationRoute } from '../../utils/notificationRouting';
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     notificationsAPI.getAll()
@@ -18,12 +21,21 @@ export default function NotificationsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const markRead = async (id: number) => {
-    try {
-      await notificationsAPI.markRead(id);
-      setNotifications(prev => prev.map(n => n.id === id ? { ...n, readStatus: true } : n));
-    } catch {
-      showToast('Failed to mark as read', 'error');
+  const handleNotificationClick = async (n: Notification) => {
+    // Mark as read if unread
+    if (!n.readStatus) {
+      try {
+        await notificationsAPI.markRead(n.id);
+        setNotifications(prev => prev.map(item => item.id === n.id ? { ...item, readStatus: true } : item));
+      } catch {
+        showToast('Failed to mark as read', 'error');
+      }
+    }
+
+    // Navigate to the relevant page
+    const route = getNotificationRoute(n);
+    if (route) {
+      navigate(route);
     }
   };
 
@@ -60,9 +72,9 @@ export default function NotificationsPage() {
           <div className="space-y-3">
             {notifications.map(n => (
               <div key={n.id}
-                onClick={() => !n.readStatus && markRead(n.id)}
-                className={`card flex items-start gap-4 transition-all ${
-                  !n.readStatus ? 'border-blue-500/20 bg-blue-500/5 cursor-pointer hover:bg-blue-500/10' : 'opacity-70'
+                onClick={() => handleNotificationClick(n)}
+                className={`card flex items-start gap-4 transition-all cursor-pointer ${
+                  !n.readStatus ? 'border-blue-500/20 bg-blue-500/5 hover:bg-blue-500/10' : 'opacity-70 hover:opacity-90 hover:bg-white/5'
                 }`}>
                 <div className={`w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 ${
                   n.readStatus ? 'bg-gray-600' : 'bg-blue-400 animate-pulse'
@@ -91,3 +103,4 @@ export default function NotificationsPage() {
     </div>
   );
 }
+

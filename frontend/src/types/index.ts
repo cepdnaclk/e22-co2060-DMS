@@ -83,6 +83,8 @@ export interface Notification {
   message: string;
   readStatus: boolean;
   createdAt: string;
+  matchId?: number;
+  tournamentId?: number;
 }
 
 export interface DiscussionComment {

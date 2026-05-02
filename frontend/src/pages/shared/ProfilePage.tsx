@@ -1,21 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
-  MapPin, Mail, Calendar, Trophy, Star, Award, Target,
-  TrendingUp, Scale, Briefcase, ExternalLink, Users
+  MapPin, Mail, Calendar, Trophy, Star, Award,
+  Scale, Briefcase, ExternalLink, Users
 } from 'lucide-react';
-import { usersAPI, statsAPI, tournamentsAPI } from '../../api';
-import type { User, DebaterStats, Tournament } from '../../types';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { usersAPI, statsAPI, tournamentsAPI, matchesAPI } from '../../api';
+import type { User, DebaterStats, Tournament, Match } from '../../types';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import Avatar from '../../components/common/Avatar';
-
-const PIE_COLORS = ['#3b82f6', '#ef4444'];
+import SharedDebaterLayout from '../../components/common/SharedDebaterLayout';
 
 export default function ProfilePage() {
   const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState<User | null>(null);
   const [debaterStats, setDebaterStats] = useState<DebaterStats | null>(null);
+  const [debaterMatches, setDebaterMatches] = useState<Match[]>([]);
   const [judgeMatchesJudged, setJudgeMatchesJudged] = useState<number | null>(null);
   const [organizerTournaments, setOrganizerTournaments] = useState<Tournament[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,20 +26,22 @@ export default function ProfilePage() {
         setUser(userData);
 
         if (userData.role === 'DEBATER') {
-          try {
-            const { data } = await statsAPI.getDebaterStats(parseInt(id));
-            setDebaterStats(data);
-          } catch {}
+          const [statsRes, matchesRes] = await Promise.allSettled([
+            statsAPI.getDebaterStats(parseInt(id)),
+            matchesAPI.getLive(),
+          ]);
+          if (statsRes.status === 'fulfilled') setDebaterStats(statsRes.value.data);
+          if (matchesRes.status === 'fulfilled') setDebaterMatches(matchesRes.value.data);
         } else if (userData.role === 'JUDGE') {
           try {
             const { data } = await statsAPI.getJudgeStats(parseInt(id));
             setJudgeMatchesJudged(data.matchesJudged);
-          } catch {}
+          } catch { }
         } else if (userData.role === 'ORGANIZER') {
           try {
             const { data } = await tournamentsAPI.getByOrganizer(parseInt(id));
             setOrganizerTournaments(data);
-          } catch {}
+          } catch { }
         }
       } finally {
         setLoading(false);
@@ -57,11 +57,21 @@ export default function ProfilePage() {
     </div>
   );
 
-  const pieData = debaterStats ? [
-    { name: 'Wins', value: debaterStats.wins || 0 },
-    { name: 'Losses', value: debaterStats.losses || 0 },
-  ].filter(d => d.value > 0) : [];
+  /* ── Debater: reuse the shared layout in read-only mode ── */
+  if (user.role === 'DEBATER') {
+    return (
+      <SharedDebaterLayout
+        user={user}
+        stats={debaterStats}
+        matches={debaterMatches}
+        notifications={[]}
+        isReadOnly={true}
+        loading={false}
+      />
+    );
+  }
 
+  /* ── Judge & Organizer: inline profile views (no duplication issue) ── */
   const socialLinks = (() => {
     try { return user.socialLinksJson ? JSON.parse(user.socialLinksJson) : {}; }
     catch { return {}; }
@@ -73,7 +83,13 @@ export default function ProfilePage() {
         {/* Profile Header */}
         <div className="card">
           <div className="flex flex-col sm:flex-row gap-6">
-            <Avatar name={user.fullName} src={user.profilePictureUrl} size="xl" />
+            <div className="mx-auto sm:mx-0 w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-2xl font-black text-white border-4 border-white/10 shadow-lg flex-shrink-0">
+              {user.profilePictureUrl ? (
+                <img src={user.profilePictureUrl} alt={user.fullName} className="w-full h-full rounded-full object-cover" />
+              ) : (
+                user.fullName[0]?.toUpperCase()
+              )}
+            </div>
             <div className="flex-1">
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -97,7 +113,6 @@ export default function ProfilePage() {
                       </span>
                     )}
                   </div>
-                  {/* Social Links */}
                   {Object.keys(socialLinks).length > 0 && (
                     <div className="flex gap-2 mt-3">
                       {Object.entries(socialLinks).map(([platform, url]) => (
@@ -111,7 +126,6 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex flex-col items-end gap-2">
                   <span className={`badge border ${
-                    user.role === 'DEBATER' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
                     user.role === 'JUDGE' ? 'bg-violet-500/20 text-violet-400 border-violet-500/30' :
                     'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                   }`}>
@@ -128,74 +142,6 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-
-        {/* Debater Stats */}
-        {user.role === 'DEBATER' && debaterStats && (
-          <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-              {[
-                { label: 'Matches', value: debaterStats.matchesPlayed, icon: Target, color: 'text-blue-400' },
-                { label: 'Wins', value: debaterStats.wins, icon: Trophy, color: 'text-green-400' },
-                { label: 'Losses', value: debaterStats.losses, icon: TrendingUp, color: 'text-red-400' },
-                { label: 'Win Rate', value: `${debaterStats.winRate.toFixed(0)}%`, icon: TrendingUp, color: 'text-violet-400' },
-                { label: 'POTM', value: debaterStats.playerOfMatchCount, icon: Star, color: 'text-yellow-400' },
-                { label: 'Best Debater', value: debaterStats.bestDebaterTournamentCount, icon: Award, color: 'text-orange-400' },
-              ].map(s => (
-                <div key={s.label} className="card text-center">
-                  <s.icon className={`w-5 h-5 ${s.color} mx-auto mb-1`} />
-                  <p className="text-xl font-black text-white">{s.value}</p>
-                  <p className="text-xs text-gray-500">{s.label}</p>
-                </div>
-              ))}
-            </div>
-
-            {pieData.length > 0 && (
-              <div className="card">
-                <h3 className="font-bold text-white mb-4">Win/Loss Distribution</h3>
-                <div className="flex items-center gap-6">
-                  <ResponsiveContainer width={160} height={160}>
-                    <PieChart>
-                      <Pie data={pieData} cx="50%" cy="50%" outerRadius={70} paddingAngle={3} dataKey="value">
-                        {pieData.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]} />)}
-                      </Pie>
-                      <Tooltip contentStyle={{ background: '#1f2937', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-blue-500" />
-                      <span className="text-sm text-gray-300">Wins: {debaterStats.wins}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <span className="text-sm text-gray-300">Losses: {debaterStats.losses}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {(debaterStats.playerOfMatchCount > 0 || debaterStats.bestDebaterTournamentCount > 0) && (
-              <div className="card">
-                <h3 className="font-bold text-white mb-3">Achievements</h3>
-                <div className="flex flex-wrap gap-2">
-                  {Array.from({ length: debaterStats.playerOfMatchCount }).map((_, i) => (
-                    <div key={`potm-${i}`} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
-                      <Star className="w-4 h-4 text-yellow-400" />
-                      <span className="text-sm text-yellow-400">Player of the Match</span>
-                    </div>
-                  ))}
-                  {Array.from({ length: debaterStats.bestDebaterTournamentCount }).map((_, i) => (
-                    <div key={`bd-${i}`} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                      <Award className="w-4 h-4 text-orange-400" />
-                      <span className="text-sm text-orange-400">Best Debater of Tournament</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </>
-        )}
 
         {/* Judge Stats */}
         {user.role === 'JUDGE' && (

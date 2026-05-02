@@ -84,7 +84,7 @@ export default function Navbar() {
                   </button>
 
                   {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-56 glass-dark rounded-2xl shadow-2xl border border-white/10 py-2 animate-fade-in">
+                    <div className="absolute right-0 mt-2 w-56 z-[100] bg-gray-900 glass-dark rounded-2xl shadow-2xl border border-white/10 py-2 animate-fade-in">
                       <div className="px-4 py-3 border-b border-white/10">
                         <p className="text-sm font-semibold text-white truncate">{user.fullName}</p>
                         <p className="text-xs text-gray-400">@{user.username}</p>

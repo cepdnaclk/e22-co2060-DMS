@@ -16,8 +16,18 @@ public class Tournament {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false)
     private String name;
+
+    private String description;
+
+    private String format;
+
+    @Column(name = "start_date")
+    private java.time.LocalDateTime startDate;
+
+    @Column(name = "end_date")
+    private java.time.LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
     private DebateType debateType;
@@ -28,7 +38,7 @@ public class Tournament {
     private TournamentType tournamentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organizer_id", nullable = false)
+    @JoinColumn(name = "organizer_id")
     private User organizer;
 
     @Enumerated(EnumType.STRING)

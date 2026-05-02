@@ -172,7 +172,7 @@ export default function CreateTournamentWizard() {
           ))}
         </div>
 
-        <div className="card space-y-5">
+        <div className="card overflow-visible space-y-5">
           {/* Step 1 */}
           {step === 1 && (
             <>
@@ -249,9 +249,9 @@ export default function CreateTournamentWizard() {
                   <Plus className="w-3.5 h-3.5" /> Add School
                 </button>
               </div>
-              <div className="space-y-4 max-h-96 overflow-y-auto scrollbar-hide pr-1">
+              <div className="space-y-4 overflow-visible pr-1">
                 {schools.map((school, si) => (
-                  <div key={si} className="glass rounded-xl p-4 space-y-3">
+                  <div key={si} className={`rounded-xl p-4 space-y-3 border border-white/10 transition-all ${activeSchoolIndex === si ? 'relative z-50 bg-gray-800' : 'relative z-0 bg-gray-800/80'}`}>
                     <div className="flex items-center gap-2">
                       <input value={school.name}
                         onChange={e => setSchools(p => p.map((s, i) => i === si ? { ...s, name: e.target.value } : s))}
@@ -284,7 +284,7 @@ export default function CreateTournamentWizard() {
                         </button>
                       </div>
                       {activeSchoolIndex === si && debaterResults.length > 0 && (
-                        <div className="absolute top-full left-0 right-0 mt-1 glass-dark rounded-xl border border-white/10 shadow-xl z-10 max-h-48 overflow-y-auto">
+                        <div className="absolute top-full left-0 right-0 mt-1 bg-gray-900 rounded-md border border-gray-700 shadow-[0_4px_20px_rgba(0,0,0,0.5)] z-[100] max-h-60 overflow-y-auto">
                           {debaterResults.map(d => (
                             <button key={d.id} onClick={() => addDebaterToSchool(si, d)}
                               className="w-full flex items-center gap-3 p-3 hover:bg-white/10 transition-colors text-left">
@@ -327,7 +327,7 @@ export default function CreateTournamentWizard() {
                   onChange={e => { setJudgeSearch(e.target.value); searchJudges(e.target.value); }}
                   placeholder="Search judges..." className="input-field" />
                 {judgeResults.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-1 glass-dark rounded-xl border border-white/10 shadow-xl z-10 max-h-48 overflow-y-auto">
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-gray-900 rounded-md border border-gray-700 shadow-xl z-[100] max-h-48 overflow-y-auto">
                     {judgeResults.map(j => (
                       <button key={j.id} onClick={() => addJudge(j)}
                         className="w-full flex items-center gap-3 p-3 hover:bg-white/10 transition-colors text-left">

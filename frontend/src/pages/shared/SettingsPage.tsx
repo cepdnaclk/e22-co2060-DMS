@@ -67,15 +67,15 @@ export default function SettingsPage() {
     if (!user) return;
     setSaving(true);
     try {
-      // Convert the selected file to a Base64 data-URI, or fall back to the existing URL
       let profilePictureUrl: string | undefined = form.profilePictureUrl || undefined;
+
+      // Upload image first via multipart — avoids Base64 size limits
       if (avatarFile) {
-        profilePictureUrl = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = () => reject(new Error('Failed to read image file'));
-          reader.readAsDataURL(avatarFile);
-        });
+        const { data: updatedUser } = await usersAPI.uploadProfilePicture(user.id, avatarFile);
+        // Add cache-busting timestamp so the browser re-fetches after update
+        profilePictureUrl = updatedUser.profilePictureUrl
+          ? `${updatedUser.profilePictureUrl}?t=${Date.now()}`
+          : undefined;
       }
 
       const { data } = await usersAPI.update(user.id, {
@@ -90,12 +90,14 @@ export default function SettingsPage() {
         privacyStatus: privacy,
       } as any);
 
-      // Update context with full server response, then patch the picture URL explicitly
-      // so the Navbar/Dashboard refresh immediately even if the API omits the large Base64
+      // Push full update then patch picture URL so Navbar refreshes immediately
       updateUser(data);
-      if (profilePictureUrl) updateUser({ profilePictureUrl } as any);
+      if (profilePictureUrl) {
+        updateUser({ profilePictureUrl } as any);
+        setAvatarPreview(profilePictureUrl);
+      }
 
-      setAvatarFile(null); // clear pending file after successful save
+      setAvatarFile(null);
       showToast('Profile updated successfully!', 'success');
     } catch (err: any) {
       showToast(err.response?.data?.error || 'Failed to update profile', 'error');

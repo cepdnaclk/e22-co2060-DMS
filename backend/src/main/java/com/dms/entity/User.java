@@ -40,6 +40,13 @@ public class User {
 
     private String profilePictureUrl;
 
+    @Lob
+    @Column(name = "profile_picture", columnDefinition = "BYTEA")
+    private byte[] profilePicture;
+
+    @Column(name = "profile_picture_content_type")
+    private String profilePictureContentType;
+
     @Column(length = 1000)
     private String socialLinksJson;
 

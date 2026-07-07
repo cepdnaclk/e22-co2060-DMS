@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, UserPlus, Swords, Camera } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { authAPI } from '../../api';
+import { authAPI, usersAPI } from '../../api';
 import { useToast } from '../../components/common/Toast';
 import type { Role } from '../../types';
 
@@ -56,17 +56,6 @@ export default function SignupPage() {
     }
     setLoading(true);
     try {
-      // Convert selected avatar to Base64, or omit if none selected
-      let profilePictureUrl: string | undefined;
-      if (avatarFile) {
-        profilePictureUrl = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = () => reject(new Error('Failed to read image'));
-          reader.readAsDataURL(avatarFile);
-        });
-      }
-
       const payload = {
         fullName: form.fullName,
         username: form.username,
@@ -76,12 +65,24 @@ export default function SignupPage() {
         email: form.email,
         password: form.password,
         role: form.role,
-        profilePictureUrl,
         expertise: form.expertise || undefined,
         yearsOfExperience: form.yearsOfExperience ? parseInt(form.yearsOfExperience) : undefined,
       };
       const { data } = await authAPI.signup(payload);
-      login(data.token, data.user);
+
+      // Upload avatar after account is created using the real multipart endpoint
+      if (avatarFile && data.user?.id) {
+        try {
+          const { data: updatedUser } = await usersAPI.uploadProfilePicture(data.user.id, avatarFile);
+          login(data.token, updatedUser);
+        } catch {
+          // Avatar upload failed — still log in, profile picture can be set later
+          login(data.token, data.user);
+        }
+      } else {
+        login(data.token, data.user);
+      }
+
       showToast('Account created successfully!', 'success');
       switch (data.user.role) {
         case 'DEBATER': navigate('/dashboard/debater'); break;

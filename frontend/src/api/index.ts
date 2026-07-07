@@ -16,6 +16,13 @@ export const authAPI = {
 export const usersAPI = {
   getById: (id: number) => api.get<User>(`/users/${id}`),
   update: (id: number, data: Partial<User>) => api.put<User>(`/users/${id}`, data),
+  uploadProfilePicture: (id: number, file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post<User>(`/users/${id}/profile-picture`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
   searchDebaters: (query: string) => api.get<User[]>(`/users/debaters/search?query=${encodeURIComponent(query)}`),
   searchJudges: (query: string) => api.get<User[]>(`/users/judges/search?query=${encodeURIComponent(query)}`),
   getTopDebaters: () => api.get<DebaterStats[]>('/users/top-debaters'),

@@ -40,7 +40,6 @@ public class User {
 
     private String profilePictureUrl;
 
-    @Lob
     @Column(name = "profile_picture", columnDefinition = "BYTEA")
     private byte[] profilePicture;
 

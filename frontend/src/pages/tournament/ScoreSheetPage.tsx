@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Send, CheckCircle, Loader2, Trophy } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Send, CheckCircle, Loader2, Trophy, ShieldOff } from 'lucide-react';
 import { matchesAPI, scoreSheetsAPI } from '../../api';
 import type { Match, ScoreCriteria } from '../../types';
 import { useAuth } from '../../context/AuthContext';
@@ -18,6 +18,7 @@ export default function ScoreSheetPage() {
   const { matchId, judgeId } = useParams<{ matchId: string; judgeId: string }>();
   const { user } = useAuth();
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const [match, setMatch] = useState<Match | null>(null);
   const [criteria, setCriteria] = useState<ScoreCriteria[]>([
@@ -34,9 +35,37 @@ export default function ScoreSheetPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
+  // Access control state
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [accessDeniedReason, setAccessDeniedReason] = useState('');
 
   useEffect(() => {
     if (!matchId || !judgeId) return;
+
+    // ── Layer 1: Basic role and identity check before any network call ──
+    if (!user) {
+      setAccessDenied(true);
+      setAccessDeniedReason('You must be logged in to access the scoring page.');
+      setLoading(false);
+      return;
+    }
+    if (user.role !== 'JUDGE') {
+      setAccessDenied(true);
+      setAccessDeniedReason(
+        `Only judges can access the scoring page. You are logged in as a ${user.role.toLowerCase()}.`
+      );
+      setLoading(false);
+      return;
+    }
+    if (user.id !== parseInt(judgeId)) {
+      setAccessDenied(true);
+      setAccessDeniedReason(
+        'You can only submit scores using your own judge account. This score sheet belongs to a different judge.'
+      );
+      setLoading(false);
+      return;
+    }
+
     const fetch = async () => {
       try {
         const [matchRes] = await Promise.allSettled([
@@ -44,6 +73,19 @@ export default function ScoreSheetPage() {
         ]);
         if (matchRes.status === 'fulfilled') {
           const m = matchRes.value.data;
+
+          // ── Layer 1: Match-assignment check (verify judge is assigned to THIS match) ──
+          const isAssignedToMatch = m.judges?.some(mj => mj.judge.id === user.id) ?? false;
+          if (!isAssignedToMatch) {
+            setMatch(m);
+            setAccessDenied(true);
+            setAccessDeniedReason(
+              `You are not assigned as a judge for match ${m.matchCode}. Only judges assigned by the organizer can score this match.`
+            );
+            setLoading(false);
+            return;
+          }
+
           setMatch(m);
 
           // Load score template criteria
@@ -103,6 +145,13 @@ export default function ScoreSheetPage() {
 
   const handleSubmit = async () => {
     if (!matchId || !judgeId) return;
+
+    // Final client-side sanity check before sending
+    if (!user || user.role !== 'JUDGE' || user.id !== parseInt(judgeId)) {
+      showToast('Access denied: you are not the assigned judge.', 'error');
+      return;
+    }
+
     setSubmitting(true);
     try {
       await scoreSheetsAPI.submit({
@@ -125,6 +174,28 @@ export default function ScoreSheetPage() {
   };
 
   if (loading) return <div className="min-h-screen flex items-center justify-center"><LoadingSpinner /></div>;
+
+  // ── Access Denied screen ──
+  if (accessDenied) {
+    return (
+      <div className="min-h-screen py-16 px-4">
+        <div className="max-w-lg mx-auto">
+          <div className="card text-center py-16 border-red-500/30 bg-red-500/5">
+            <ShieldOff className="w-16 h-16 text-red-400 mx-auto mb-5" />
+            <h2 className="text-2xl font-black text-white mb-3">Access Denied</h2>
+            <p className="text-gray-400 leading-relaxed mb-6">{accessDeniedReason}</p>
+            <button
+              onClick={() => navigate(-1)}
+              className="btn-secondary px-6 py-2"
+            >
+              Go Back
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!match) return <div className="min-h-screen flex items-center justify-center"><p className="text-gray-400">Match not found</p></div>;
 
   const allSpeakers = [

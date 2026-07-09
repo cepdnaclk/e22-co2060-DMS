@@ -51,11 +51,25 @@ public class ScoreSheetService {
     }
 
     @Transactional
-    public ScoreSheetSubmission submitScoreSheet(ScoreSheetSubmissionRequest req) {
+    public ScoreSheetSubmission submitScoreSheet(ScoreSheetSubmissionRequest req, String callerUsername) {
+        // ── Backend enforcement: verify the JWT-authenticated caller IS the judge ──
+        User caller = userRepository.findByUsername(callerUsername)
+            .orElseThrow(() -> new RuntimeException("Unauthorized: caller not found"));
+
+        if (!caller.getId().equals(req.getJudgeId())) {
+            throw new RuntimeException("Access denied: you can only submit scores as yourself");
+        }
+
         Match match = matchRepository.findById(req.getMatchId())
             .orElseThrow(() -> new RuntimeException("Match not found"));
-        User judge = userRepository.findById(req.getJudgeId())
-            .orElseThrow(() -> new RuntimeException("Judge not found"));
+
+        // Verify this judge is actually assigned to the match by the organizer
+        boolean isAssigned = matchJudgeRepository.findByMatchAndJudge(match, caller).isPresent();
+        if (!isAssigned) {
+            throw new RuntimeException("Access denied: you are not assigned as a judge for this match");
+        }
+
+        User judge = caller; // identity confirmed — no need to re-fetch by req.getJudgeId()
 
         if (submissionRepository.existsByMatchAndJudge(match, judge)) {
             throw new RuntimeException("This judge has already submitted scores");

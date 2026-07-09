@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { usersAPI } from '../../api';
 import { useToast } from '../../components/common/Toast';
 import Avatar from '../../components/common/Avatar';
-import { toAbsoluteAvatarUrl } from '../../utils/avatarUrl';
+import { toAbsoluteAvatarUrl, compressImageFile } from '../../utils/avatarUrl';
 
 const LANGUAGES = [
   { code: 'en', label: 'English' },
@@ -72,9 +72,10 @@ export default function SettingsPage() {
     try {
       let profilePictureUrl: string | undefined = form.profilePictureUrl || undefined;
 
-      // Upload image first via multipart — avoids Base64 size limits
+      // Compress before upload: resize to 1280 px max, JPEG 82% — keeps files tiny
       if (avatarFile) {
-        const { data: updatedUser } = await usersAPI.uploadProfilePicture(user.id, avatarFile);
+        const compressed = await compressImageFile(avatarFile);
+        const { data: updatedUser } = await usersAPI.uploadProfilePicture(user.id, compressed);
         if (updatedUser.profilePictureUrl) {
           // Build an absolute URL so <img src> resolves against the backend, not the frontend
           const backendBase = (import.meta.env.VITE_API_BASE_URL || '/api')

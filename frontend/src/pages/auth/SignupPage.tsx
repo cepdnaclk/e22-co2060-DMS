@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, UserPlus, Swords, Camera } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { authAPI, usersAPI } from '../../api';
+import { compressImageFile } from '../../utils/avatarUrl';
+
 import { useToast } from '../../components/common/Toast';
 import type { Role } from '../../types';
 
@@ -73,7 +75,9 @@ export default function SignupPage() {
       // Upload avatar after account is created using the real multipart endpoint
       if (avatarFile && data.user?.id) {
         try {
-          const { data: updatedUser } = await usersAPI.uploadProfilePicture(data.user.id, avatarFile);
+          // Compress first so large wallpapers/photos don't exceed backend limits
+          const compressed = await compressImageFile(avatarFile);
+          const { data: updatedUser } = await usersAPI.uploadProfilePicture(data.user.id, compressed);
           login(data.token, updatedUser);
         } catch {
           // Avatar upload failed — still log in, profile picture can be set later
@@ -82,6 +86,7 @@ export default function SignupPage() {
       } else {
         login(data.token, data.user);
       }
+
 
       showToast('Account created successfully!', 'success');
       switch (data.user.role) {

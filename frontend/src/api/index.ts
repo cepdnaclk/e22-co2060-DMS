@@ -19,9 +19,9 @@ export const usersAPI = {
   uploadProfilePicture: (id: number, file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-    return api.post<User>(`/users/${id}/profile-picture`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    // Do NOT set Content-Type manually — Axios sets multipart/form-data with the
+    // correct boundary automatically when the body is a FormData object.
+    return api.post<User>(`/users/${id}/profile-picture`, formData);
   },
   searchDebaters: (query: string) => api.get<User[]>(`/users/debaters/search?query=${encodeURIComponent(query)}`),
   searchJudges: (query: string) => api.get<User[]>(`/users/judges/search?query=${encodeURIComponent(query)}`),

@@ -160,3 +160,12 @@ export interface ScoreCriteria {
   name: string;
   maxMarks: number;
 }
+
+export interface MessageDTO {
+  id: number;
+  senderId: number;
+  receiverId: number;
+  text: string;
+  createdAt: string;
+}
+

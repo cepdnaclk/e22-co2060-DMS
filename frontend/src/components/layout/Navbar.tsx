@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Trophy, Search, Bell, Calendar, Settings, LogOut,
-  User, LayoutDashboard, ChevronDown, Menu, X, Swords
+  User, LayoutDashboard, ChevronDown, Menu, X, Swords, MessageCircleMore
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import LogoutModal from '../common/LogoutModal';
@@ -102,6 +102,10 @@ export default function Navbar() {
                       <Link to="/notifications" onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
                         <Bell className="w-4 h-4" /> Notifications
+                      </Link>
+                      <Link to="/messages" onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                        <MessageCircleMore className="w-4 h-4" /> Messages
                       </Link>
                       <Link to="/settings" onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">

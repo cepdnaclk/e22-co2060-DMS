@@ -32,7 +32,8 @@ export default function LoginPage() {
         default: navigate('/');
       }
     } catch (err: any) {
-      showToast(err.response?.data?.error || 'Invalid credentials', 'error');
+      const message = err?.response?.data?.error || err?.message || 'Invalid credentials';
+      showToast(message, 'error');
     } finally {
       setLoading(false);
     }

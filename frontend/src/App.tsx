@@ -16,20 +16,21 @@ import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 
 // Dashboard pages
-import DebaterDashboard from './pages/dashboard/DebaterDashboard';
-import JudgeDashboard from './pages/dashboard/JudgeDashboard';
-import OrganizerDashboard from './pages/dashboard/OrganizerDashboard';
+import DebaterDashboard from './pages/Dashboard/DebaterDashboard';
+import JudgeDashboard from './pages/Dashboard/JudgeDashboard';
+import OrganizerDashboard from './pages/Dashboard/OrganizerDashboard';
 
 // Tournament pages
-import CreateTournamentWizard from './pages/tournament/CreateTournamentWizard';
-import TournamentPage from './pages/tournament/TournamentPage';
-import ScoreSheetPage from './pages/tournament/ScoreSheetPage';
+import CreateTournamentWizard from './pages/Tournament/CreateTournamentWizard';
+import TournamentPage from './pages/Tournament/TournamentPage';
+import ScoreSheetPage from './pages/Tournament/ScoreSheetPage';
 
 // Shared pages
 import NotificationsPage from './pages/shared/NotificationsPage';
 import CalendarPage from './pages/shared/CalendarPage';
 import SettingsPage from './pages/shared/SettingsPage';
 import ProfilePage from './pages/shared/ProfilePage';
+import MessagesPage from './pages/shared/MessagesPage';
 
 function ProtectedRoute({ children, allowedRoles }: {
   children: React.ReactNode;
@@ -102,6 +103,7 @@ export default function App() {
         </ProtectedRoute>
       }>
         <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/messages" element={<MessagesPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/score-sheet/:matchId/:judgeId" element={<ScoreSheetPage />} />

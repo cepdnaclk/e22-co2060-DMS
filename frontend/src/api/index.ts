@@ -2,7 +2,8 @@ import api from './axios';
 import type {
   User, Tournament, Match, Notification, DiscussionComment,
   DebaterStats, NewsPost, CalendarEvent, SearchResult,
-  SchoolLeaderboardEntry, ScoreSheetTemplate, MessageDTO
+  SchoolLeaderboardEntry, ScoreSheetTemplate, MessageDTO,
+  DiaryPost, DiaryComment
 } from '../types';
 
 // Auth
@@ -124,5 +125,16 @@ export const connectionsAPI = {
   getConnectionCount: (userId: number) => api.get<{ count: number }>(`/connections/count/${userId}`),
   getBlockedUsers: () => api.get<import('../types').Block[]>('/connections/blocked'),
   getConnectionStatus: (userId: number) => api.get<{ status: string }>(`/connections/status/${userId}`),
+};
+
+// Diaries
+export const diariesAPI = {
+  getByUserId: (userId: number) => api.get<DiaryPost[]>(`/diaries/user/${userId}`),
+  create: (data: Partial<DiaryPost>) => api.post<DiaryPost>('/diaries', data),
+  like: (id: number) => api.post<DiaryPost>(`/diaries/${id}/like`),
+  comment: (id: number, text: string) => api.post<DiaryComment>(`/diaries/${id}/comment`, { comment: text }),
+  share: (id: number) => api.post<DiaryPost>(`/diaries/${id}/share`),
+  verify: (id: number, verified: boolean) => api.put<DiaryPost>(`/diaries/${id}/verify?verified=${verified}`),
+  delete: (id: number) => api.delete(`/diaries/${id}`),
 };
 

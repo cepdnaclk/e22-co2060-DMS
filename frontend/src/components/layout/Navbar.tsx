@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Trophy, Search, Bell, Calendar, Settings, LogOut,
-  User, LayoutDashboard, ChevronDown, Menu, X, Swords, MessageCircleMore
+  User, LayoutDashboard, ChevronDown, Menu, X, Swords, MessageCircleMore,
+  Award
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { toAbsoluteAvatarUrl } from '../../utils/avatarUrl';
@@ -92,6 +93,11 @@ export default function Navbar() {
                           {user.role}
                         </span>
                       </div>
+
+                      <Link to={`/profile/${user.id}#diaries`} onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                        <Award className="w-4 h-4 text-indigo-400" /> My Diaries
+                      </Link>
                       <Link to={getDashboardPath()} onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
                         <LayoutDashboard className="w-4 h-4" /> Dashboard
@@ -151,6 +157,16 @@ export default function Navbar() {
             <Link to="/scoring" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">Scoring</Link>
             <Link to="/about" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">About Us</Link>
             <Link to="/news" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">News</Link>
+            {isAuthenticated && user && (
+              <>
+                <Link to={`/profile/${user.id}#diaries`} onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 py-2 font-semibold">
+                  <Award className="w-4 h-4" /> My Diaries
+                </Link>
+                <Link to="/messages" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-blue-400 hover:text-blue-300 py-2 font-semibold">
+                  <MessageCircleMore className="w-4 h-4" /> Messages
+                </Link>
+              </>
+            )}
             {!isAuthenticated && (
               <Link to="/role-select" onClick={() => setMobileOpen(false)}
                 className="btn-primary text-sm inline-flex items-center gap-2 mt-2">

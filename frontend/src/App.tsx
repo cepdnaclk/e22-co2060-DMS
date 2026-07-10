@@ -8,6 +8,7 @@ import ScoringPage from './pages/public/ScoringPage';
 import NewsPage from './pages/public/NewsPage';
 import AboutUsPage from './pages/public/AboutUsPage';
 import SearchResultsPage from './pages/public/SearchResultsPage';
+import ForumPage from './pages/public/ForumPage';
 
 // Auth pages
 import RoleSelectionPage from './pages/auth/RoleSelectionPage';
@@ -51,6 +52,7 @@ export default function App() {
         <Route path="/scoring" element={<ScoringPage />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/about" element={<AboutUsPage />} />
+        <Route path="/forum" element={<ForumPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
         <Route path="/tournament/:id" element={<TournamentPage />} />

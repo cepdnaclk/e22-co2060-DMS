@@ -122,6 +122,9 @@ export default function HomePage() {
             <Link to="/role-select" className="btn-primary text-base px-8 py-3 flex items-center gap-2">
               Get Started <ArrowRight className="w-4 h-4" />
             </Link>
+            <Link to="/forum" className="btn-secondary text-base px-8 py-3 flex items-center gap-2">
+              Open Forum <Users className="w-4 h-4" />
+            </Link>
             <Link to="/scoring" className="btn-secondary text-base px-8 py-3">
               How Scoring Works
             </Link>

@@ -57,6 +57,7 @@ export default function Navbar() {
             {/* Nav Links */}
             <div className="hidden lg:flex items-center gap-6">
               <Link to="/" className="nav-link text-sm">Home</Link>
+              <Link to="/forum" className="nav-link text-sm">Forum</Link>
               <Link to="/scoring" className="nav-link text-sm">Scoring</Link>
               <Link to="/about" className="nav-link text-sm">About Us</Link>
               <Link to="/news" className="nav-link text-sm">News</Link>
@@ -141,6 +142,7 @@ export default function Navbar() {
               <SearchBar />
             </div>
             <Link to="/" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">Home</Link>
+            <Link to="/forum" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">Forum</Link>
             <Link to="/scoring" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">Scoring</Link>
             <Link to="/about" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">About Us</Link>
             <Link to="/news" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">News</Link>

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Star, Award, Trophy, ArrowRight } from 'lucide-react';
 import type { User, DebaterStats, Notification, Match } from '../../types';
 import SharedProfileLayout from './SharedProfileLayout';
@@ -45,10 +46,11 @@ export interface SharedDebaterLayoutProps {
   isReadOnly: boolean;
   loading: boolean;
   onNotificationsChange?: (updater: (prev: Notification[]) => Notification[]) => void;
+  headerActions?: ReactNode;
 }
 
 export default function SharedDebaterLayout({
-  user, stats, matches, notifications, isReadOnly, loading, onNotificationsChange,
+  user, stats, matches, notifications, isReadOnly, loading, onNotificationsChange, headerActions,
 }: SharedDebaterLayoutProps) {
   const wins = stats?.wins ?? 0;
   const losses = stats?.losses ?? 0;
@@ -86,7 +88,7 @@ export default function SharedDebaterLayout({
   ) : undefined;
 
   return (
-    <SharedProfileLayout user={user} notifications={notifications} isReadOnly={isReadOnly} loading={loading} onNotificationsChange={onNotificationsChange} sidebarExtra={sidebarExtra}>
+    <SharedProfileLayout user={user} notifications={notifications} isReadOnly={isReadOnly} loading={loading} onNotificationsChange={onNotificationsChange} sidebarExtra={sidebarExtra} headerActions={headerActions}>
       {/* Top Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="card lg:col-span-2">

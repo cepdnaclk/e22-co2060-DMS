@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Settings, Globe, Lock, Bell, User, Eye, EyeOff, Save, Loader2, Camera } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { usersAPI } from '../../api';
@@ -15,6 +15,56 @@ const LANGUAGES = [
 ];
 
 type Tab = 'profile' | 'privacy' | 'notifications' | 'password';
+
+function BlockedUsersList() {
+  const [blocked, setBlocked] = useState<import('../../types').Block[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlocked = async () => {
+      try {
+        const { data } = await import('../../api').then(m => m.connectionsAPI.getBlockedUsers());
+        setBlocked(data);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlocked();
+  }, []);
+
+  const handleUnblock = async (id: number) => {
+    try {
+      await import('../../api').then(m => m.connectionsAPI.unblockUser(id));
+      setBlocked(prev => prev.filter(b => b.blocked.id !== id));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  if (loading) return <Loader2 className="w-5 h-5 animate-spin mx-auto my-4 text-gray-500" />;
+  if (blocked.length === 0) return <p className="text-gray-500 text-sm text-center py-4">No blocked users.</p>;
+
+  return (
+    <div className="space-y-3">
+      {blocked.map(b => (
+        <div key={b.id} className="flex items-center justify-between p-3 bg-white/[0.02] rounded-xl border border-white/5">
+          <div className="flex items-center gap-3">
+            <Avatar name={b.blocked.fullName} src={b.blocked.profilePictureUrl} size="md" />
+            <div>
+              <p className="text-sm font-semibold text-gray-200">{b.blocked.fullName}</p>
+              <p className="text-xs text-gray-500">@{b.blocked.username}</p>
+            </div>
+          </div>
+          <button onClick={() => handleUnblock(b.blocked.id)} className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg text-xs font-semibold transition-colors">
+            Unblock
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function SettingsPage() {
   const { user, updateUser } = useAuth();
@@ -301,34 +351,43 @@ export default function SettingsPage() {
 
         {/* Privacy Tab */}
         {activeTab === 'privacy' && (
-          <div className="card space-y-5">
-            <h3 className="font-bold text-white">Privacy Settings</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {(['PUBLIC', 'PRIVATE'] as const).map(p => (
-                <button key={p} onClick={() => setPrivacy(p)}
-                  className={`p-4 rounded-xl border text-left transition-all ${privacy === p ? 'bg-blue-600/20 border-blue-500 text-white' : 'glass border-white/10 text-gray-400 hover:border-white/20'
-                    }`}>
-                  {p === 'PUBLIC' ? (
-                    <>
-                      <Eye className="w-5 h-5 mb-2 text-blue-400" />
-                      <p className="font-semibold">Public Profile</p>
-                      <p className="text-xs text-gray-400 mt-1">Anyone can see your profile and stats</p>
-                    </>
-                  ) : (
-                    <>
-                      <EyeOff className="w-5 h-5 mb-2 text-gray-400" />
-                      <p className="font-semibold">Private Profile</p>
-                      <p className="text-xs text-gray-400 mt-1">Only tournament participants can see your profile</p>
-                    </>
-                  )}
-                </button>
-              ))}
+          <div className="space-y-6">
+            <div className="card space-y-5">
+              <h3 className="font-bold text-white">Privacy Settings</h3>
+              <div className="grid grid-cols-2 gap-4">
+                {(['PUBLIC', 'PRIVATE'] as const).map(p => (
+                  <button key={p} onClick={() => setPrivacy(p)}
+                    className={`p-4 rounded-xl border text-left transition-all ${privacy === p ? 'bg-blue-600/20 border-blue-500 text-white' : 'glass border-white/10 text-gray-400 hover:border-white/20'
+                      }`}>
+                    {p === 'PUBLIC' ? (
+                      <>
+                        <Eye className="w-5 h-5 mb-2 text-blue-400" />
+                        <p className="font-semibold">Public Profile</p>
+                        <p className="text-xs text-gray-400 mt-1">Anyone can see your profile and stats</p>
+                      </>
+                    ) : (
+                      <>
+                        <EyeOff className="w-5 h-5 mb-2 text-gray-400" />
+                        <p className="font-semibold">Private Profile</p>
+                        <p className="text-xs text-gray-400 mt-1">Only tournament participants can see your profile</p>
+                      </>
+                    )}
+                  </button>
+                ))}
+              </div>
+              <button onClick={savePrivacy} disabled={saving}
+                className="btn-primary w-full flex items-center justify-center gap-2">
+                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                {saving ? 'Saving...' : 'Save Privacy Settings'}
+              </button>
             </div>
-            <button onClick={savePrivacy} disabled={saving}
-              className="btn-primary w-full flex items-center justify-center gap-2">
-              {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              {saving ? 'Saving...' : 'Save Privacy Settings'}
-            </button>
+            
+            {/* Blocked Users Section */}
+            <div className="card">
+              <h3 className="font-bold text-white mb-4">Blocked Users</h3>
+              <p className="text-sm text-gray-400 mb-4">Blocked users cannot view your profile or send you messages.</p>
+              <BlockedUsersList />
+            </div>
           </div>
         )}
 

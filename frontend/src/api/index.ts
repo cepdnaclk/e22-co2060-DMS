@@ -111,3 +111,17 @@ export const messagesAPI = {
   sendMessage: (data: { receiverId: number; text: string }) => api.post<MessageDTO>('/messages', data),
 };
 
+// Connections & Blocking
+export const connectionsAPI = {
+  sendRequest: (userId: number) => api.post(`/connections/request/${userId}`),
+  acceptRequest: (connectionId: number) => api.put(`/connections/accept/${connectionId}`),
+  rejectRequest: (connectionId: number) => api.delete(`/connections/reject/${connectionId}`),
+  disconnect: (userId: number) => api.delete(`/connections/disconnect/${userId}`),
+  blockUser: (userId: number) => api.post(`/connections/block/${userId}`),
+  unblockUser: (userId: number) => api.delete(`/connections/unblock/${userId}`),
+  getPendingRequests: () => api.get<import('../types').Connection[]>('/connections/pending'),
+  getConnections: () => api.get<User[]>('/connections'),
+  getBlockedUsers: () => api.get<import('../types').Block[]>('/connections/blocked'),
+  getConnectionStatus: (userId: number) => api.get<{ status: string }>(`/connections/status/${userId}`),
+};
+

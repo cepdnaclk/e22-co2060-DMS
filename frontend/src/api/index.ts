@@ -2,7 +2,7 @@ import api from './axios';
 import type {
   User, Tournament, Match, Notification, DiscussionComment,
   DebaterStats, NewsPost, CalendarEvent, SearchResult,
-  SchoolLeaderboardEntry, ScoreSheetTemplate
+  SchoolLeaderboardEntry, ScoreSheetTemplate, ForumTopic, ForumPoint
 } from '../types';
 
 // Auth
@@ -75,6 +75,13 @@ export const discussionAPI = {
   addComment: (data: object) => api.post<DiscussionComment>('/discussion', data),
   delete: (id: number) => api.delete(`/discussion/${id}`),
   reply: (id: number, data: object) => api.post<DiscussionComment>(`/discussion/${id}/reply`, data),
+};
+
+// Forum
+export const forumAPI = {
+  getTopics: () => api.get<ForumTopic[]>('/forum/topics'),
+  addPoint: (topicId: number, data: object) =>
+    api.post<ForumPoint>(`/forum/topics/${topicId}/points`, data),
 };
 
 // Notifications

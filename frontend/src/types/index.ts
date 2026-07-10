@@ -160,3 +160,28 @@ export interface ScoreCriteria {
   name: string;
   maxMarks: number;
 }
+
+export type ForumSide = 'PROPOSITION' | 'OPPOSITION';
+export type ForumRole = 'DEBATER' | 'ORGANIZER' | 'JUDGE';
+
+export interface ForumPoint {
+  id: number;
+  topicId: number;
+  side: ForumSide;
+  authorName: string;
+  role: ForumRole;
+  colorClass: string;
+  content: string;
+  taggedPointId?: number;
+  createdAt: string;
+}
+
+export interface ForumTopic {
+  id: number;
+  title: string;
+  language: string;
+  category: string;
+  summary: string;
+  createdAt: string;
+  points: ForumPoint[];
+}

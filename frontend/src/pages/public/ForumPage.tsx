@@ -1,39 +1,42 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowLeft, Check, MessageCircle, Plus, Reply, Search, Send, Shield, Sparkles,
   ThumbsDown, ThumbsUp, Users
 } from 'lucide-react';
+import { forumAPI } from '../../api';
+import type { ForumRole, ForumSide, ForumTopic } from '../../types';
 
-type Side = 'PROPOSITION' | 'OPPOSITION';
-type Role = 'Debater' | 'Organizer' | 'Judge';
-
-interface ForumTopic {
-  id: number;
-  title: string;
-  language: 'English' | 'தமிழ்';
-  category: string;
-  summary: string;
-}
-
-interface ForumPoint {
-  id: number;
-  topicId: number;
-  side: Side;
-  author: string;
-  role: Role;
-  color: string;
-  point: string;
-  taggedPointId?: number;
-  createdAt: string;
-}
-
-const topics: ForumTopic[] = [
+const fallbackTopics: ForumTopic[] = [
   {
     id: 1,
     title: 'This house would make voting compulsory',
     language: 'English',
     category: 'Civics',
     summary: 'Discuss whether democratic participation should be a legal duty.',
+    createdAt: '',
+    points: [
+      {
+        id: 101,
+        topicId: 1,
+        side: 'PROPOSITION',
+        authorName: 'Anjali',
+        role: 'DEBATER',
+        colorClass: 'border-blue-400 bg-blue-500/10',
+        content: 'Compulsory voting makes elected leaders answerable to a wider public, not only the most motivated groups.',
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: 102,
+        topicId: 1,
+        side: 'OPPOSITION',
+        authorName: 'Kavin',
+        role: 'JUDGE',
+        colorClass: 'border-rose-400 bg-rose-500/10',
+        content: 'A forced vote may increase turnout numbers but reduce the quality of democratic choice if people vote without interest.',
+        taggedPointId: 101,
+        createdAt: new Date().toISOString(),
+      },
+    ],
   },
   {
     id: 2,
@@ -41,6 +44,8 @@ const topics: ForumTopic[] = [
     language: 'English',
     category: 'Technology',
     summary: 'Balance innovation, public safety, accountability, and access.',
+    createdAt: '',
+    points: [],
   },
   {
     id: 3,
@@ -48,6 +53,30 @@ const topics: ForumTopic[] = [
     language: 'தமிழ்',
     category: 'கல்வி',
     summary: 'கற்றல் கவனம், பாதுகாப்பு, மற்றும் டிஜிட்டல் திறன் குறித்து விவாதிக்கவும்.',
+    createdAt: '',
+    points: [
+      {
+        id: 103,
+        topicId: 3,
+        side: 'PROPOSITION',
+        authorName: 'Meena',
+        role: 'ORGANIZER',
+        colorClass: 'border-emerald-400 bg-emerald-500/10',
+        content: 'கைப்பேசி தடை மாணவர்களின் கவனச்சிதறலை குறைத்து வகுப்பறை ஒழுங்கை மேம்படுத்தும்.',
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: 104,
+        topicId: 3,
+        side: 'OPPOSITION',
+        authorName: 'Suren',
+        role: 'DEBATER',
+        colorClass: 'border-violet-400 bg-violet-500/10',
+        content: 'முழு தடை விட, பொறுப்பான பயன்பாட்டை கற்பிப்பதே மாணவர்களுக்கு நீண்டகால பயன் தரும்.',
+        taggedPointId: 103,
+        createdAt: new Date().toISOString(),
+      },
+    ],
   },
   {
     id: 4,
@@ -55,6 +84,8 @@ const topics: ForumTopic[] = [
     language: 'தமிழ்',
     category: 'மொழி',
     summary: 'பாரம்பரியம், அணுகல், மற்றும் புதிய தலைமுறை வாசிப்பு பழக்கங்கள்.',
+    createdAt: '',
+    points: [],
   },
   {
     id: 5,
@@ -62,6 +93,8 @@ const topics: ForumTopic[] = [
     language: 'English',
     category: 'Education',
     summary: 'Compare practical ability, fairness, grading, and employability.',
+    createdAt: '',
+    points: [],
   },
   {
     id: 6,
@@ -69,71 +102,54 @@ const topics: ForumTopic[] = [
     language: 'தமிழ்',
     category: 'சுற்றுச்சூழல்',
     summary: 'அரசு கொள்கை, தொழில், மற்றும் மக்களின் தினசரி தேர்வுகள்.',
+    createdAt: '',
+    points: [],
   },
 ];
 
-const starterPoints: ForumPoint[] = [
-  {
-    id: 101,
-    topicId: 1,
-    side: 'PROPOSITION',
-    author: 'Anjali',
-    role: 'Debater',
-    color: 'border-blue-400 bg-blue-500/10',
-    point: 'Compulsory voting makes elected leaders answerable to a wider public, not only the most motivated groups.',
-    createdAt: '09:20',
-  },
-  {
-    id: 102,
-    topicId: 1,
-    side: 'OPPOSITION',
-    author: 'Kavin',
-    role: 'Judge',
-    color: 'border-rose-400 bg-rose-500/10',
-    point: 'A forced vote may increase turnout numbers but reduce the quality of democratic choice if people vote without interest.',
-    taggedPointId: 101,
-    createdAt: '09:27',
-  },
-  {
-    id: 103,
-    topicId: 3,
-    side: 'PROPOSITION',
-    author: 'Meena',
-    role: 'Organizer',
-    color: 'border-emerald-400 bg-emerald-500/10',
-    point: 'கைப்பேசி தடை மாணவர்களின் கவனச்சிதறலை குறைத்து வகுப்பறை ஒழுங்கை மேம்படுத்தும்.',
-    createdAt: '10:05',
-  },
-  {
-    id: 104,
-    topicId: 3,
-    side: 'OPPOSITION',
-    author: 'Suren',
-    role: 'Debater',
-    color: 'border-violet-400 bg-violet-500/10',
-    point: 'முழு தடை விட, பொறுப்பான பயன்பாட்டை கற்பிப்பதே மாணவர்களுக்கு நீண்டகால பயன் தரும்.',
-    taggedPointId: 103,
-    createdAt: '10:12',
-  },
-];
+const roleLabels: Record<ForumRole, string> = {
+  DEBATER: 'Debater',
+  ORGANIZER: 'Organizer',
+  JUDGE: 'Judge',
+};
 
-const colors = [
-  'border-blue-400 bg-blue-500/10',
-  'border-emerald-400 bg-emerald-500/10',
-  'border-amber-400 bg-amber-500/10',
-  'border-violet-400 bg-violet-500/10',
-  'border-rose-400 bg-rose-500/10',
-];
+function formatTime(value: string) {
+  return new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
 
 export default function ForumPage() {
+  const [topics, setTopics] = useState<ForumTopic[]>(fallbackTopics);
   const [query, setQuery] = useState('');
-  const [selectedTopic, setSelectedTopic] = useState<ForumTopic>(topics[0]);
-  const [points, setPoints] = useState<ForumPoint[]>(starterPoints);
-  const [side, setSide] = useState<Side>('PROPOSITION');
-  const [role, setRole] = useState<Role>('Debater');
+  const [selectedTopicId, setSelectedTopicId] = useState<number>(fallbackTopics[0].id);
+  const [side, setSide] = useState<ForumSide>('PROPOSITION');
+  const [role, setRole] = useState<ForumRole>('DEBATER');
   const [author, setAuthor] = useState('Guest Speaker');
   const [point, setPoint] = useState('');
   const [taggedPointId, setTaggedPointId] = useState<number | undefined>();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const loadTopics = async () => {
+      try {
+        const { data } = await forumAPI.getTopics();
+        if (data.length > 0) {
+          setTopics(data);
+          setSelectedTopicId(data[0].id);
+        }
+      } catch {
+        setError('Backend forum API is not running, so sample topics are shown temporarily.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadTopics();
+  }, []);
+
+  const selectedTopic = topics.find(topic => topic.id === selectedTopicId) || topics[0];
+  const topicPoints = selectedTopic?.points || [];
+  const taggedPoint = topicPoints.find(item => item.id === taggedPointId);
 
   const filteredTopics = useMemo(() => {
     const value = query.trim().toLowerCase();
@@ -141,31 +157,35 @@ export default function ForumPage() {
     return topics.filter(topic =>
       `${topic.title} ${topic.category} ${topic.summary} ${topic.language}`.toLowerCase().includes(value)
     );
-  }, [query]);
+  }, [query, topics]);
 
-  const topicPoints = points.filter(item => item.topicId === selectedTopic.id);
-  const taggedPoint = topicPoints.find(item => item.id === taggedPointId);
-
-  const addPoint = (event: React.FormEvent) => {
+  const addPoint = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!point.trim()) return;
+    if (!point.trim() || !selectedTopic) return;
 
-    setPoints(current => [
-      ...current,
-      {
-        id: Date.now(),
-        topicId: selectedTopic.id,
+    setSaving(true);
+    setError('');
+    try {
+      const { data } = await forumAPI.addPoint(selectedTopic.id, {
         side,
-        author: author.trim() || 'Guest Speaker',
+        authorName: author.trim() || 'Guest Speaker',
         role,
-        color: colors[current.length % colors.length],
-        point: point.trim(),
+        content: point.trim(),
         taggedPointId,
-        createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      },
-    ]);
-    setPoint('');
-    setTaggedPointId(undefined);
+      });
+
+      setTopics(current => current.map(topic =>
+        topic.id === selectedTopic.id
+          ? { ...topic, points: [...topic.points, data] }
+          : topic
+      ));
+      setPoint('');
+      setTaggedPointId(undefined);
+    } catch {
+      setError('Could not save this point. Please make sure the backend is running.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -199,6 +219,16 @@ export default function ForumPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
           <aside className="space-y-4">
+            {error && (
+              <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+                {error}
+              </div>
+            )}
+            {loading && (
+              <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-300">
+                Loading forum topics...
+              </div>
+            )}
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
@@ -214,7 +244,7 @@ export default function ForumPage() {
                 <button
                   key={topic.id}
                   onClick={() => {
-                    setSelectedTopic(topic);
+                    setSelectedTopicId(topic.id);
                     setTaggedPointId(undefined);
                   }}
                   className={`w-full text-left rounded-2xl border p-4 transition-all ${
@@ -263,13 +293,13 @@ export default function ForumPage() {
                   className="input-field xl:max-w-52"
                   placeholder="Your name"
                 />
-                <select value={role} onChange={event => setRole(event.target.value as Role)} className="input-field xl:max-w-44">
-                  <option className="bg-gray-900">Debater</option>
-                  <option className="bg-gray-900">Organizer</option>
-                  <option className="bg-gray-900">Judge</option>
+                <select value={role} onChange={event => setRole(event.target.value as ForumRole)} className="input-field xl:max-w-44">
+                  <option value="DEBATER" className="bg-gray-900">Debater</option>
+                  <option value="ORGANIZER" className="bg-gray-900">Organizer</option>
+                  <option value="JUDGE" className="bg-gray-900">Judge</option>
                 </select>
                 <div className="grid grid-cols-2 gap-2 xl:w-80">
-                  {(['PROPOSITION', 'OPPOSITION'] as Side[]).map(item => (
+                  {(['PROPOSITION', 'OPPOSITION'] as ForumSide[]).map(item => (
                     <button
                       type="button"
                       key={item}
@@ -291,8 +321,8 @@ export default function ForumPage() {
               {taggedPoint && (
                 <div className="rounded-xl bg-white/5 border border-white/10 p-3 flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-xs text-gray-400 mb-1">Replying to {taggedPoint.author}</p>
-                    <p className="text-sm text-gray-200 line-clamp-2">{taggedPoint.point}</p>
+                    <p className="text-xs text-gray-400 mb-1">Replying to {taggedPoint.authorName}</p>
+                    <p className="text-sm text-gray-200 line-clamp-2">{taggedPoint.content}</p>
                   </div>
                   <button type="button" onClick={() => setTaggedPointId(undefined)} className="text-gray-500 hover:text-white">
                     <Check className="w-4 h-4" />
@@ -310,14 +340,14 @@ export default function ForumPage() {
                 <p className="text-xs text-gray-500 flex items-center gap-2">
                   <Sparkles className="w-4 h-4" /> Useful feature: tag a point before writing a rebuttal to keep arguments traceable.
                 </p>
-                <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2">
-                  <Send className="w-4 h-4" /> Post Point
+                <button type="submit" disabled={saving} className="btn-primary inline-flex items-center justify-center gap-2 disabled:opacity-60">
+                  <Send className="w-4 h-4" /> {saving ? 'Saving...' : 'Post Point'}
                 </button>
               </div>
             </form>
 
             <section className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-              {(['PROPOSITION', 'OPPOSITION'] as Side[]).map(columnSide => (
+              {(['PROPOSITION', 'OPPOSITION'] as ForumSide[]).map(columnSide => (
                 <div key={columnSide} className="card">
                   <div className="flex items-center gap-2 mb-4">
                     {columnSide === 'PROPOSITION' ? (
@@ -334,13 +364,13 @@ export default function ForumPage() {
                     {topicPoints.filter(item => item.side === columnSide).map(item => {
                       const parent = topicPoints.find(parentPoint => parentPoint.id === item.taggedPointId);
                       return (
-                        <article key={item.id} className={`rounded-2xl border-l-4 p-4 ${item.color}`}>
+                        <article key={item.id} className={`rounded-2xl border-l-4 p-4 ${item.colorClass}`}>
                           <div className="flex items-start justify-between gap-3 mb-3">
                             <div>
-                              <p className="font-semibold text-white">{item.author}</p>
+                              <p className="font-semibold text-white">{item.authorName}</p>
                               <p className="text-xs text-gray-400 flex items-center gap-1">
-                                {item.role === 'Judge' ? <Shield className="w-3 h-3" /> : <Users className="w-3 h-3" />}
-                                {item.role} · {item.createdAt}
+                                {item.role === 'JUDGE' ? <Shield className="w-3 h-3" /> : <Users className="w-3 h-3" />}
+                                {roleLabels[item.role]} · {formatTime(item.createdAt)}
                               </p>
                             </div>
                             <button
@@ -352,11 +382,11 @@ export default function ForumPage() {
                           </div>
                           {parent && (
                             <div className="mb-3 rounded-xl bg-black/20 border border-white/10 p-3">
-                              <p className="text-[11px] text-gray-500 mb-1">Rebuttal to {parent.author}</p>
-                              <p className="text-xs text-gray-300 line-clamp-2">{parent.point}</p>
+                              <p className="text-[11px] text-gray-500 mb-1">Rebuttal to {parent.authorName}</p>
+                              <p className="text-xs text-gray-300 line-clamp-2">{parent.content}</p>
                             </div>
                           )}
-                          <p className="text-sm text-gray-100 leading-relaxed">{item.point}</p>
+                          <p className="text-sm text-gray-100 leading-relaxed">{item.content}</p>
                         </article>
                       );
                     })}

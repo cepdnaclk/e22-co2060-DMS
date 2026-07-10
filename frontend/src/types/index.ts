@@ -169,3 +169,33 @@ export interface MessageDTO {
   createdAt: string;
 }
 
+export interface DiaryComment {
+  id: number;
+  postId: number;
+  authorId: number;
+  authorName: string;
+  authorUsername: string;
+  authorProfilePictureUrl?: string;
+  content: string;
+  createdAt: string;
+}
+
+export interface DiaryPost {
+  id: number;
+  authorId: number;
+  authorName: string;
+  authorUsername: string;
+  authorProfilePictureUrl?: string;
+  authorRole: string;
+  title?: string;
+  content: string;
+  imageUrl?: string;
+  videoUrl?: string;
+  likesCount: number;
+  isLikedByCurrentUser: boolean;
+  comments: DiaryComment[];
+  shareCount: number;
+  isVerified: boolean;
+  createdAt: string;
+}
+

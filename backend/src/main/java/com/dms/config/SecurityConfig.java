@@ -43,6 +43,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/tournaments/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/stats/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/diaries/user/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/diaries/*/share").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

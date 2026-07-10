@@ -8,6 +8,7 @@ import { getNotificationRoute } from '../../utils/notificationRouting';
 import { toAbsoluteAvatarUrl } from '../../utils/avatarUrl';
 import { notificationsAPI } from '../../api';
 import LoadingSpinner from './LoadingSpinner';
+import DiariesSection from './DiariesSection';
 
 /* ── Role theme config ── */
 const ROLE_THEME: Record<string, { gradient: string; shadow: string; badgeBg: string; badgeBorder: string; badgeText: string; icon: typeof Swords; label: string }> = {
@@ -97,9 +98,10 @@ export default function SharedProfileLayout({
               </div>
             </aside>
 
-            {/* ════ RIGHT COLUMN ════ */}
             <main className="space-y-5">
               {children}
+
+              <DiariesSection profileUserId={user.id} />
 
               {!isReadOnly && notifications.length > 0 && (
                 <div className="card">

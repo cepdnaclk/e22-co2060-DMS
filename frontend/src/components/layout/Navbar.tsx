@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
-  Trophy, Search, Bell, Calendar, Settings, LogOut,
+  Bell, Calendar, Settings, LogOut,
   User, LayoutDashboard, ChevronDown, Menu, X, Swords, MessageCircleMore,
   Award
 } from 'lucide-react';
@@ -39,34 +39,40 @@ export default function Navbar() {
   };
 
   const avatarLetter = user?.fullName?.[0]?.toUpperCase() || 'U';
+  const publicLinks = [
+    { label: 'Tournaments', to: '/' },
+    { label: 'Forums', to: '/forum' },
+    { label: 'Rankings', to: '/scoring' },
+    { label: 'About', to: '/about' },
+  ];
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-dark border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 gap-4">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
-              <img src="/logo.png" alt="VIVAATHI" className="w-9 h-9 rounded-xl shadow-lg" />
-              <span className="font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 hidden sm:block">VIVAATHI</span>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/92 backdrop-blur-xl border-b border-slate-300">
+        <div className="editorial-shell">
+          <div className="flex items-center justify-between h-[76px] gap-5">
+            <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+              <img src="/logo.png" alt="VIVAATHI" className="w-10 h-10 object-contain border border-[#06192b]/20" />
+              <span className="font-display font-bold text-2xl text-[#06192b] tracking-normal hidden sm:block">VIVAATHI</span>
             </Link>
 
-            {/* Search Bar - Center */}
-            <div className="flex-1 max-w-md hidden md:block">
+            <div className="hidden lg:flex items-center gap-8">
+              {publicLinks.map(link => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={({ isActive }) => `nav-link ${isActive ? 'text-[#06192b] after:w-full' : ''}`}
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </div>
+
+            <div className="hidden md:block flex-1 max-w-[320px]">
               <SearchBar />
             </div>
 
-            {/* Nav Links */}
-            <div className="hidden lg:flex items-center gap-6">
-              <Link to="/" className="nav-link text-sm">Home</Link>
-              <Link to="/forum" className="nav-link text-sm">Forum</Link>
-              <Link to="/scoring" className="nav-link text-sm">Scoring</Link>
-              <Link to="/about" className="nav-link text-sm">About Us</Link>
-              <Link to="/news" className="nav-link text-sm">News</Link>
-            </div>
-
-            {/* Right: Auth */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {isAuthenticated && user ? (
                 <div className="relative" ref={dropdownRef}>
                   <button
@@ -75,53 +81,53 @@ export default function Navbar() {
                   >
                     {user.profilePictureUrl ? (
                       <img src={toAbsoluteAvatarUrl(user.profilePictureUrl)} alt={user.fullName}
-                        className="w-9 h-9 rounded-full object-cover border-2 border-blue-500/50" />
+                        className="w-10 h-10 rounded-none object-cover border border-[#06192b]" />
                     ) : (
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-sm font-bold text-white border-2 border-blue-500/50">
+                      <div className="w-10 h-10 rounded-none bg-[#06192b] flex items-center justify-center text-sm font-bold text-white border border-[#06192b]">
                         {avatarLetter}
                       </div>
                     )}
-                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
 
                   {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-56 z-[100] bg-gray-900 glass-dark rounded-2xl shadow-2xl border border-white/10 py-2 animate-fade-in">
-                      <div className="px-4 py-3 border-b border-white/10">
-                        <p className="text-sm font-semibold text-white truncate">{user.fullName}</p>
-                        <p className="text-xs text-gray-400">@{user.username}</p>
-                        <span className="mt-1 inline-block text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                    <div className="absolute right-0 mt-3 w-60 z-[100] bg-white shadow-2xl border border-slate-300 py-2 animate-fade-in">
+                      <div className="px-4 py-3 border-b border-slate-200">
+                        <p className="text-sm font-bold text-[#06192b] truncate">{user.fullName}</p>
+                        <p className="text-xs text-slate-500">@{user.username}</p>
+                        <span className="mt-2 badge bg-[#eef5ff] text-[#06192b] border-slate-300">
                           {user.role}
                         </span>
                       </div>
 
                       <Link to={`/profile/${user.id}#diaries`} onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
-                        <Award className="w-4 h-4 text-indigo-400" /> My Diaries
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-[#06192b] hover:bg-[#eef5ff] transition-colors">
+                        <Award className="w-4 h-4 text-[#8a6a00]" /> My Diaries
                       </Link>
                       <Link to={getDashboardPath()} onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-[#06192b] hover:bg-[#eef5ff] transition-colors">
                         <LayoutDashboard className="w-4 h-4" /> Dashboard
                       </Link>
                       <Link to="/calendar" onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-[#06192b] hover:bg-[#eef5ff] transition-colors">
                         <Calendar className="w-4 h-4" /> Calendar
                       </Link>
                       <Link to="/notifications" onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-[#06192b] hover:bg-[#eef5ff] transition-colors">
                         <Bell className="w-4 h-4" /> Notifications
                       </Link>
                       <Link to="/messages" onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-[#06192b] hover:bg-[#eef5ff] transition-colors">
                         <MessageCircleMore className="w-4 h-4" /> Messages
                       </Link>
                       <Link to="/settings" onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-[#06192b] hover:bg-[#eef5ff] transition-colors">
                         <Settings className="w-4 h-4" /> Settings
                       </Link>
-                      <div className="border-t border-white/10 mt-1 pt-1">
+                      <div className="border-t border-slate-200 mt-1 pt-1">
                         <button
                           onClick={() => { setDropdownOpen(false); setLogoutModal(true); }}
-                          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors">
+                          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-700 hover:text-red-800 hover:bg-red-50 transition-colors">
                           <LogOut className="w-4 h-4" /> Log Out
                         </button>
                       </div>
@@ -130,16 +136,14 @@ export default function Navbar() {
                 </div>
               ) : (
                 <Link to="/role-select"
-                  className="btn-primary text-sm hidden sm:flex items-center gap-2">
-                  <User className="w-4 h-4" />
-                  Log In / Sign Up
+                  className="btn-primary text-xs hidden sm:flex">
+                  Sign In
                 </Link>
               )}
 
-              {/* Mobile menu button */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 text-gray-400 hover:text-white transition-colors">
+                className="lg:hidden p-2 text-[#06192b] hover:bg-[#eef5ff] transition-colors border border-slate-300">
                 {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
@@ -148,29 +152,29 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {mobileOpen && (
-          <div className="lg:hidden glass-dark border-t border-white/10 px-4 py-4 space-y-3 animate-fade-in">
+          <div className="lg:hidden bg-white border-t border-slate-300 px-4 py-4 space-y-3 animate-fade-in">
             <div className="mb-4">
               <SearchBar />
             </div>
-            <Link to="/" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">Home</Link>
-            <Link to="/forum" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">Forum</Link>
-            <Link to="/scoring" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">Scoring</Link>
-            <Link to="/about" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">About Us</Link>
-            <Link to="/news" onClick={() => setMobileOpen(false)} className="block text-gray-300 hover:text-white py-2">News</Link>
+            {publicLinks.map(link => (
+              <Link key={link.to} to={link.to} onClick={() => setMobileOpen(false)} className="block text-[#06192b] font-bold py-2">
+                {link.label}
+              </Link>
+            ))}
             {isAuthenticated && user && (
               <>
-                <Link to={`/profile/${user.id}#diaries`} onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 py-2 font-semibold">
+                <Link to={`/profile/${user.id}#diaries`} onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-[#8a6a00] py-2 font-semibold">
                   <Award className="w-4 h-4" /> My Diaries
                 </Link>
-                <Link to="/messages" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-blue-400 hover:text-blue-300 py-2 font-semibold">
+                <Link to="/messages" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-[#06192b] py-2 font-semibold">
                   <MessageCircleMore className="w-4 h-4" /> Messages
                 </Link>
               </>
             )}
             {!isAuthenticated && (
               <Link to="/role-select" onClick={() => setMobileOpen(false)}
-                className="btn-primary text-sm inline-flex items-center gap-2 mt-2">
-                <User className="w-4 h-4" /> Log In / Sign Up
+                className="btn-primary text-xs inline-flex mt-2">
+                <User className="w-4 h-4" /> Sign In
               </Link>
             )}
           </div>

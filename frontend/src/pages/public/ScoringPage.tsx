@@ -1,157 +1,197 @@
-import { Brain, MessageSquare, Layout, Repeat, Users, Award, ChevronRight, Info } from 'lucide-react';
+import { Award, BarChart3, Brain, CheckCircle, Layout, MessageSquare, Repeat, Users } from 'lucide-react';
 
 const criteria = [
   {
-    icon: Brain,
     name: 'Matter',
-    color: 'from-blue-500 to-cyan-500',
-    bg: 'bg-blue-500/10 border-blue-500/20',
-    desc: 'The content of the debate — arguments, evidence, logic, and relevance to the motion.',
-    points: ['Quality of arguments', 'Use of evidence', 'Logical reasoning', 'Relevance to topic'],
+    desc: 'Substance, evidence, and logical construction of the argument.',
+    focus: 'Quality of Arguments',
+    score: 32,
     maxScore: 40,
+    details: ['Logical Reasoning', 'Rebuttal Strength'],
   },
   {
-    icon: MessageSquare,
     name: 'Manner',
-    color: 'from-violet-500 to-purple-500',
-    bg: 'bg-violet-500/10 border-violet-500/20',
-    desc: 'The delivery of the speech — tone, confidence, body language, and audience engagement.',
-    points: ['Confidence & poise', 'Eye contact', 'Voice modulation', 'Persuasiveness'],
+    desc: 'Elocution, persuasion, body language, and rhetorical flair.',
+    focus: 'Presentation Impact',
+    score: 36,
     maxScore: 40,
+    details: ['Voice & Pace', 'Rhetorical Style'],
   },
   {
-    icon: Layout,
     name: 'Method',
-    color: 'from-emerald-500 to-teal-500',
-    bg: 'bg-emerald-500/10 border-emerald-500/20',
-    desc: 'The structure and organization of arguments within the speech.',
-    points: ['Clear structure', 'Time management', 'Team strategy', 'Logical flow'],
+    desc: 'Structure of the speech, timing, and fulfilment of the role.',
+    focus: 'Structural Integrity',
+    score: 28,
     maxScore: 40,
+    details: ['Team Structure', 'Time Discipline'],
   },
-  {
-    icon: Repeat,
-    name: 'Rebuttal',
-    color: 'from-rose-500 to-pink-500',
-    bg: 'bg-rose-500/10 border-rose-500/20',
-    desc: 'The ability to effectively respond to and counter opposing arguments.',
-    points: ['Direct responses', 'Counter-arguments', 'Clash engagement', 'Quick thinking'],
-    maxScore: 30,
-  },
-  {
-    icon: Users,
-    name: 'Teamwork',
-    color: 'from-amber-500 to-orange-500',
-    bg: 'bg-amber-500/10 border-amber-500/20',
-    desc: 'How well the team works together — consistency, support, and unified messaging.',
-    points: ['Consistency', 'Support for teammates', 'Unified messaging', 'Coordination'],
-    maxScore: 30,
-  },
+];
+
+const fullCriteria = [
+  { icon: Brain, name: 'Matter', maxScore: 40 },
+  { icon: MessageSquare, name: 'Manner', maxScore: 40 },
+  { icon: Layout, name: 'Method', maxScore: 40 },
+  { icon: Repeat, name: 'Rebuttal', maxScore: 30 },
+  { icon: Users, name: 'Teamwork', maxScore: 30 },
 ];
 
 export default function ScoringPage() {
   return (
-    <div className="min-h-screen py-16 px-4">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-16 animate-slide-up">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-blue-500/30 text-blue-400 text-sm font-medium mb-6">
-            <Award className="w-4 h-4" /> Scoring System
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">
-            How Debate Scoring Works
-          </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Our transparent, multi-criteria scoring system ensures fair and comprehensive evaluation of every debater.
-          </p>
+    <div className="min-h-screen py-12">
+      <div className="editorial-shell">
+        <header className="border-l-4 border-[#06192b] pl-6 mb-12">
+          <p className="eyebrow text-slate-500 mb-3">Final Adjudication</p>
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-[#06192b]">Scoring Dashboard</h1>
+          <p className="mt-3 text-slate-700">The Grand Parliamentary Debate Finals / Room 402B</p>
+        </header>
+
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-7">
+          <main>
+            <div className="flex items-center justify-between gap-4 mb-6">
+              <h2 className="font-display text-3xl font-bold text-[#06192b]">Evaluation Criteria</h2>
+              <span className="badge bg-[#fff0bd] text-[#8a6a00] border-[#e8d48a]">Guidelines v4.2</span>
+            </div>
+
+            <div className="space-y-6">
+              {criteria.map((criterion, index) => {
+                const width = `${(criterion.score / criterion.maxScore) * 100}%`;
+                return (
+                  <article key={criterion.name} className="paper-panel p-7">
+                    <div className="flex items-start justify-between gap-5 mb-7">
+                      <div>
+                        <h3 className="font-display text-2xl font-bold text-[#06192b]">{criterion.name}</h3>
+                        <p className="text-slate-600 mt-1">{criterion.desc}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-[#e1c66a] font-bold">0{index + 1}</p>
+                        <p className="text-sm text-slate-600 mt-2">Max Pts:</p>
+                        <p className="font-display text-[#8a6a00]">{criterion.maxScore}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4 mb-3">
+                      <p className="font-medium text-[#06192b]">{criterion.focus}</p>
+                      <p className="font-bold text-[#06192b]">{criterion.score}/{criterion.maxScore}</p>
+                    </div>
+                    <div className="h-1 bg-[#dbeafe]">
+                      <div className="h-full bg-[#06192b]" style={{ width }} />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                      {criterion.details.map(detail => (
+                        <div key={detail} className="border-l border-slate-300 pl-4">
+                          <p className="font-medium text-[#06192b]">{detail}</p>
+                          <p className="mt-2 text-sm leading-6 text-slate-600">
+                            Evaluation of clarity, evidence, pacing, and the ability to create useful clash without losing audience focus.
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </main>
+
+          <aside className="space-y-6">
+            <section className="ink-panel p-8">
+              <p className="eyebrow text-slate-300 mb-10">Aggregated Score</p>
+              <div className="flex items-end gap-2">
+                <p className="font-display text-6xl font-bold text-white">96</p>
+                <p className="text-sm text-slate-400 mb-3">/120</p>
+              </div>
+              <p className="text-slate-300 mt-2">Performance: Excellent</p>
+              <div className="border-t border-white/15 mt-8 pt-6 grid grid-cols-3 gap-1">
+                {[
+                  ['Matter', 32, 'bg-white'],
+                  ['Manner', 36, 'bg-[#ffe58f]'],
+                  ['Method', 28, 'bg-slate-500'],
+                ].map(([label, score, color]) => (
+                  <div key={label as string}>
+                    <p className="text-xs text-slate-300 mb-3">{label} ({score})</p>
+                    <div className="h-2 bg-white/10">
+                      <div className={`h-full ${color}`} style={{ width: `${Number(score) * 2.5}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="paper-panel bg-[#eef5ff] p-6">
+              <h3 className="font-bold text-[#06192b] mb-4">Adjudicator Notes</h3>
+              <div className="border-t border-slate-300 pt-4 flex gap-3">
+                <div className="w-8 h-8 bg-[#dbeafe] flex items-center justify-center text-xs font-bold text-[#06192b]">JD</div>
+                <div>
+                  <p className="text-sm font-bold text-[#06192b]">Justice D'souza</p>
+                  <p className="text-sm italic text-slate-600 mt-1">
+                    Exceptional handling of the second cross-examination. Manner score reflects high poise under pressure.
+                  </p>
+                </div>
+              </div>
+              <button className="btn-secondary w-full mt-6 text-xs">Submit Final Verdict</button>
+            </section>
+
+            <section className="paper-panel bg-[#dbeafe] p-6">
+              <h3 className="font-bold text-[#06192b] mb-5">Historical Benchmark</h3>
+              <div className="grid grid-cols-2 gap-5">
+                <div>
+                  <p className="text-xs text-slate-600 mb-2">Tournament Average</p>
+                  <p className="font-display text-xl text-[#06192b]">82.4</p>
+                </div>
+                <div className="border-l border-slate-300 pl-5">
+                  <p className="text-xs text-slate-600 mb-2">Rank in Room</p>
+                  <p className="font-display text-xl text-[#8a6a00]">#1 of 8</p>
+                </div>
+              </div>
+            </section>
+          </aside>
         </div>
 
-        {/* Algorithm Visual */}
-        <div className="card border-blue-500/20 bg-gradient-to-br from-blue-600/5 to-violet-600/5 mb-12">
-          <div className="text-center">
-            <h2 className="text-xl font-bold text-white mb-6">Scoring Algorithm</h2>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              {criteria.map((c, i) => (
-                <div key={c.name} className="flex items-center gap-2">
-                  <div className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border ${c.bg}`}>
-                    <c.icon className="w-4 h-4 text-white/80" />
-                    <span className="text-sm font-semibold text-white">{c.name}</span>
-                    <span className="text-xs text-gray-400">/{c.maxScore}</span>
+        <section className="paper-panel p-8 mt-10">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-7">
+            <div>
+              <p className="eyebrow text-slate-500 mb-3">Transparent Formula</p>
+              <h2 className="font-display text-3xl font-bold text-[#06192b]">How totals are calculated</h2>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              {fullCriteria.map((item, index) => (
+                <div key={item.name} className="flex items-center gap-3">
+                  <div className="border border-slate-300 bg-[#eef5ff] px-4 py-3 flex items-center gap-2">
+                    <item.icon className="w-4 h-4 text-[#06192b]" />
+                    <span className="text-sm font-bold text-[#06192b]">{item.name}</span>
+                    <span className="text-xs text-slate-500">/{item.maxScore}</span>
                   </div>
-                  {i < criteria.length - 1 && <span className="text-gray-600">+</span>}
+                  {index < fullCriteria.length - 1 && <span className="text-slate-400">+</span>}
                 </div>
               ))}
-              <span className="text-gray-400 font-bold">=</span>
-              <div className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 border border-blue-500/50">
-                <span className="text-sm font-bold text-white">Total Score /180</span>
+              <div className="border border-[#06192b] bg-[#06192b] px-4 py-3 flex items-center gap-2">
+                <Award className="w-4 h-4 text-[#fff0bd]" />
+                <span className="text-sm font-bold text-white">Total /180</span>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Winner Logic */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
           {[
-            { step: '01', title: 'Judges Score', desc: 'Each assigned judge fills out score sheets for all speakers from both teams.' },
-            { step: '02', title: 'Average Calculated', desc: 'System averages proposition & opposition totals across all submitted score sheets.' },
-            { step: '03', title: 'Winner Declared', desc: 'Team with the higher average score wins. Best speaker determined by most judge votes.' },
-          ].map(step => (
-            <div key={step.step} className="card">
-              <span className="text-4xl font-black gradient-text">{step.step}</span>
-              <h3 className="font-bold text-white mt-2 mb-1">{step.title}</h3>
-              <p className="text-gray-400 text-sm">{step.desc}</p>
+            ['01', 'Judges Score', 'Each assigned judge fills out score sheets for all speakers from both teams.'],
+            ['02', 'Average Calculated', 'The system averages proposition and opposition totals across submitted score sheets.'],
+            ['03', 'Winner Declared', 'The higher average score wins; best speaker is determined by judge votes.'],
+          ].map(([step, title, desc]) => (
+            <div key={step} className="paper-panel p-6">
+              <CheckCircle className="w-5 h-5 text-[#8a6a00] mb-5" />
+              <p className="eyebrow text-slate-500">{step}</p>
+              <h3 className="font-display text-2xl font-bold text-[#06192b] mt-2">{title}</h3>
+              <p className="text-sm text-slate-600 leading-6 mt-3">{desc}</p>
             </div>
           ))}
-        </div>
+        </section>
 
-        {/* Criteria Cards */}
-        <h2 className="text-2xl font-bold text-white mb-6">Evaluation Criteria</h2>
-        <div className="grid grid-cols-1 gap-6">
-          {criteria.map(c => (
-            <div key={c.name} className="card group">
-              <div className="flex flex-col sm:flex-row gap-5">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${c.color} flex items-center justify-center flex-shrink-0 shadow-xl`}>
-                  <c.icon className="w-8 h-8 text-white" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xl font-bold text-white">{c.name}</h3>
-                    <span className={`badge border ${c.bg} text-white`}>Max {c.maxScore} pts</span>
-                  </div>
-                  <p className="text-gray-400 text-sm mb-4">{c.desc}</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {c.points.map(p => (
-                      <div key={p} className="flex items-center gap-2 text-sm text-gray-300">
-                        <ChevronRight className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
-                        {p}
-                      </div>
-                    ))}
-                  </div>
-                  {/* Score bar */}
-                  <div className="mt-4">
-                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                      <div className={`h-full bg-gradient-to-r ${c.color} rounded-full`}
-                        style={{ width: `${(c.maxScore / 40) * 100}%` }} />
-                    </div>
-                    <div className="flex justify-between mt-1">
-                      <span className="text-xs text-gray-600">0</span>
-                      <span className="text-xs text-gray-600">{c.maxScore}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Info note */}
-        <div className="mt-8 flex items-start gap-3 glass rounded-xl p-4 border border-blue-500/20">
-          <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-semibold text-blue-400 mb-1">Custom Criteria</p>
-            <p className="text-sm text-gray-400">
-              Organizers can customize scoring criteria, adjust maximum marks, and add or remove criteria when setting up their tournament score sheet template.
-            </p>
-          </div>
+        <div className="mt-8 flex items-start gap-3 paper-panel bg-[#eef5ff] p-5">
+          <BarChart3 className="w-5 h-5 text-[#06192b] flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-slate-700">
+            Organizers can customize criteria, adjust maximum marks, and publish a score sheet template for each tournament format.
+          </p>
         </div>
       </div>
     </div>

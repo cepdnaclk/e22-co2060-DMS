@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Newspaper, Video, Users, Calendar, ArrowRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { format } from 'date-fns';
+import { ArrowRight, Calendar, Newspaper, Users, Video } from 'lucide-react';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { newsAPI } from '../../api';
 import type { NewsPost } from '../../types';
-import LoadingSpinner from '../../components/common/LoadingSpinner';
-import { format } from 'date-fns';
 
 const categories = [
   { key: 'ALL', label: 'All', icon: Newspaper },
@@ -11,12 +11,6 @@ const categories = [
   { key: 'VLOGS', label: 'Vlogs', icon: Video },
   { key: 'COMMUNITY_STORIES', label: 'Community Stories', icon: Users },
 ];
-
-const categoryColors: Record<string, string> = {
-  LATEST_NEWS: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  VLOGS: 'bg-violet-500/20 text-violet-400 border-violet-500/30',
-  COMMUNITY_STORIES: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-};
 
 const categoryLabels: Record<string, string> = {
   LATEST_NEWS: 'Latest News',
@@ -28,45 +22,42 @@ function PostCard({ post }: { post: NewsPost }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="card-hover group overflow-hidden flex flex-col">
-      {/* Image */}
-      <div className="h-48 rounded-xl overflow-hidden mb-4 bg-gradient-to-br from-blue-600/20 to-violet-600/20 flex items-center justify-center">
+    <article className="paper-panel p-5 flex flex-col">
+      <div className="h-48 overflow-hidden mb-5 bg-[#eef5ff] border border-slate-300 flex items-center justify-center">
         {post.imageUrl ? (
-          <img src={post.imageUrl} alt={post.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover" />
         ) : (
-          <Newspaper className="w-12 h-12 text-gray-600" />
+          <Newspaper className="w-12 h-12 text-slate-400" />
         )}
       </div>
 
-      {/* Badge */}
-      <span className={`badge border mb-3 self-start ${categoryColors[post.category] || 'bg-gray-500/20 text-gray-400'}`}>
+      <span className="badge bg-[#eef5ff] text-[#06192b] border-slate-300 self-start mb-4">
         {categoryLabels[post.category] || post.category}
       </span>
 
-      <h3 className="font-bold text-white text-lg mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">
+      <h3 className="font-display text-2xl font-bold text-[#06192b] mb-3 line-clamp-2">
         {post.title}
       </h3>
 
-      <p className={`text-gray-400 text-sm mb-4 ${expanded ? '' : 'line-clamp-3'}`}>
+      <p className={`text-slate-600 text-sm leading-7 mb-5 ${expanded ? '' : 'line-clamp-3'}`}>
         {post.content}
       </p>
 
-      <div className="mt-auto flex items-center justify-between">
-        <div className="flex items-center gap-2 text-xs text-gray-500">
-          {post.authorName && <span className="font-medium text-gray-400">{post.authorName}</span>}
-          {post.authorName && <span>·</span>}
+      <div className="mt-auto flex items-center justify-between gap-4 border-t border-slate-300 pt-4">
+        <div className="flex items-center gap-2 text-xs text-slate-500">
+          {post.authorName && <span className="font-bold text-[#06192b]">{post.authorName}</span>}
+          {post.authorName && <span>/</span>}
           <span className="flex items-center gap-1">
             <Calendar className="w-3 h-3" />
             {post.createdAt ? format(new Date(post.createdAt), 'MMM d, yyyy') : ''}
           </span>
         </div>
         <button onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-1 text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors">
+          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#06192b]">
           {expanded ? 'Show less' : 'Read More'} <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -87,24 +78,19 @@ export default function NewsPage() {
     : posts.filter(p => p.category === activeCategory);
 
   return (
-    <div className="min-h-screen py-16 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-black text-white mb-3">News & Community</h1>
-          <p className="text-gray-400 text-lg">Latest updates, vlogs, and community stories from the debate world</p>
-        </div>
+    <div className="min-h-screen py-16">
+      <div className="editorial-shell">
+        <header className="max-w-3xl mb-10">
+          <p className="eyebrow text-slate-500 mb-4">News & Community</p>
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-[#06192b]">Dispatches from the debate world.</h1>
+          <p className="text-slate-600 text-lg mt-5">Latest updates, vlogs, and community stories from tournaments and institutions.</p>
+        </header>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <div className="flex flex-wrap gap-2 mb-10">
           {categories.map(cat => (
             <button key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
-                activeCategory === cat.key
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25'
-                  : 'glass text-gray-400 hover:text-white hover:bg-white/10'
-              }`}>
+              className={activeCategory === cat.key ? 'tab-btn-active' : 'tab-btn-inactive'}>
               <cat.icon className="w-4 h-4" />
               {cat.label}
             </button>
@@ -118,9 +104,9 @@ export default function NewsPage() {
             {filtered.map(post => <PostCard key={post.id} post={post} />)}
           </div>
         ) : (
-          <div className="card text-center py-16">
-            <Newspaper className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400">No posts in this category yet.</p>
+          <div className="paper-panel text-center py-16">
+            <Newspaper className="w-12 h-12 text-slate-400 mx-auto mb-4" />
+            <p className="text-slate-500">No posts in this category yet.</p>
           </div>
         )}
       </div>

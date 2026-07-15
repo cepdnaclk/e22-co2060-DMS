@@ -73,24 +73,24 @@ export default function SearchBar() {
           value={query}
           onChange={e => { setQuery(e.target.value); setOpen(true); }}
           onFocus={() => query && setOpen(true)}
-          placeholder="Search players, tournaments..."
-          className="w-full bg-white/5 border border-white/15 rounded-xl pl-9 pr-16 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
+          placeholder="Search debates..."
+          className="w-full bg-[#eef5ff] border border-transparent rounded-none pl-9 pr-16 py-2.5 text-sm text-[#06192b] placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#dbeafe] focus:border-[#06192b] transition-all"
         />
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-600 font-mono hidden sm:block">
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 font-mono hidden sm:block">
           Ctrl+K
         </span>
       </div>
 
       {open && query && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-[#0f172a] rounded-2xl border border-white/10 shadow-2xl overflow-hidden z-[100] animate-fade-in">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-300 shadow-2xl overflow-hidden z-[100] animate-fade-in">
           {loading && (
-            <div className="flex items-center gap-2 px-4 py-3 text-gray-400 text-sm">
+            <div className="flex items-center gap-2 px-4 py-3 text-slate-500 text-sm">
               <Loader2 className="w-4 h-4 animate-spin" /> Searching...
             </div>
           )}
 
           {!loading && !hasResults && (
-            <div className="px-4 py-6 text-center text-gray-400 text-sm">
+            <div className="px-4 py-6 text-center text-slate-500 text-sm">
               No results for "{query}"
             </div>
           )}
@@ -99,16 +99,16 @@ export default function SearchBar() {
             <div className="max-h-80 overflow-y-auto scrollbar-hide py-2">
               {results!.players.length > 0 && (
                 <div>
-                  <p className="px-4 py-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Debaters</p>
+                  <p className="px-4 py-1.5 eyebrow text-slate-500">Debaters</p>
                   {results!.players.slice(0, 3).map(p => (
                     <button key={p.id} onClick={() => handleSelect(`/profile/${p.id}`)}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-white/10 transition-colors text-left">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[#eef5ff] transition-colors text-left">
+                      <div className="w-8 h-8 bg-[#dbeafe] flex items-center justify-center text-xs font-bold text-[#06192b] flex-shrink-0">
                         {p.fullName[0]}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white">{p.fullName}</p>
-                        <p className="text-xs text-gray-400">@{p.username}</p>
+                        <p className="text-sm font-bold text-[#06192b]">{p.fullName}</p>
+                        <p className="text-xs text-slate-500">@{p.username}</p>
                       </div>
                     </button>
                   ))}
@@ -117,16 +117,16 @@ export default function SearchBar() {
 
               {results!.tournaments.length > 0 && (
                 <div>
-                  <p className="px-4 py-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Tournaments</p>
+                  <p className="px-4 py-1.5 eyebrow text-slate-500">Tournaments</p>
                   {results!.tournaments.slice(0, 3).map(t => (
                     <button key={t.id} onClick={() => handleSelect(`/tournament/${t.id}`)}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-white/10 transition-colors text-left">
-                      <div className="w-8 h-8 rounded-xl bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
-                        <Trophy className="w-4 h-4 text-yellow-400" />
+                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[#eef5ff] transition-colors text-left">
+                      <div className="w-8 h-8 bg-[#fff0bd] border border-[#e8d48a] flex items-center justify-center flex-shrink-0">
+                        <Trophy className="w-4 h-4 text-[#8a6a00]" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white">{t.name}</p>
-                        <p className="text-xs text-gray-400">{t.status} · {t.debateType?.replace(/_/g, ' ')}</p>
+                        <p className="text-sm font-bold text-[#06192b]">{t.name}</p>
+                        <p className="text-xs text-slate-500">{t.status} · {t.debateType?.replace(/_/g, ' ')}</p>
                       </div>
                     </button>
                   ))}
@@ -135,16 +135,16 @@ export default function SearchBar() {
 
               {results!.organizers.length > 0 && (
                 <div>
-                  <p className="px-4 py-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Organizers</p>
+                  <p className="px-4 py-1.5 eyebrow text-slate-500">Organizers</p>
                   {results!.organizers.slice(0, 2).map(o => (
                     <button key={o.id} onClick={() => handleSelect(`/profile/${o.id}`)}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-white/10 transition-colors text-left">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[#eef5ff] transition-colors text-left">
+                      <div className="w-8 h-8 bg-emerald-50 border border-emerald-200 flex items-center justify-center text-xs font-bold text-emerald-800 flex-shrink-0">
                         {o.fullName[0]}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white">{o.fullName}</p>
-                        <p className="text-xs text-gray-400">Organizer</p>
+                        <p className="text-sm font-bold text-[#06192b]">{o.fullName}</p>
+                        <p className="text-xs text-slate-500">Organizer</p>
                       </div>
                     </button>
                   ))}
@@ -152,7 +152,7 @@ export default function SearchBar() {
               )}
 
               <button onClick={() => handleSelect(`/search?q=${encodeURIComponent(query)}`)}
-                className="w-full px-4 py-2.5 text-sm text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 transition-colors text-left border-t border-white/10 mt-1">
+                className="w-full px-4 py-2.5 text-sm font-bold text-[#06192b] hover:bg-[#eef5ff] transition-colors text-left border-t border-slate-200 mt-1">
                 See all results for "{query}"
               </button>
             </div>

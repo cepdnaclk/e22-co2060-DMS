@@ -242,8 +242,8 @@ export default function CreateTournamentWizard() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold text-white">Schools & Debaters</h2>
                 <button onClick={() => setSchools(p => [...p, { name: '', debaters: [] }])}
-                  className="btn-secondary text-sm flex items-center gap-1 py-1.5 px-3">
-                  <Plus className="w-3.5 h-3.5" /> Add School
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#eef5ff] hover:bg-white text-[#06192b] font-bold text-xs uppercase tracking-wider rounded-none border border-slate-300 transition-all shadow-sm active:translate-y-px">
+                  <Plus className="w-4 h-4 text-[#06192b]" /> Add School
                 </button>
               </div>
               <div className="space-y-4 overflow-visible pr-1">
@@ -371,8 +371,8 @@ export default function CreateTournamentWizard() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold text-white">Score Sheet Setup</h2>
                 <button onClick={() => setCriteria(p => [...p, { name: '', maxMarks: 40 }])}
-                  className="btn-secondary text-sm flex items-center gap-1 py-1.5 px-3">
-                  <Plus className="w-3.5 h-3.5" /> Add Criteria
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#eef5ff] hover:bg-white text-[#06192b] font-bold text-xs uppercase tracking-wider rounded-none border border-slate-300 transition-all shadow-sm active:translate-y-px">
+                  <Plus className="w-4 h-4 text-[#06192b]" /> Add Criteria
                 </button>
               </div>
               <p className="text-sm text-gray-400">Customize scoring criteria for this tournament</p>
@@ -436,8 +436,8 @@ export default function CreateTournamentWizard() {
           {/* Navigation */}
           <div className="flex justify-between pt-4 border-t border-white/10">
             <button onClick={() => setStep(p => p - 1)} disabled={step === 1}
-              className="btn-secondary flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
-              <ChevronLeft className="w-4 h-4" /> Back
+              className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/10 text-white font-bold uppercase tracking-widest px-5 py-3 rounded-none border border-white/30 transition-all duration-200 active:translate-y-px disabled:opacity-30 disabled:cursor-not-allowed">
+              <ChevronLeft className="w-4 h-4 text-white" /> Back
             </button>
             {step < 6 ? (
               <button onClick={() => {

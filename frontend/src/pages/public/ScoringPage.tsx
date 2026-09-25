@@ -37,26 +37,26 @@ const fullCriteria = [
 
 export default function ScoringPage() {
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen py-6 sm:py-12">
       <div className="editorial-shell">
-        <header className="border-l-4 border-[#06192b] pl-6 mb-12">
-          <p className="eyebrow text-slate-500 mb-3">Final Adjudication</p>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-[#06192b]">Scoring Dashboard</h1>
-          <p className="mt-3 text-slate-700">The Grand Parliamentary Debate Finals / Room 402B</p>
+        <header className="border-l-4 border-[#06192b] pl-4 sm:pl-6 mb-8 sm:mb-12">
+          <p className="eyebrow text-slate-500 mb-2 sm:mb-3">Final Adjudication</p>
+          <h1 className="font-display text-3xl sm:text-6xl font-bold text-[#06192b]">Scoring Dashboard</h1>
+          <p className="mt-2 sm:mt-3 text-sm sm:text-base text-slate-700">The Grand Parliamentary Debate Finals / Room 402B</p>
         </header>
 
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-7">
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-5 sm:gap-7">
           <main>
-            <div className="flex items-center justify-between gap-4 mb-6">
-              <h2 className="font-display text-3xl font-bold text-[#06192b]">Evaluation Criteria</h2>
+            <div className="flex items-center justify-between gap-4 mb-4 sm:mb-6">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#06192b]">Evaluation Criteria</h2>
               <span className="badge bg-[#fff0bd] text-[#8a6a00] border-[#e8d48a]">Guidelines v4.2</span>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {criteria.map((criterion, index) => {
                 const width = `${(criterion.score / criterion.maxScore) * 100}%`;
                 return (
-                  <article key={criterion.name} className="paper-panel p-7">
+                  <article key={criterion.name} className="paper-panel p-5 sm:p-7">
                     <div className="flex items-start justify-between gap-5 mb-7">
                       <div>
                         <h3 className="font-display text-2xl font-bold text-[#06192b]">{criterion.name}</h3>

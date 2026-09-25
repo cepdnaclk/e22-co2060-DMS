@@ -54,24 +54,24 @@ export default function SharedProfileLayout({
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6">
             {/* ════ LEFT SIDEBAR ════ */}
-            <aside className="space-y-5">
-              <div className="card text-center relative">
+            <aside className="space-y-4 sm:space-y-5">
+              <div className="card p-5 sm:p-6 text-center relative">
                 <div className="absolute top-4 right-4 flex items-center gap-2">
                   {!isReadOnly && (
                     <button onClick={() => setIsEditModalOpen(true)}
-                      className="text-gray-500 hover:text-white transition-colors cursor-pointer" title="Edit Profile">
+                      className="text-gray-400 hover:text-white transition-colors cursor-pointer p-1.5 rounded-lg hover:bg-white/10" title="Edit Profile">
                       <Pencil className="w-4 h-4" />
                     </button>
                   )}
                 </div>
-                <div className={`mx-auto w-28 h-28 rounded-full bg-gradient-to-br ${theme.gradient} flex items-center justify-center text-4xl font-black text-white border-4 border-white/10 shadow-lg ${theme.shadow} mb-4`}>
+                <div className={`mx-auto w-20 h-20 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br ${theme.gradient} flex items-center justify-center text-3xl sm:text-4xl font-black text-white border-4 border-white/10 shadow-lg ${theme.shadow} mb-3 sm:mb-4`}>
                   {user.profilePictureUrl ? (
                     <img src={toAbsoluteAvatarUrl(user.profilePictureUrl)} alt={user.fullName} className="w-full h-full rounded-full object-cover" />
                   ) : user.fullName[0]?.toUpperCase()}
                 </div>
-                <h1 className="text-xl font-black text-white">{user.fullName}</h1>
-                <p className="text-gray-500 text-sm">@{user.username}</p>
-                <div className="mt-3">
+                <h1 className="text-lg sm:text-xl font-black text-white">{user.fullName}</h1>
+                <p className="text-gray-400 text-xs sm:text-sm">@{user.username}</p>
+                <div className="mt-2.5 sm:mt-3">
                   <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg ${theme.badgeBg} border ${theme.badgeBorder} ${theme.badgeText} text-xs font-bold uppercase tracking-wider`}>
                     <RoleIcon className="w-3.5 h-3.5" /> {theme.label}
                   </span>
@@ -79,44 +79,44 @@ export default function SharedProfileLayout({
                 
                 <div className="mt-4 flex items-center justify-center gap-6">
                   <div className="text-center">
-                    <p className="font-bold text-white text-lg leading-none">{connectionsCount}</p>
+                    <p className="font-bold text-white text-base sm:text-lg leading-none">{connectionsCount}</p>
                     <p className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">Connections</p>
                   </div>
                 </div>
 
-                {user.bio && <p className="text-gray-400 text-sm mt-4 leading-relaxed">{user.bio}</p>}
+                {user.bio && <p className="text-gray-300 text-xs sm:text-sm mt-3 sm:mt-4 leading-relaxed">{user.bio}</p>}
                 
                 {headerActions && (
-                  <div className="mt-5 flex items-center justify-center gap-3">
+                  <div className="mt-4 sm:mt-5 flex items-center justify-center gap-3">
                     {headerActions}
                   </div>
                 )}
               </div>
 
-              <div className="card space-y-3">
+              <div className="card p-4 sm:p-6 space-y-3">
                 {user.location && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <MapPin className="w-4 h-4 text-gray-600 flex-shrink-0" /><span className="text-gray-300">{user.location}</span>
+                  <div className="flex items-center gap-3 text-xs sm:text-sm">
+                    <MapPin className="w-4 h-4 text-gray-500 flex-shrink-0" /><span className="text-gray-300">{user.location}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-3 text-sm">
-                  <Mail className="w-4 h-4 text-gray-600 flex-shrink-0" /><span className="text-gray-300 truncate">{user.email}</span>
+                <div className="flex items-center gap-3 text-xs sm:text-sm">
+                  <Mail className="w-4 h-4 text-gray-500 flex-shrink-0" /><span className="text-gray-300 truncate">{user.email}</span>
                 </div>
                 {user.age && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <Calendar className="w-4 h-4 text-gray-600 flex-shrink-0" /><span className="text-gray-300">Age {user.age}</span>
+                  <div className="flex items-center gap-3 text-xs sm:text-sm">
+                    <Calendar className="w-4 h-4 text-gray-500 flex-shrink-0" /><span className="text-gray-300">Age {user.age}</span>
                   </div>
                 )}
                 {user.createdAt && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <Clock className="w-4 h-4 text-gray-600 flex-shrink-0" /><span className="text-gray-300">Joined {format(new Date(user.createdAt), 'MMM yyyy')}</span>
+                  <div className="flex items-center gap-3 text-xs sm:text-sm">
+                    <Clock className="w-4 h-4 text-gray-500 flex-shrink-0" /><span className="text-gray-300">Joined {format(new Date(user.createdAt), 'MMM yyyy')}</span>
                   </div>
                 )}
               </div>
 
               {sidebarExtra}
 
-              <div className="flex items-center justify-center gap-6 mt-4 py-4">
+              <div className="flex items-center justify-center gap-6 py-2">
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-blue-500 transition-all duration-300 hover:-translate-y-1"><Linkedin className="w-5 h-5" /></a>
                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-200 transition-all duration-300 hover:-translate-y-1"><Twitter className="w-5 h-5" /></a>
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-blue-600 transition-all duration-300 hover:-translate-y-1"><Facebook className="w-5 h-5" /></a>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { MessageCircleMore, Paperclip, SendHorizonal, Search, Sparkles, Plus } from 'lucide-react';
+import { MessageCircleMore, Paperclip, SendHorizonal, Search, Sparkles, Plus, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { usersAPI, messagesAPI } from '../../api';
 import type { User, MessageDTO } from '../../types';
@@ -60,6 +60,7 @@ export default function MessagesPage() {
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [threads, setThreads] = useState<ChatThread[]>([]);
   const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
+  const [mobileChatOpen, setMobileChatOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
@@ -129,6 +130,7 @@ export default function MessagesPage() {
 
     if (existing) {
       setActiveThreadId(existing.id);
+      setMobileChatOpen(true);
       setSearchTerm('');
       return;
     }
@@ -142,6 +144,7 @@ export default function MessagesPage() {
 
     setThreads([newThread, ...threads]);
     setActiveThreadId(newThread.id);
+    setMobileChatOpen(true);
     setSearchTerm('');
   };
 
@@ -203,7 +206,7 @@ export default function MessagesPage() {
 
         <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 shadow-2xl">
           <div className="grid min-h-[70vh] lg:grid-cols-[320px_minmax(0,1fr)]">
-            <aside className="border-b border-white/10 bg-slate-900/70 p-4 lg:border-b-0 lg:border-r">
+            <aside className={`border-b border-white/10 bg-slate-900/70 p-4 lg:border-b-0 lg:border-r ${mobileChatOpen ? 'hidden lg:block' : 'block lg:block'}`}>
               <div className="mb-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-400">
                 <div className="flex items-center gap-2">
                   <Search className="w-4 h-4" />
@@ -249,7 +252,10 @@ export default function MessagesPage() {
                   return (
                     <button
                       key={thread.id}
-                      onClick={() => setActiveThreadId(thread.id)}
+                      onClick={() => {
+                        setActiveThreadId(thread.id);
+                        setMobileChatOpen(true);
+                      }}
                       className={`flex w-full items-center gap-3 rounded-2xl border p-3 text-left transition-all ${
                         isActive ? 'border-blue-500/40 bg-blue-500/10' : 'border-white/10 bg-white/5 hover:bg-white/10'
                       }`}
@@ -272,11 +278,19 @@ export default function MessagesPage() {
               </div>
             </aside>
 
-            <section className="flex flex-col">
+            <section className={`flex-col ${mobileChatOpen ? 'flex flex-1' : 'hidden lg:flex'}`}>
               {activeParticipant ? (
                 <>
                   <div className="flex items-center justify-between border-b border-white/10 bg-slate-900/70 px-4 py-4">
                     <div className="flex items-center gap-3">
+                      {/* Mobile Back Arrow Button */}
+                      <button
+                        onClick={() => setMobileChatOpen(false)}
+                        className="lg:hidden p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors active:scale-95"
+                        title="Back to conversations"
+                      >
+                        <ArrowLeft className="w-5 h-5" />
+                      </button>
                       <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-600 font-semibold text-white">
                         {getInitials(activeParticipant.fullName || activeParticipant.username || 'User')}
                         <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-slate-900 bg-emerald-400" />

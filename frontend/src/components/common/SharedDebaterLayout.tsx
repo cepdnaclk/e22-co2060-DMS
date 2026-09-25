@@ -74,9 +74,21 @@ export default function SharedDebaterLayout({
   const statusText: Record<string, string> = { Win: 'text-emerald-400', Loss: 'text-red-400', Assigned: 'text-blue-400' };
 
   const sidebarExtra = badges.length > 0 ? (
-    <div className="card">
-      <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Badges</h3>
-      <div className="grid grid-cols-3 gap-2">
+    <div className="card p-4 sm:p-6">
+      <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Badges ({badges.length})</h3>
+      
+      {/* Mobile Badge View: Horizontal scrollable chips */}
+      <div className="flex sm:hidden overflow-x-auto gap-2.5 scrollbar-hide py-1 snap-x">
+        {badges.map(b => (
+          <div key={b.id} className={`flex-shrink-0 flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-gradient-to-br ${b.gradient} border ${b.border} snap-start`}>
+            <b.icon className={`w-4 h-4 ${b.iconColor} flex-shrink-0`} />
+            <span className={`text-xs font-semibold ${b.textColor} whitespace-nowrap`}>{b.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Badge View */}
+      <div className="hidden sm:grid grid-cols-3 gap-2">
         {badges.map(b => (
           <div key={b.id} className={`flex flex-col items-center gap-1.5 p-2.5 rounded-xl bg-gradient-to-br ${b.gradient} border ${b.border} hover:scale-105 transition-transform cursor-default`}>
             <b.icon className={`w-5 h-5 ${b.iconColor}`} />
@@ -91,20 +103,20 @@ export default function SharedDebaterLayout({
     <SharedProfileLayout user={user} notifications={notifications} isReadOnly={isReadOnly} loading={loading} onNotificationsChange={onNotificationsChange} sidebarExtra={sidebarExtra} headerActions={headerActions}>
       {/* Top Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="card lg:col-span-2">
-          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-5">Match Performance</h3>
-          <div className="flex flex-col sm:flex-row items-center gap-8">
+        <div className="card p-4 sm:p-6 lg:col-span-2">
+          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4 sm:mb-5">Match Performance</h3>
+          <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
             <DonutChart wins={wins} losses={losses} total={total} />
-            <div className="flex-1 grid grid-cols-2 gap-4 w-full">
+            <div className="flex-1 grid grid-cols-2 gap-3 sm:gap-4 w-full">
               {[
                 { val: wins, lbl: 'Wins', from: 'from-emerald-400', to: 'to-emerald-600' },
                 { val: losses, lbl: 'Losses', from: 'from-red-400', to: 'to-red-600' },
                 { val: total, lbl: 'Total Matches', from: 'from-blue-400', to: 'to-blue-600' },
                 { val: pom + bestDebater, lbl: 'Awards', from: 'from-violet-400', to: 'to-violet-600' },
               ].map(s => (
-                <div key={s.lbl} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03]">
-                  <div className={`w-2 h-8 rounded-full bg-gradient-to-b ${s.from} ${s.to}`} />
-                  <div><p className="text-2xl font-black text-white leading-none">{s.val}</p><p className="text-xs text-gray-500 mt-0.5">{s.lbl}</p></div>
+                <div key={s.lbl} className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl bg-white/[0.03]">
+                  <div className={`w-2 h-7 sm:h-8 rounded-full bg-gradient-to-b ${s.from} ${s.to}`} />
+                  <div><p className="text-xl sm:text-2xl font-black text-white leading-none">{s.val}</p><p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">{s.lbl}</p></div>
                 </div>
               ))}
             </div>

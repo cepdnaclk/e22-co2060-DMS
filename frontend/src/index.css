@@ -169,6 +169,12 @@
   .animate-slide-up {
     animation: slideUp 0.4s ease-out;
   }
+  .animate-slide-left {
+    animation: slideLeft 0.3s ease-out;
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
 }
 
 @keyframes fadeIn {
@@ -180,3 +186,9 @@
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+@keyframes slideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+

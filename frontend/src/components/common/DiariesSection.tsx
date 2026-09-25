@@ -217,7 +217,7 @@ export default function DiariesSection({ profileUserId }: DiariesSectionProps) {
   const isOrganizer = currentUser?.role === 'ORGANIZER';
 
   return (
-    <div id="diaries" className="card space-y-6">
+    <div id="diaries" className="card p-4 sm:p-6 space-y-6">
       {/* Header section with Create Button */}
       <div className="flex items-center justify-between pb-2 border-b border-white/5">
         <div>
@@ -262,7 +262,7 @@ export default function DiariesSection({ profileUserId }: DiariesSectionProps) {
               <div 
                 key={post.id} 
                 id={`post-${post.id}`}
-                className="p-5 rounded-2xl glass border border-white/5 hover:border-white/10 transition-all space-y-4"
+                className="p-4 sm:p-5 rounded-2xl glass border border-white/5 hover:border-white/10 transition-all space-y-4"
               >
                 {/* Post Author Info */}
                 <div className="flex items-center justify-between">

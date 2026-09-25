@@ -96,37 +96,48 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
-      <section className="relative min-h-[calc(100vh-76px)] overflow-hidden bg-[#eef5ff] border-b border-slate-300">
-        <div className="absolute right-[-9rem] top-40 h-[640px] w-[260px] rotate-12 border border-slate-300/70 bg-white/20" />
-        <div className="editorial-shell relative flex min-h-[calc(100vh-76px)] items-center py-20">
+      <section className="relative overflow-hidden bg-[#eef5ff] border-b border-slate-300">
+        <div className="hidden sm:block absolute right-[-9rem] top-40 h-[640px] w-[260px] rotate-12 border border-slate-300/70 bg-white/20" />
+        <div className="editorial-shell relative flex items-center py-10 sm:py-20 min-h-[auto] sm:min-h-[calc(100vh-76px)]">
           <div className="max-w-3xl">
-            <p className="eyebrow mb-7">Tournament intelligence for serious debate</p>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[0.95] text-[#06192b]">
+            <p className="eyebrow mb-4 sm:mb-7">Tournament intelligence for serious debate</p>
+            <h1 className="font-display text-3xl sm:text-6xl lg:text-7xl font-bold leading-tight sm:leading-[0.95] text-[#06192b]">
               Where Great Debates
               <span className="block italic text-[#8a6a00]">Come to Life</span>
             </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-700">
+            <p className="mt-4 sm:mt-8 max-w-2xl text-base sm:text-lg leading-relaxed sm:leading-8 text-slate-700">
               Manage tournaments, track scores, judge matches, and build your legacy in one calm platform designed for rigorous academic and competitive debate.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-4">
-              <Link to="/role-select" className="btn-primary text-xs">
+            <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+              <Link to="/role-select" className="btn-primary text-xs w-full sm:w-auto text-center active:scale-[0.98] transition-transform">
                 Get Started
               </Link>
-              <Link to="/forum" className="btn-secondary text-xs">
+              <Link to="/forum" className="btn-secondary text-xs w-full sm:w-auto text-center active:scale-[0.98] transition-transform">
                 Open Forum
               </Link>
-              <Link to="/scoring" className="inline-flex items-center gap-3 px-2 py-3 text-xs font-bold uppercase tracking-widest text-[#06192b]">
-                How Scoring Works <ArrowRight className="w-5 h-5" />
+              <Link to="/scoring" className="inline-flex items-center justify-center sm:justify-start gap-2 sm:gap-3 px-2 py-3 text-xs font-bold uppercase tracking-widest text-[#06192b]">
+                How Scoring Works <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="editorial-shell -mt-10 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-3 border border-slate-300 bg-white shadow-[0_18px_40px_rgba(6,25,43,0.08)]">
+      <section className="editorial-shell -mt-5 sm:-mt-10 relative z-10">
+        {/* Mobile compact 3-column metric bar */}
+        <div className="grid sm:hidden grid-cols-3 divide-x divide-slate-300 border border-slate-300 bg-white shadow-md p-4 text-center">
           {stats.map(stat => (
-            <div key={stat.label} className="p-6 text-center border-b sm:border-b-0 sm:border-r border-slate-300 last:border-0">
+            <div key={stat.label} className="px-1">
+              <p className="font-display text-2xl font-bold text-[#06192b]">{stat.value}</p>
+              <p className="eyebrow text-[9px] mt-1 text-slate-500 truncate">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop 3-column stats */}
+        <div className="hidden sm:grid grid-cols-3 border border-slate-300 bg-white shadow-[0_18px_40px_rgba(6,25,43,0.08)]">
+          {stats.map(stat => (
+            <div key={stat.label} className="p-6 text-center border-r border-slate-300 last:border-0">
               <p className="font-display text-4xl font-bold text-[#06192b]">{stat.value}</p>
               <p className="eyebrow mt-2 text-slate-500">{stat.label}</p>
             </div>
@@ -134,29 +145,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="editorial-shell py-20">
-        <div className="max-w-2xl mb-10">
+      <section className="editorial-shell py-12 sm:py-20">
+        <div className="max-w-2xl mb-8 sm:mb-10">
           <h2 className="section-title">Everything You Need</h2>
-          <p className="mt-4 text-slate-600 leading-7">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-600 leading-relaxed sm:leading-7">
             Built on structural integrity and editorial clarity, VIVAATHI gives organizers, judges, and debaters a shared operating room for competition day.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
           {[
             { icon: BarChart3, title: 'Structured Scoring', desc: 'Matter, Manner, Method, Rebuttal, and Teamwork criteria with transparent scoring ranges.' },
             { icon: Users, title: 'Role-Aware Workflows', desc: 'Separate paths for debaters, judges, and organizers without losing one shared source of truth.' },
             { icon: MessageSquareQuote, title: 'Argument Forum', desc: 'Topic-led proposition and opposition threads for practice, rebuttals, and debate literacy.' },
           ].map((feature, index) => (
-            <article key={feature.title} className={`paper-panel p-8 ${index === 2 ? 'lg:bg-[#06192b] lg:text-white' : ''}`}>
-              <div className={`w-12 h-12 flex items-center justify-center border mb-10 ${
+            <article key={feature.title} className={`paper-panel p-6 sm:p-8 ${index === 2 ? 'lg:bg-[#06192b] lg:text-white' : ''}`}>
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center border mb-6 sm:mb-10 ${
                 index === 2 ? 'bg-[#102a43] border-white/10 text-[#fff0bd]' : 'bg-[#eef5ff] border-slate-300 text-[#06192b]'
               }`}>
                 <feature.icon className="w-5 h-5" />
               </div>
-              <p className={`eyebrow mb-3 ${index === 2 ? 'text-slate-300' : 'text-slate-500'}`}>0{index + 1}</p>
-              <h3 className={`font-display text-2xl font-bold ${index === 2 ? 'text-white' : 'text-[#06192b]'}`}>{feature.title}</h3>
-              <p className={`mt-4 text-sm leading-7 ${index === 2 ? 'text-slate-300' : 'text-slate-600'}`}>{feature.desc}</p>
+              <p className={`eyebrow mb-2 sm:mb-3 ${index === 2 ? 'text-slate-300' : 'text-slate-500'}`}>0{index + 1}</p>
+              <h3 className={`font-display text-xl sm:text-2xl font-bold ${index === 2 ? 'text-white' : 'text-[#06192b]'}`}>{feature.title}</h3>
+              <p className={`mt-3 sm:mt-4 text-xs sm:text-sm leading-relaxed sm:leading-7 ${index === 2 ? 'text-slate-300' : 'text-slate-600'}`}>{feature.desc}</p>
             </article>
           ))}
         </div>

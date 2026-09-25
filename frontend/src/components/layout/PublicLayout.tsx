@@ -8,7 +8,7 @@ export default function PublicLayout() {
     <div className="page-bg">
       <ScrollToTop />
       <Navbar />
-      <main className="pt-16">
+      <main className="pt-16 pb-20 md:pb-0">
         <Outlet />
       </main>
       <Footer />

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiaryPostDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.dto</a> &gt; <span class="el_source">DiaryPostDTO.java</span></div><h1>DiaryPostDTO.java</h1><pre class="source lang-java linenums">package com.dms.dto;
+
+import com.dms.entity.DiaryPost;
+import com.dms.entity.User;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Data
+public class DiaryPostDTO {
+    private Long id;
+    private Long authorId;
+    private String authorName;
+    private String authorUsername;
+    private String authorProfilePictureUrl;
+    private String authorRole;
+    private String title;
+    private String content;
+    private String imageUrl;
+    private String videoUrl;
+    private Integer likesCount;
+    private Boolean isLikedByCurrentUser;
+    private List&lt;DiaryCommentDTO&gt; comments = new ArrayList&lt;&gt;();
+    private Integer shareCount;
+    private Boolean isVerified;
+    private LocalDateTime createdAt;
+
+    public static DiaryPostDTO from(DiaryPost p, User currentUser) {
+<span class="fc" id="L32">        DiaryPostDTO dto = new DiaryPostDTO();</span>
+<span class="fc" id="L33">        dto.setId(p.getId());</span>
+<span class="fc" id="L34">        dto.setTitle(p.getTitle());</span>
+<span class="fc" id="L35">        dto.setContent(p.getContent());</span>
+<span class="fc" id="L36">        dto.setImageUrl(p.getImageUrl());</span>
+<span class="fc" id="L37">        dto.setVideoUrl(p.getVideoUrl());</span>
+<span class="fc" id="L38">        dto.setShareCount(p.getShareCount());</span>
+<span class="fc" id="L39">        dto.setIsVerified(p.getIsVerified());</span>
+<span class="fc" id="L40">        dto.setCreatedAt(p.getCreatedAt());</span>
+
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (p.getAuthor() != null) {</span>
+<span class="fc" id="L43">            dto.setAuthorId(p.getAuthor().getId());</span>
+<span class="fc" id="L44">            dto.setAuthorName(p.getAuthor().getFullName());</span>
+<span class="fc" id="L45">            dto.setAuthorUsername(p.getAuthor().getUsername());</span>
+<span class="fc" id="L46">            dto.setAuthorProfilePictureUrl(p.getAuthor().getProfilePictureUrl());</span>
+<span class="fc" id="L47">            dto.setAuthorRole(p.getAuthor().getRole().toString());</span>
+        }
+
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        int likes = p.getLikes() != null ? p.getLikes().size() : 0;</span>
+<span class="fc" id="L51">        dto.setLikesCount(likes);</span>
+
+<span class="pc bpc" id="L53" title="1 of 6 branches missed.">        boolean liked = currentUser != null &amp;&amp; p.getLikes() != null &amp;&amp; p.getLikes().contains(currentUser);</span>
+<span class="fc" id="L54">        dto.setIsLikedByCurrentUser(liked);</span>
+
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (p.getComments() != null) {</span>
+<span class="fc" id="L57">            dto.setComments(p.getComments().stream()</span>
+<span class="fc" id="L58">                .map(DiaryCommentDTO::from)</span>
+<span class="fc" id="L59">                .collect(Collectors.toList()));</span>
+        }
+
+<span class="fc" id="L62">        return dto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

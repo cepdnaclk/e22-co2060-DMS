@@ -1,0 +1,363 @@
+{
+  "generatedAt": "2026-09-25T16:06:53.197Z",
+  "backend": {
+    "classes": {
+      "integration.AuthApiIntegrationTest": {
+        "total": 8,
+        "failed": 1
+      },
+      "integration.OwnershipSecurityIntegrationTest": {
+        "total": 8,
+        "failed": 7
+      },
+      "integration.RbacIntegrationTest": {
+        "total": 47,
+        "failed": 5
+      },
+      "integration.TournamentWorkflowIntegrationTest": {
+        "total": 7,
+        "failed": 2
+      },
+      "unit.AuthServiceTest": {
+        "total": 10,
+        "failed": 0
+      },
+      "unit.JwtUtilTest": {
+        "total": 5,
+        "failed": 0
+      },
+      "unit.ScoreSheetServiceTest": {
+        "total": 8,
+        "failed": 0
+      },
+      "unit.SocialServicesTest": {
+        "total": 13,
+        "failed": 0
+      },
+      "unit.TournamentAndMatchServiceTest": {
+        "total": 10,
+        "failed": 0
+      }
+    },
+    "total": 116,
+    "failed": 15,
+    "coverage": {
+      "config": {
+        "lines": 100,
+        "branches": null
+      },
+      "dto": {
+        "lines": 99.4,
+        "branches": 73.3
+      },
+      "exception": {
+        "lines": 72.7,
+        "branches": 60
+      },
+      "entity": {
+        "lines": 100,
+        "branches": null
+      },
+      "controller": {
+        "lines": 65.4,
+        "branches": 56.3
+      },
+      "service": {
+        "lines": 85.7,
+        "branches": 77.1
+      },
+      "security": {
+        "lines": 100,
+        "branches": 70
+      },
+      "TOTAL": {
+        "lines": 86.9,
+        "branches": 74.2
+      }
+    }
+  },
+  "frontend": {
+    "files": {
+      "src/App.test.tsx": {
+        "total": 18,
+        "failed": 0
+      },
+      "src/api/axios.test.ts": {
+        "total": 4,
+        "failed": 0
+      },
+      "src/context/AuthContext.test.tsx": {
+        "total": 8,
+        "failed": 0
+      },
+      "src/utils/utils.test.tsx": {
+        "total": 7,
+        "failed": 0
+      },
+      "src/pages/auth/LoginPage.test.tsx": {
+        "total": 7,
+        "failed": 0
+      },
+      "src/pages/auth/SignupPage.test.tsx": {
+        "total": 8,
+        "failed": 0
+      }
+    },
+    "total": 52,
+    "failed": 0,
+    "coverage": {
+      "lines": 78.9,
+      "statements": 76.11,
+      "branches": 74.37,
+      "functions": 73.97
+    }
+  },
+  "newman": {
+    "folders": {
+      "01 Health &amp; public pages": {
+        "requests": 4,
+        "assertions": 9,
+        "failedAssertions": 1
+      },
+      "02 Authentication": {
+        "requests": 13,
+        "assertions": 45,
+        "failedAssertions": 2
+      },
+      "03 Role-based access control": {
+        "requests": 5,
+        "assertions": 15,
+        "failedAssertions": 4
+      },
+      "04 Tournament lifecycle": {
+        "requests": 21,
+        "assertions": 65,
+        "failedAssertions": 4
+      },
+      "05 Social features": {
+        "requests": 21,
+        "assertions": 52,
+        "failedAssertions": 0
+      },
+      "06 Ownership &amp; privacy": {
+        "requests": 5,
+        "assertions": 11,
+        "failedAssertions": 5
+      }
+    },
+    "requests": 69,
+    "requestsWithFailures": 15,
+    "assertions": 197,
+    "failedAssertions": 16
+  },
+  "playwright": {
+    "tests": [
+      {
+        "file": "01-auth.spec.ts",
+        "title": "organizer logs in through the UI and lands on their dashboard",
+        "status": "passed",
+        "ms": 1291
+      },
+      {
+        "file": "01-auth.spec.ts",
+        "title": "judge logs in through the UI and lands on their dashboard",
+        "status": "passed",
+        "ms": 1092
+      },
+      {
+        "file": "01-auth.spec.ts",
+        "title": "debaterA logs in through the UI and lands on their dashboard",
+        "status": "passed",
+        "ms": 1037
+      },
+      {
+        "file": "01-auth.spec.ts",
+        "title": "wrong password shows an error and stays on the login page",
+        "status": "passed",
+        "ms": 998
+      },
+      {
+        "file": "01-auth.spec.ts",
+        "title": "new user can sign up and is taken to their dashboard",
+        "status": "passed",
+        "ms": 1224
+      },
+      {
+        "file": "01-auth.spec.ts",
+        "title": "logged-out visitor cannot open the organizer dashboard",
+        "status": "passed",
+        "ms": 1132
+      },
+      {
+        "file": "01-auth.spec.ts",
+        "title": "debater cannot open the create-tournament page",
+        "status": "passed",
+        "ms": 1155
+      },
+      {
+        "file": "01-auth.spec.ts",
+        "title": "user can log out from the navbar menu",
+        "status": "passed",
+        "ms": 2009
+      },
+      {
+        "file": "02-session.spec.ts",
+        "title": "logging in as another user in a second tab warns the first tab",
+        "status": "passed",
+        "ms": 1333
+      },
+      {
+        "file": "02-session.spec.ts",
+        "title": "logging out in a second tab tells the first tab the session ended",
+        "status": "passed",
+        "ms": 1242
+      },
+      {
+        "file": "02-session.spec.ts",
+        "title": "an expired token sends the user back to login",
+        "status": "failed",
+        "ms": 15915
+      },
+      {
+        "file": "03-tournament.spec.ts",
+        "title": "organizer creates a tournament with the 6-step wizard",
+        "status": "passed",
+        "ms": 2221
+      },
+      {
+        "file": "03-tournament.spec.ts",
+        "title": "a visitor can find the new tournament with search",
+        "status": "passed",
+        "ms": 972
+      },
+      {
+        "file": "03-tournament.spec.ts",
+        "title": "judge opens the score sheet for an assigned match",
+        "status": "passed",
+        "ms": 1068
+      },
+      {
+        "file": "03-tournament.spec.ts",
+        "title": "judge submits the score sheet",
+        "status": "passed",
+        "ms": 1153
+      },
+      {
+        "file": "03-tournament.spec.ts",
+        "title": "match result appears on the tournament page",
+        "status": "passed",
+        "ms": 990
+      },
+      {
+        "file": "04-public.spec.ts",
+        "title": "/ loads without errors",
+        "status": "passed",
+        "ms": 1052
+      },
+      {
+        "file": "04-public.spec.ts",
+        "title": "/news loads without errors",
+        "status": "passed",
+        "ms": 1141
+      },
+      {
+        "file": "04-public.spec.ts",
+        "title": "/about loads without errors",
+        "status": "passed",
+        "ms": 1184
+      },
+      {
+        "file": "04-public.spec.ts",
+        "title": "/scoring loads without errors",
+        "status": "passed",
+        "ms": 1152
+      },
+      {
+        "file": "04-public.spec.ts",
+        "title": "search finds seeded debaters",
+        "status": "passed",
+        "ms": 1213
+      },
+      {
+        "file": "04-public.spec.ts",
+        "title": "home page loads live matches for visitors without API errors",
+        "status": "failed",
+        "ms": 1699
+      },
+      {
+        "file": "04-public.spec.ts",
+        "title": "layout works on a phone-sized screen",
+        "status": "passed",
+        "ms": 1219
+      },
+      {
+        "file": "05-score-sheet.spec.ts",
+        "title": "score sheet shows the organizer's custom criteria",
+        "status": "failed",
+        "ms": 11389
+      },
+      {
+        "file": "05-score-sheet.spec.ts",
+        "title": "after submitting, reopening the sheet shows \"already submitted\"",
+        "status": "failed",
+        "ms": 11434
+      }
+    ],
+    "total": 25,
+    "passed": 21
+  },
+  "lighthouse": {
+    "home": {
+      "url": "http://localhost:5174/",
+      "scores": {
+        "performance": 99,
+        "accessibility": 94,
+        "best-practices": 96,
+        "seo": 83
+      },
+      "fcp": 683.0952,
+      "lcp": 932.1655999999999,
+      "tbt": 0,
+      "cls": 0.0003396354641863819
+    },
+    "login": {
+      "url": "http://localhost:5174/login",
+      "scores": {
+        "performance": 100,
+        "accessibility": 81,
+        "best-practices": 100,
+        "seo": 83
+      },
+      "fcp": 671.2126,
+      "lcp": 671.2126,
+      "tbt": 0,
+      "cls": 0.001191317748008055
+    },
+    "news": {
+      "url": "http://localhost:5174/news",
+      "scores": {
+        "performance": 99,
+        "accessibility": 94,
+        "best-practices": 100,
+        "seo": 83
+      },
+      "fcp": 673.1315999999999,
+      "lcp": 883.9694499999999,
+      "tbt": 0,
+      "cls": 0.0002318068974861987
+    },
+    "roleselect": {
+      "url": "http://localhost:5174/role-select",
+      "scores": {
+        "performance": 99,
+        "accessibility": 94,
+        "best-practices": 100,
+        "seo": 83
+      },
+      "fcp": 618.7292999999999,
+      "lcp": 846.1263,
+      "tbt": 0,
+      "cls": 0.0004909489099028106
+    }
+  }
+}

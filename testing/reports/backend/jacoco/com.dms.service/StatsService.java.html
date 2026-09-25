@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StatsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.service</a> &gt; <span class="el_source">StatsService.java</span></div><h1>StatsService.java</h1><pre class="source lang-java linenums">package com.dms.service;
+
+import com.dms.dto.DebaterStatsDTO;
+import com.dms.entity.*;
+import com.dms.repository.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class StatsService {
+
+    private final DebaterStatsRepository debaterStatsRepository;
+    private final JudgeStatsRepository judgeStatsRepository;
+    private final UserRepository userRepository;
+    private final MatchRepository matchRepository;
+    private final SchoolRepository schoolRepository;
+    private final TournamentRepository tournamentRepository;
+
+    public DebaterStatsDTO getDebaterStats(Long id) {
+<span class="fc" id="L26">        User user = userRepository.findById(id)</span>
+<span class="pc" id="L27">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L28">        DebaterStats stats = debaterStatsRepository.findByDebater(user)</span>
+<span class="fc" id="L29">            .orElse(DebaterStats.builder().debater(user).matchesPlayed(0).wins(0).losses(0).playerOfMatchCount(0).build());</span>
+<span class="fc" id="L30">        return DebaterStatsDTO.from(stats);</span>
+    }
+
+    public Map&lt;String, Object&gt; getJudgeStats(Long id) {
+<span class="fc" id="L34">        User user = userRepository.findById(id)</span>
+<span class="pc" id="L35">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L36">        JudgeStats stats = judgeStatsRepository.findByJudge(user)</span>
+<span class="fc" id="L37">            .orElse(JudgeStats.builder().judge(user).matchesJudged(0).build());</span>
+<span class="fc" id="L38">        Map&lt;String, Object&gt; result = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L39">        result.put(&quot;judgeId&quot;, id);</span>
+<span class="fc" id="L40">        result.put(&quot;matchesJudged&quot;, stats.getMatchesJudged());</span>
+<span class="fc" id="L41">        return result;</span>
+    }
+
+    public List&lt;DebaterStatsDTO&gt; getTopDebaters() {
+<span class="fc" id="L45">        return debaterStatsRepository.findTopDebaters().stream()</span>
+<span class="fc" id="L46">            .limit(10)</span>
+<span class="fc" id="L47">            .map(DebaterStatsDTO::from)</span>
+<span class="fc" id="L48">            .collect(Collectors.toList());</span>
+    }
+
+    public List&lt;SchoolLeaderboardEntry&gt; getTournamentLeaderboard(Long tournamentId) {
+<span class="fc" id="L52">        Tournament tournament = tournamentRepository.findById(tournamentId)</span>
+<span class="pc" id="L53">            .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="fc" id="L54">        List&lt;School&gt; schools = schoolRepository.findByTournament(tournament);</span>
+<span class="fc" id="L55">        List&lt;Match&gt; matches = matchRepository.findByTournament(tournament);</span>
+
+<span class="fc" id="L57">        Map&lt;Long, SchoolLeaderboardEntry&gt; leaderboard = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (School school : schools) {</span>
+<span class="fc" id="L59">            leaderboard.put(school.getId(), new SchoolLeaderboardEntry(</span>
+<span class="fc" id="L60">                school.getId(), school.getName(), 0, 0, 0, 0, 0.0));</span>
+<span class="fc" id="L61">        }</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (Match match : matches) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            if (match.getStatus() != Match.Status.COMPLETED) continue;</span>
+<span class="fc" id="L65">            Long propId = match.getPropositionSchool().getId();</span>
+<span class="fc" id="L66">            Long oppId = match.getOppositionSchool().getId();</span>
+
+<span class="fc" id="L68">            leaderboard.computeIfPresent(propId, (k, e) -&gt; {</span>
+<span class="fc" id="L69">                e.setPlayed(e.getPlayed() + 1);</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">                if (match.getWinnerSchool() != null &amp;&amp; match.getWinnerSchool().getId().equals(propId))</span>
+<span class="fc" id="L71">                    e.setWins(e.getWins() + 1);</span>
+<span class="fc" id="L72">                else e.setLosses(e.getLosses() + 1);</span>
+<span class="fc" id="L73">                e.setPoints(e.getWins() * 2);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">                e.setWinRate(e.getPlayed() &gt; 0 ? (double) e.getWins() / e.getPlayed() * 100 : 0);</span>
+<span class="fc" id="L75">                return e;</span>
+            });
+<span class="fc" id="L77">            leaderboard.computeIfPresent(oppId, (k, e) -&gt; {</span>
+<span class="fc" id="L78">                e.setPlayed(e.getPlayed() + 1);</span>
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">                if (match.getWinnerSchool() != null &amp;&amp; match.getWinnerSchool().getId().equals(oppId))</span>
+<span class="fc" id="L80">                    e.setWins(e.getWins() + 1);</span>
+<span class="fc" id="L81">                else e.setLosses(e.getLosses() + 1);</span>
+<span class="fc" id="L82">                e.setPoints(e.getWins() * 2);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">                e.setWinRate(e.getPlayed() &gt; 0 ? (double) e.getWins() / e.getPlayed() * 100 : 0);</span>
+<span class="fc" id="L84">                return e;</span>
+            });
+<span class="fc" id="L86">        }</span>
+
+<span class="fc" id="L88">        return leaderboard.values().stream()</span>
+<span class="fc" id="L89">            .sorted(Comparator.comparingInt(SchoolLeaderboardEntry::getPoints).reversed())</span>
+<span class="fc" id="L90">            .collect(Collectors.toList());</span>
+    }
+
+    @Data @AllArgsConstructor
+    public static class SchoolLeaderboardEntry {
+        private Long schoolId;
+        private String schoolName;
+        private int played;
+        private int wins;
+        private int losses;
+        private int points;
+        private double winRate;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

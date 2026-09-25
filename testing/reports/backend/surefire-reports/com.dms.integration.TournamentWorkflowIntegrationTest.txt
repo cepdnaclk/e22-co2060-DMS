@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------------
+Test set: com.dms.integration.TournamentWorkflowIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 2.577 s <<< FAILURE! -- in com.dms.integration.TournamentWorkflowIntegrationTest
+com.dms.integration.TournamentWorkflowIntegrationTest.submissionReadBack -- Time elapsed: 0.583 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[GET /api/score-sheets/{match}/{judge} response body: {"error":"Type definition error: [simple type, class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor]","timestamp":"2026-09-25T21:00:26.184591900"}] 
+expected: 200
+ but was: 400
+	at com.dms.integration.TournamentWorkflowIntegrationTest.submissionReadBack(TournamentWorkflowIntegrationTest.java:199)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.dms.integration.TournamentWorkflowIntegrationTest.scoreTemplateReadBack -- Time elapsed: 0.302 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[GET /api/score-templates/{id} response body: {"error":"Type definition error: [simple type, class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor]","timestamp":"2026-09-25T21:00:28.174106200"}] 
+expected: 200
+ but was: 400
+	at com.dms.integration.TournamentWorkflowIntegrationTest.scoreTemplateReadBack(TournamentWorkflowIntegrationTest.java:177)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

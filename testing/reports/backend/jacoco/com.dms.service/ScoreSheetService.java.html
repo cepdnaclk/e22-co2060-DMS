@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScoreSheetService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.service</a> &gt; <span class="el_source">ScoreSheetService.java</span></div><h1>ScoreSheetService.java</h1><pre class="source lang-java linenums">package com.dms.service;
+
+import com.dms.dto.*;
+import com.dms.entity.*;
+import com.dms.repository.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class ScoreSheetService {
+
+    private final ScoreSheetSubmissionRepository submissionRepository;
+    private final ScoreSheetTemplateRepository templateRepository;
+    private final MatchRepository matchRepository;
+    private final MatchJudgeRepository matchJudgeRepository;
+    private final UserRepository userRepository;
+    private final NotificationService notificationService;
+    private final DebaterStatsRepository debaterStatsRepository;
+    private final JudgeStatsRepository judgeStatsRepository;
+    private final SchoolDebaterRepository schoolDebaterRepository;
+    private final TournamentRepository tournamentRepository;
+
+    public ScoreSheetTemplate getTemplate(Long tournamentId) {
+<span class="fc" id="L30">        Tournament t = tournamentRepository.findById(tournamentId)</span>
+<span class="pc" id="L31">            .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="fc" id="L32">        return templateRepository.findTopByTournamentOrderByCreatedAtDesc(t)</span>
+<span class="fc" id="L33">            .orElse(null);</span>
+    }
+
+    @Transactional
+    public ScoreSheetTemplate saveTemplate(Long tournamentId, String name, String criteriaJson) {
+<span class="fc" id="L38">        Tournament t = tournamentRepository.findById(tournamentId)</span>
+<span class="pc" id="L39">            .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="fc" id="L40">        ScoreSheetTemplate tmpl = ScoreSheetTemplate.builder()</span>
+<span class="fc" id="L41">            .tournament(t).name(name).criteriaJson(criteriaJson).build();</span>
+<span class="fc" id="L42">        return templateRepository.save(tmpl);</span>
+    }
+
+    public ScoreSheetSubmission getSubmission(Long matchId, Long judgeId) {
+<span class="fc" id="L46">        Match match = matchRepository.findById(matchId)</span>
+<span class="pc" id="L47">            .orElseThrow(() -&gt; new RuntimeException(&quot;Match not found&quot;));</span>
+<span class="fc" id="L48">        User judge = userRepository.findById(judgeId)</span>
+<span class="pc" id="L49">            .orElseThrow(() -&gt; new RuntimeException(&quot;Judge not found&quot;));</span>
+<span class="fc" id="L50">        return submissionRepository.findByMatchAndJudge(match, judge).orElse(null);</span>
+    }
+
+    @Transactional
+    public ScoreSheetSubmission submitScoreSheet(ScoreSheetSubmissionRequest req, String callerUsername) {
+        // ── Backend enforcement: verify the JWT-authenticated caller IS the judge ──
+<span class="fc" id="L56">        User caller = userRepository.findByUsername(callerUsername)</span>
+<span class="pc" id="L57">            .orElseThrow(() -&gt; new RuntimeException(&quot;Unauthorized: caller not found&quot;));</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (!caller.getId().equals(req.getJudgeId())) {</span>
+<span class="fc" id="L60">            throw new RuntimeException(&quot;Access denied: you can only submit scores as yourself&quot;);</span>
+        }
+
+<span class="fc" id="L63">        Match match = matchRepository.findById(req.getMatchId())</span>
+<span class="pc" id="L64">            .orElseThrow(() -&gt; new RuntimeException(&quot;Match not found&quot;));</span>
+
+        // Verify this judge is actually assigned to the match by the organizer
+<span class="fc" id="L67">        boolean isAssigned = matchJudgeRepository.findByMatchAndJudge(match, caller).isPresent();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (!isAssigned) {</span>
+<span class="fc" id="L69">            throw new RuntimeException(&quot;Access denied: you are not assigned as a judge for this match&quot;);</span>
+        }
+
+<span class="fc" id="L72">        User judge = caller; // identity confirmed — no need to re-fetch by req.getJudgeId()</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (submissionRepository.existsByMatchAndJudge(match, judge)) {</span>
+<span class="fc" id="L75">            throw new RuntimeException(&quot;This judge has already submitted scores&quot;);</span>
+        }
+
+<span class="fc" id="L78">        User bestSpeaker = null;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (req.getSelectedBestSpeakerId() != null) {</span>
+<span class="fc" id="L80">            bestSpeaker = userRepository.findById(req.getSelectedBestSpeakerId()).orElse(null);</span>
+        }
+
+<span class="fc" id="L83">        ScoreSheetSubmission submission = ScoreSheetSubmission.builder()</span>
+<span class="fc" id="L84">            .match(match)</span>
+<span class="fc" id="L85">            .judge(judge)</span>
+<span class="fc" id="L86">            .propositionScoresJson(req.getPropositionScoresJson())</span>
+<span class="fc" id="L87">            .oppositionScoresJson(req.getOppositionScoresJson())</span>
+<span class="fc" id="L88">            .propositionTotal(req.getPropositionTotal())</span>
+<span class="fc" id="L89">            .oppositionTotal(req.getOppositionTotal())</span>
+<span class="fc" id="L90">            .selectedBestSpeaker(bestSpeaker)</span>
+<span class="fc" id="L91">            .comments(req.getComments())</span>
+<span class="fc" id="L92">            .build();</span>
+
+<span class="fc" id="L94">        submission = submissionRepository.save(submission);</span>
+
+        // Mark match judge as submitted
+<span class="fc" id="L97">        matchJudgeRepository.findByMatchAndJudge(match, judge).ifPresent(mj -&gt; {</span>
+<span class="fc" id="L98">            mj.setSubmitted(true);</span>
+<span class="fc" id="L99">            matchJudgeRepository.save(mj);</span>
+<span class="fc" id="L100">        });</span>
+
+        // Update judge stats
+<span class="fc" id="L103">        judgeStatsRepository.findByJudge(judge).ifPresent(js -&gt; {</span>
+<span class="fc" id="L104">            js.setMatchesJudged(js.getMatchesJudged() + 1);</span>
+<span class="fc" id="L105">            judgeStatsRepository.save(js);</span>
+<span class="fc" id="L106">        });</span>
+
+        // Notify organizer
+<span class="fc" id="L109">        notificationService.send(match.getTournament().getOrganizer(),</span>
+            &quot;Score Sheet Submitted&quot;,
+<span class="fc" id="L111">            judge.getFullName() + &quot; submitted scores for &quot; + match.getMatchCode());</span>
+
+        // Check if all judges submitted
+<span class="fc" id="L114">        List&lt;MatchJudge&gt; judges = matchJudgeRepository.findByMatch(match);</span>
+<span class="fc" id="L115">        boolean allSubmitted = judges.stream().allMatch(MatchJudge::getSubmitted);</span>
+
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">        if (allSubmitted &amp;&amp; !judges.isEmpty()) {</span>
+<span class="fc" id="L118">            completeMatch(match);</span>
+        }
+
+<span class="fc" id="L121">        return submission;</span>
+    }
+
+    private void completeMatch(Match match) {
+<span class="fc" id="L125">        List&lt;ScoreSheetSubmission&gt; submissions = submissionRepository.findByMatch(match);</span>
+
+<span class="fc" id="L127">        double avgProp = submissions.stream()</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">            .mapToDouble(s -&gt; s.getPropositionTotal() != null ? s.getPropositionTotal() : 0)</span>
+<span class="fc" id="L129">            .average().orElse(0);</span>
+<span class="fc" id="L130">        double avgOpp = submissions.stream()</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">            .mapToDouble(s -&gt; s.getOppositionTotal() != null ? s.getOppositionTotal() : 0)</span>
+<span class="fc" id="L132">            .average().orElse(0);</span>
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        School winner = avgProp &gt;= avgOpp</span>
+<span class="fc" id="L135">            ? match.getPropositionSchool() : match.getOppositionSchool();</span>
+
+        // Determine best speaker by votes
+<span class="fc" id="L138">        Map&lt;Long, Long&gt; voteCount = submissions.stream()</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            .filter(s -&gt; s.getSelectedBestSpeaker() != null)</span>
+<span class="fc" id="L140">            .collect(Collectors.groupingBy(</span>
+<span class="fc" id="L141">                s -&gt; s.getSelectedBestSpeaker().getId(),</span>
+<span class="fc" id="L142">                Collectors.counting()</span>
+            ));
+<span class="fc" id="L144">        User bestSpeaker = voteCount.entrySet().stream()</span>
+<span class="fc" id="L145">            .max(Map.Entry.comparingByValue())</span>
+<span class="fc" id="L146">            .flatMap(e -&gt; userRepository.findById(e.getKey()))</span>
+<span class="fc" id="L147">            .orElse(null);</span>
+
+<span class="fc" id="L149">        match.setWinnerSchool(winner);</span>
+<span class="fc" id="L150">        match.setBestSpeaker(bestSpeaker);</span>
+<span class="fc" id="L151">        match.setStatus(Match.Status.COMPLETED);</span>
+<span class="fc" id="L152">        matchRepository.save(match);</span>
+
+        // Update debater stats
+<span class="fc" id="L155">        List&lt;SchoolDebater&gt; propDebaters = schoolDebaterRepository.findBySchool(match.getPropositionSchool());</span>
+<span class="fc" id="L156">        List&lt;SchoolDebater&gt; oppDebaters = schoolDebaterRepository.findBySchool(match.getOppositionSchool());</span>
+
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        for (SchoolDebater sd : propDebaters) {</span>
+<span class="fc" id="L159">            updateDebaterStats(sd.getDebater(), winner.equals(match.getPropositionSchool()),</span>
+<span class="fc" id="L160">                sd.getDebater().equals(bestSpeaker));</span>
+<span class="fc" id="L161">        }</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        for (SchoolDebater sd : oppDebaters) {</span>
+<span class="fc" id="L163">            updateDebaterStats(sd.getDebater(), winner.equals(match.getOppositionSchool()),</span>
+<span class="fc" id="L164">                sd.getDebater().equals(bestSpeaker));</span>
+<span class="fc" id="L165">        }</span>
+
+        // Notify organizer
+<span class="fc" id="L168">        notificationService.send(match.getTournament().getOrganizer(),</span>
+            &quot;Match Completed&quot;,
+<span class="fc" id="L170">            match.getMatchCode() + &quot; completed. Winner: &quot; + winner.getName());</span>
+<span class="fc" id="L171">    }</span>
+
+    private void updateDebaterStats(User debater, boolean won, boolean isBestSpeaker) {
+<span class="fc" id="L174">        DebaterStats stats = debaterStatsRepository.findByDebater(debater)</span>
+<span class="fc" id="L175">            .orElse(DebaterStats.builder().debater(debater).build());</span>
+<span class="fc" id="L176">        stats.setMatchesPlayed(stats.getMatchesPlayed() + 1);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (won) stats.setWins(stats.getWins() + 1);</span>
+<span class="fc" id="L178">        else stats.setLosses(stats.getLosses() + 1);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (isBestSpeaker) stats.setPlayerOfMatchCount(stats.getPlayerOfMatchCount() + 1);</span>
+<span class="fc" id="L180">        debaterStatsRepository.save(stats);</span>
+<span class="fc" id="L181">    }</span>
+
+    @Transactional
+    public void reopenScoreSheet(Long submissionId) {
+<span class="fc" id="L185">        ScoreSheetSubmission sub = submissionRepository.findById(submissionId)</span>
+<span class="fc" id="L186">            .orElseThrow(() -&gt; new RuntimeException(&quot;Submission not found&quot;));</span>
+<span class="fc" id="L187">        sub.setReopened(true);</span>
+<span class="fc" id="L188">        submissionRepository.save(sub);</span>
+
+<span class="fc" id="L190">        matchJudgeRepository.findByMatchAndJudge(sub.getMatch(), sub.getJudge()).ifPresent(mj -&gt; {</span>
+<span class="fc" id="L191">            mj.setSubmitted(false);</span>
+<span class="fc" id="L192">            matchJudgeRepository.save(mj);</span>
+<span class="fc" id="L193">        });</span>
+<span class="fc" id="L194">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

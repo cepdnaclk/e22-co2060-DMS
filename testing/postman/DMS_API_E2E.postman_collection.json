@@ -1,0 +1,2587 @@
+{
+  "info": {
+    "name": "DMS API End-to-End Tests",
+    "description": "End-to-end API scenario for the Debate Management System: authentication, role-based access control, full tournament lifecycle (create → match → judge scoring → results), social features, and security checks.\n\nRun against a disposable database. Requests run in order and share state through environment variables.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.environment.get(\"runId\")) {",
+          "      pm.environment.set(\"runId\", Date.now().toString(36));",
+          "    }"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test(\"Response time is under 2000 ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+        ]
+      }
+    }
+  ],
+  "variable": [],
+  "item": [
+    {
+      "name": "01 Health & public pages",
+      "description": "Endpoints a logged-out visitor uses on the home page.",
+      "item": [
+        {
+          "name": "List tournaments (public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Body is an array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Top debaters (public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/top-debaters",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "top-debaters"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "News feed (public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/news",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "news"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Live matches (used by public home page)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/live",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "matches",
+                "live"
+              ]
+            },
+            "description": "The home page calls this without a token to show the \"Live Matches\" counter."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Visitors can load live matches (200)\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02 Authentication",
+      "description": "Sign-up for every role, login with username/email, error handling.",
+      "item": [
+        {
+          "name": "Sign up organizer (organizer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Postman organizer\",\n  \"username\": \"pm_organizer_{{runId}}\",\n  \"email\": \"pm_organizer_{{runId}}@test.dms\",\n  \"password\": \"password123\",\n  \"role\": \"ORGANIZER\",\n  \"bio\": \"Created by the Postman E2E run\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const res = pm.response.json();",
+                  "pm.test(\"Returns a JWT token\", () => pm.expect(res.token).to.match(/^[\\w-]+\\.[\\w-]+\\.[\\w-]+$/));",
+                  "pm.test(\"Role is ORGANIZER\", () => pm.expect(res.user.role).to.eql(\"ORGANIZER\"));",
+                  "pm.test(\"Password hash is never returned\", () => pm.expect(res.user).to.not.have.property(\"passwordHash\"));",
+                  "pm.environment.set(\"organizerToken\", res.token);",
+                  "pm.environment.set(\"organizerId\", res.user.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sign up judge (judge1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Postman judge1\",\n  \"username\": \"pm_judge1_{{runId}}\",\n  \"email\": \"pm_judge1_{{runId}}@test.dms\",\n  \"password\": \"password123\",\n  \"role\": \"JUDGE\",\n  \"bio\": \"Created by the Postman E2E run\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const res = pm.response.json();",
+                  "pm.test(\"Returns a JWT token\", () => pm.expect(res.token).to.match(/^[\\w-]+\\.[\\w-]+\\.[\\w-]+$/));",
+                  "pm.test(\"Role is JUDGE\", () => pm.expect(res.user.role).to.eql(\"JUDGE\"));",
+                  "pm.test(\"Password hash is never returned\", () => pm.expect(res.user).to.not.have.property(\"passwordHash\"));",
+                  "pm.environment.set(\"judge1Token\", res.token);",
+                  "pm.environment.set(\"judge1Id\", res.user.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sign up judge (judge2)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Postman judge2\",\n  \"username\": \"pm_judge2_{{runId}}\",\n  \"email\": \"pm_judge2_{{runId}}@test.dms\",\n  \"password\": \"password123\",\n  \"role\": \"JUDGE\",\n  \"bio\": \"Created by the Postman E2E run\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const res = pm.response.json();",
+                  "pm.test(\"Returns a JWT token\", () => pm.expect(res.token).to.match(/^[\\w-]+\\.[\\w-]+\\.[\\w-]+$/));",
+                  "pm.test(\"Role is JUDGE\", () => pm.expect(res.user.role).to.eql(\"JUDGE\"));",
+                  "pm.test(\"Password hash is never returned\", () => pm.expect(res.user).to.not.have.property(\"passwordHash\"));",
+                  "pm.environment.set(\"judge2Token\", res.token);",
+                  "pm.environment.set(\"judge2Id\", res.user.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sign up debater (debaterA)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Postman debaterA\",\n  \"username\": \"pm_debaterA_{{runId}}\",\n  \"email\": \"pm_debaterA_{{runId}}@test.dms\",\n  \"password\": \"password123\",\n  \"role\": \"DEBATER\",\n  \"bio\": \"Created by the Postman E2E run\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const res = pm.response.json();",
+                  "pm.test(\"Returns a JWT token\", () => pm.expect(res.token).to.match(/^[\\w-]+\\.[\\w-]+\\.[\\w-]+$/));",
+                  "pm.test(\"Role is DEBATER\", () => pm.expect(res.user.role).to.eql(\"DEBATER\"));",
+                  "pm.test(\"Password hash is never returned\", () => pm.expect(res.user).to.not.have.property(\"passwordHash\"));",
+                  "pm.environment.set(\"debaterAToken\", res.token);",
+                  "pm.environment.set(\"debaterAId\", res.user.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sign up debater (debaterB)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Postman debaterB\",\n  \"username\": \"pm_debaterB_{{runId}}\",\n  \"email\": \"pm_debaterB_{{runId}}@test.dms\",\n  \"password\": \"password123\",\n  \"role\": \"DEBATER\",\n  \"bio\": \"Created by the Postman E2E run\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const res = pm.response.json();",
+                  "pm.test(\"Returns a JWT token\", () => pm.expect(res.token).to.match(/^[\\w-]+\\.[\\w-]+\\.[\\w-]+$/));",
+                  "pm.test(\"Role is DEBATER\", () => pm.expect(res.user.role).to.eql(\"DEBATER\"));",
+                  "pm.test(\"Password hash is never returned\", () => pm.expect(res.user).to.not.have.property(\"passwordHash\"));",
+                  "pm.environment.set(\"debaterBToken\", res.token);",
+                  "pm.environment.set(\"debaterBId\", res.user.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Duplicate username is rejected",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Dup\",\n  \"username\": \"pm_organizer_{{runId}}\",\n  \"email\": \"other_{{runId}}@test.dms\",\n  \"password\": \"password123\",\n  \"role\": \"DEBATER\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "    pm.test(\"Error explains the problem\", () => pm.expect(pm.response.json().error).to.eql(\"Username already taken\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalid e-mail is rejected at signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Bad\",\n  \"username\": \"pm_bademail_{{runId}}\",\n  \"email\": \"not-an-email\",\n  \"password\": \"password123\",\n  \"role\": \"DEBATER\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Invalid e-mail gives 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login with username",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usernameOrEmail\": \"pm_judge1_{{runId}}\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Logged in as the judge\", () => pm.expect(pm.response.json().user.role).to.eql(\"JUDGE\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login with e-mail",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usernameOrEmail\": \"pm_judge1_{{runId}}@test.dms\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login with seeded demo account (organizer1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usernameOrEmail\": \"organizer1\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login with wrong password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usernameOrEmail\": \"pm_judge1_{{runId}}\",\n  \"password\": \"wrong\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "    pm.test(\"Generic 'Invalid credentials' message\", () => pm.expect(pm.response.json().error).to.eql(\"Invalid credentials\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Current user (/auth/me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Returns the logged-in user\", () => pm.expect(pm.response.json().id).to.eql(pm.environment.get(\"debaterAId\")));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Current user without token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No token gives 401 Unauthorized\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03 Role-based access control",
+      "description": "Organizer-only actions attempted by other roles and by anonymous callers.",
+      "item": [
+        {
+          "name": "Debater tries to create a tournament",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Debater Cup\",\n  \"debateType\": \"TRADITIONAL\",\n  \"tournamentType\": \"LEAGUE\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Request is blocked (no 2xx)\", () => pm.expect(pm.response.code).to.be.within(400, 403));",
+                  "    pm.test(\"Blocked by the role check\", () => pm.expect(pm.response.text()).to.include(\"Access Denied\"));",
+                  "    ",
+                  "pm.test(\"Uses HTTP 403 Forbidden\", () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge tries to create a match",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/matches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "matches"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tournamentId\": 1,\n  \"propositionSchoolId\": 1,\n  \"oppositionSchoolId\": 2,\n  \"topic\": \"x\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Request is blocked (no 2xx)\", () => pm.expect(pm.response.code).to.be.within(400, 403));",
+                  "    ",
+                  "pm.test(\"Uses HTTP 403 Forbidden\", () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Anonymous tries to create a tournament",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Anon Cup\",\n  \"debateType\": \"TRADITIONAL\",\n  \"tournamentType\": \"LEAGUE\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Request is blocked (no 2xx)\", () => pm.expect(pm.response.code).to.be.within(400, 403));",
+                  "    ",
+                  "pm.test(\"Uses HTTP 401 Unauthorized\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Forged token is rejected",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.request.headers.upsert({ key: \"Authorization\", value: \"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXIxIn0.forged\" });"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Forged token is blocked\", () => pm.expect(pm.response.code).to.be.oneOf([401, 403]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Expired token is rejected with 401",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Builds a correctly signed but already-expired token using the local JWT secret",
+                  "    const b64 = (o) => CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(o))).replace(/=+$/, \"\").replace(/\\+/g, \"-\").replace(/\\//g, \"_\");",
+                  "    const now = Math.floor(Date.now() / 1000);",
+                  "    const head = b64({ alg: \"HS256\" });",
+                  "    const body = b64({ sub: \"pm_debaterA_\" + pm.environment.get(\"runId\"), role: \"DEBATER\", iat: now - 7200, exp: now - 3600 });",
+                  "    const sig = CryptoJS.HmacSHA256(head + \".\" + body, pm.environment.get(\"jwtSecret\")).toString(CryptoJS.enc.Base64).replace(/=+$/, \"\").replace(/\\+/g, \"-\").replace(/\\//g, \"_\");",
+                  "    pm.request.headers.upsert({ key: \"Authorization\", value: \"Bearer \" + head + \".\" + body + \".\" + sig });"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expired token is blocked\", () => pm.expect(pm.response.code).to.be.oneOf([401, 403]));",
+                  "    ",
+                  "pm.test(\"Uses HTTP 401 so the frontend logs the user out\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "04 Tournament lifecycle",
+      "description": "Organizer builds a tournament; judges score; results propagate to stats and leaderboard.",
+      "item": [
+        {
+          "name": "Organizer creates tournament with schools, judges and template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Nationals {{runId}}\",\n  \"debateType\": \"ASIAN_PARLIAMENTARY\",\n  \"tournamentType\": \"KNOCKOUT\",\n  \"schools\": [\n    { \"name\": \"Royal College\", \"debaterIds\": [{{debaterAId}}] },\n    { \"name\": \"Trinity College\", \"debaterIds\": [{{debaterBId}}] }\n  ],\n  \"judgeIds\": [{{judge1Id}}, {{judge2Id}}],\n  \"scoreTemplate\": { \"name\": \"Standard\", \"criteriaJson\": \"[{\\\"name\\\":\\\"Matter\\\",\\\"max\\\":40},{\\\"name\\\":\\\"Manner\\\",\\\"max\\\":40},{\\\"name\\\":\\\"Method\\\",\\\"max\\\":20}]\" }\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    const t = pm.response.json();",
+                  "    pm.test(\"Two schools created\", () => pm.expect(t.schools).to.have.length(2));",
+                  "    pm.test(\"Judges get sequential codes\", () => pm.expect(t.judges.map(j => j.judgeCode)).to.have.members([\"JUDGE-001\", \"JUDGE-002\"]));",
+                  "    pm.test(\"Tournament starts ACTIVE\", () => pm.expect(t.status).to.eql(\"ACTIVE\"));",
+                  "    pm.environment.set(\"tournamentId\", t.id);",
+                  "    pm.environment.set(\"schoolA\", t.schools.find(s => s.name === \"Royal College\").id);",
+                  "    pm.environment.set(\"schoolB\", t.schools.find(s => s.name === \"Trinity College\").id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Tournament is visible publicly",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/{{tournamentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments",
+                "{{tournamentId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Correct name\", () => pm.expect(pm.response.json().name).to.include(\"Postman Nationals\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Organizer's tournaments list",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/organizer/{{organizerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments",
+                "organizer",
+                "{{organizerId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Contains the new tournament\", () => pm.expect(pm.response.json().map(t => t.id)).to.include(pm.environment.get(\"tournamentId\")));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Adding the same judge twice is rejected",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/{{tournamentId}}/judges",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments",
+                "{{tournamentId}}",
+                "judges"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"judgeId\": {{judge1Id}} }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "    pm.test(\"Explains duplicate\", () => pm.expect(pm.response.json().error).to.include(\"already added\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Score template can be read back (judge score sheet)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/score-templates/{{tournamentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "score-templates",
+                "{{tournamentId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Template loads (200)\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Template has the organizer's criteria\", () => pm.expect(pm.response.text()).to.include(\"Matter\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A school cannot debate itself",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/matches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "matches"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"tournamentId\": {{tournamentId}}, \"propositionSchoolId\": {{schoolA}}, \"oppositionSchoolId\": {{schoolA}}, \"topic\": \"x\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Organizer creates a match with two judges",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/matches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "matches"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tournamentId\": {{tournamentId}},\n  \"propositionSchoolId\": {{schoolA}},\n  \"oppositionSchoolId\": {{schoolB}},\n  \"topic\": \"This house would ban homework\",\n  \"judgeIds\": [{{judge1Id}}, {{judge2Id}}],\n  \"startTime\": \"2026-10-01T10:00:00\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    const m = pm.response.json();",
+                  "    pm.test(\"Round 1, UPCOMING\", () => { pm.expect(m.roundNumber).to.eql(1); pm.expect(m.status).to.eql(\"UPCOMING\"); });",
+                  "    pm.test(\"Match code format MATCH-{tournament}-{n}\", () => pm.expect(m.matchCode).to.match(/^MATCH-\\d+-\\d+$/));",
+                  "    pm.environment.set(\"matchId\", m.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge receives assignment notification",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Has 'New Judging Assignment'\", () => pm.expect(pm.response.json().map(n => n.title)).to.include(\"New Judging Assignment\"));",
+                  "    pm.environment.set(\"judge1NotificationId\", pm.response.json()[0].id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Debater sees the match on the tournament page",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/{{tournamentId}}/matches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments",
+                "{{tournamentId}}",
+                "matches"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"One match\", () => pm.expect(pm.response.json()).to.have.length(1));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge 2 cannot submit on behalf of judge 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge2Token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/score-sheets/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "score-sheets",
+                "submit"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"matchId\": {{matchId}}, \"judgeId\": {{judge1Id}}, \"propositionTotal\": 99, \"oppositionTotal\": 1 }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Impersonation is blocked\", () => pm.expect(pm.response.code).to.be.within(400, 403));",
+                  "    ",
+                  "pm.test(\"Uses HTTP 403 Forbidden\", () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge 1 submits scores",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/score-sheets/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "score-sheets",
+                "submit"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"matchId\": {{matchId}}, \"judgeId\": {{judge1Id}}, \"propositionScoresJson\": \"{}\", \"oppositionScoresJson\": \"{}\", \"propositionTotal\": 70, \"oppositionTotal\": 72, \"selectedBestSpeakerId\": {{debaterBId}}, \"comments\": \"Close debate\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Confirmation message\", () => pm.expect(pm.response.json().message).to.eql(\"Score sheet submitted successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Match stays open until all judges submit",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/matches/{{matchId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "matches",
+                "{{matchId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Still UPCOMING\", () => pm.expect(pm.response.json().status).to.eql(\"UPCOMING\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge 1 can see their submitted sheet",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/score-sheets/{{matchId}}/{{judge1Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "score-sheets",
+                "{{matchId}}",
+                "{{judge1Id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Submission loads (200)\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge 2 submits scores",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge2Token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/score-sheets/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "score-sheets",
+                "submit"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"matchId\": {{matchId}}, \"judgeId\": {{judge2Id}}, \"propositionScoresJson\": \"{}\", \"oppositionScoresJson\": \"{}\", \"propositionTotal\": 65, \"oppositionTotal\": 74, \"selectedBestSpeakerId\": {{debaterBId}} }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Match is completed with winner and best speaker",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/matches/{{matchId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "matches",
+                "{{matchId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    const m = pm.response.json();",
+                  "    pm.test(\"Status COMPLETED\", () => pm.expect(m.status).to.eql(\"COMPLETED\"));",
+                  "    pm.test(\"Trinity wins on average score\", () => pm.expect(m.winnerSchool.name).to.eql(\"Trinity College\"));",
+                  "    pm.test(\"Best speaker chosen by judges' votes\", () => pm.expect(m.bestSpeaker.id).to.eql(pm.environment.get(\"debaterBId\")));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge cannot submit twice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/score-sheets/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "score-sheets",
+                "submit"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"matchId\": {{matchId}}, \"judgeId\": {{judge1Id}}, \"propositionTotal\": 1, \"oppositionTotal\": 1 }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "    pm.test(\"Explains duplicate\", () => pm.expect(pm.response.json().error).to.include(\"already submitted\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Leaderboard updated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/{{tournamentId}}/leaderboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments",
+                "{{tournamentId}}",
+                "leaderboard"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    const b = pm.response.json();",
+                  "    pm.test(\"Trinity first with 2 points\", () => { pm.expect(b[0].schoolName).to.eql(\"Trinity College\"); pm.expect(b[0].points).to.eql(2); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Winning debater stats updated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/stats/debater/{{debaterBId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stats",
+                "debater",
+                "{{debaterBId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    const s = pm.response.json();",
+                  "    pm.test(\"1 win, 1 best-speaker award\", () => { pm.expect(s.wins).to.eql(1); pm.expect(s.playerOfMatchCount).to.eql(1); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Losing debater stats updated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/stats/debater/{{debaterAId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stats",
+                "debater",
+                "{{debaterAId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"1 loss\", () => pm.expect(pm.response.json().losses).to.eql(1));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge stats updated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/stats/judge/{{judge1Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stats",
+                "judge",
+                "{{judge1Id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"1 match judged\", () => pm.expect(pm.response.json().matchesJudged).to.eql(1));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Next round needs at least two winners",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/{{tournamentId}}/generate-next-round",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tournaments",
+                "{{tournamentId}}",
+                "generate-next-round"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "    pm.test(\"Explains why\", () => pm.expect(pm.response.json().error).to.include(\"Not enough winners\"));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "05 Social features",
+      "description": "Connections, messages, diaries, calendar, news, notifications, search, newsletter.",
+      "item": [
+        {
+          "name": "Debater A sends connection request to B",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/request/{{debaterBId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "connections",
+                "request",
+                "{{debaterBId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"PENDING\", () => pm.expect(pm.response.json().status).to.eql(\"PENDING\"));",
+                  "    pm.environment.set(\"connectionId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "B sees the pending request",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterBToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/pending",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "connections",
+                "pending"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Has one pending\", () => pm.expect(pm.response.json().length).to.be.at.least(1));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A cannot accept their own request",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/accept/{{connectionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "connections",
+                "accept",
+                "{{connectionId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "B accepts",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterBToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/accept/{{connectionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "connections",
+                "accept",
+                "{{connectionId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"ACCEPTED\", () => pm.expect(pm.response.json().status).to.eql(\"ACCEPTED\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Connection status is ACCEPTED",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/status/{{debaterBId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "connections",
+                "status",
+                "{{debaterBId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"ACCEPTED\", () => pm.expect(pm.response.json().status).to.eql(\"ACCEPTED\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A sends a message to B",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/messages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "messages"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"receiverId\": {{debaterBId}}, \"text\": \"Well played today!\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "B reads messages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterBToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/messages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "messages"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Message delivered\", () => pm.expect(pm.response.json().map(m => m.text)).to.include(\"Well played today!\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A writes a diary post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/diaries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diaries"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Lessons from the final\",\n  \"content\": \"Rebuttals win debates.\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.environment.set(\"diaryId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "B likes the diary post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterBToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/diaries/{{diaryId}}/like",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diaries",
+                "{{diaryId}}",
+                "like"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Like counted\", () => pm.expect(pm.response.json().likesCount).to.eql(1));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "B comments on the diary post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterBToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/diaries/{{diaryId}}/comment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diaries",
+                "{{diaryId}}",
+                "comment"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"Great insight!\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Debater cannot verify a diary post (organizer-only)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterBToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/diaries/{{diaryId}}/verify?verified=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diaries",
+                "{{diaryId}}",
+                "verify"
+              ],
+              "query": [
+                {
+                  "key": "verified",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Blocked\", () => pm.expect(pm.response.code).to.be.within(400, 403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Organizer verifies the diary post",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/diaries/{{diaryId}}/verify?verified=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diaries",
+                "{{diaryId}}",
+                "verify"
+              ],
+              "query": [
+                {
+                  "key": "verified",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Verified\", () => pm.expect(pm.response.json().isVerified).to.eql(true));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Public diary list for A",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/diaries/user/{{debaterAId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diaries",
+                "user",
+                "{{debaterAId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Post listed\", () => pm.expect(pm.response.json()[0].title).to.eql(\"Lessons from the final\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create calendar event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/calendar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "calendar"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Judging briefing\",\n  \"eventType\": \"JUDGING_ASSIGNMENT\",\n  \"startTime\": \"2026-10-01T09:00:00\",\n  \"endTime\": \"2026-10-01T09:30:00\",\n  \"reminderEnabled\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Calendar lists the event",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/calendar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "calendar"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Event present\", () => pm.expect(pm.response.json().map(e => e.title)).to.include(\"Judging briefing\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Post news article",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{organizerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/news",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "news"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Postman Nationals results\",\n  \"category\": \"LATEST_NEWS\",\n  \"content\": \"Trinity College won the opening round.\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Unread notification count",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/unread-count",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "unread-count"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Count is a number > 0\", () => pm.expect(pm.response.json().count).to.be.above(0));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mark own notification read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge1Token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/{{judge1NotificationId}}/read",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "{{judge1NotificationId}}",
+                "read"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search by tournament name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/search?query=Postman",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "Postman"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Finds the tournament\", () => pm.expect(pm.response.json().tournaments.map(t => t.name).join()).to.include(\"Postman Nationals\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Newsletter subscribe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/newsletter/subscribe",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "newsletter",
+                "subscribe"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"email\": \"fan_{{runId}}@test.dms\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"Subscribed\", () => pm.expect(pm.response.json().message).to.include(\"Successfully subscribed\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Newsletter rejects bad e-mail",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/newsletter/subscribe",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "newsletter",
+                "subscribe"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"broken@\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "06 Ownership & privacy",
+      "description": "Logged-in users must not change or see data that belongs to someone else.",
+      "item": [
+        {
+          "name": "Debater A edits debater B's profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{debaterBId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{debaterBId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bio\": \"Edited by someone else\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Cannot edit another user's profile (403)\", () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Debater B posts a discussion comment as debater A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterBToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/discussion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "discussion"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"tournamentId\": {{tournamentId}}, \"userId\": {{debaterAId}}, \"comment\": \"Posted under someone else's name\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Cannot post as another user (403)\", () => pm.response.to.have.status(403));",
+                  "    if (pm.response.code === 200) pm.environment.set(\"forgedCommentId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge 2 deletes a comment they don't own",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judge2Token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/discussion/{{forgedCommentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "discussion",
+                "{{forgedCommentId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Cannot delete another user's comment (403)\", () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Debater marks judge's notification as read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{debaterAToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/{{judge1NotificationId}}/read",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "{{judge1NotificationId}}",
+                "read"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Cannot modify another user's notification (403)\", () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Anonymous user list hides e-mail addresses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "    pm.test(\"No e-mail addresses exposed to visitors\", () => pm.expect(pm.response.json().some(u => u.email)).to.eql(false));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

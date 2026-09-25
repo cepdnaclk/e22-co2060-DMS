@@ -1,0 +1,78 @@
+-------------------------------------------------------------------------------
+Test set: com.dms.integration.OwnershipSecurityIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 7, Errors: 0, Skipped: 0, Time elapsed: 1.089 s <<< FAILURE! -- in com.dms.integration.OwnershipSecurityIntegrationTest
+com.dms.integration.OwnershipSecurityIntegrationTest.cannotImpersonateInDiscussion -- Time elapsed: 0.123 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[POST /api/discussion with someone else's userId] 
+expected: 403
+ but was: 200
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotImpersonateInDiscussion(OwnershipSecurityIntegrationTest.java:67)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.dms.integration.OwnershipSecurityIntegrationTest.cannotReadOthersNotification -- Time elapsed: 0.056 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[PUT alice's notification /read as bob] 
+expected: 403
+ but was: 200
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotReadOthersNotification(OwnershipSecurityIntegrationTest.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.dms.integration.OwnershipSecurityIntegrationTest.cannotEditOthersProfile -- Time elapsed: 0.026 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[PUT /api/users/{bob} as alice] 
+expected: 403
+ but was: 200
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotEditOthersProfile(OwnershipSecurityIntegrationTest.java:50)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.dms.integration.OwnershipSecurityIntegrationTest.cannotDeleteOtherOrganizersTournament -- Time elapsed: 0.062 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[DELETE organizer A's tournament as organizer B] 
+expected: 403
+ but was: 204
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotDeleteOtherOrganizersTournament(OwnershipSecurityIntegrationTest.java:91)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.dms.integration.OwnershipSecurityIntegrationTest.publicUserListHidesEmails -- Time elapsed: 0.019 s <<< FAILURE!
+java.lang.AssertionError: 
+JSON path "$[*].email"
+Expected: not a collection containing "debater_5_11300@test.dms"
+     but: was <["debater_1_11000@test.dms","debater_2_73500@test.dms","judge_3_55900@test.dms","newdeb@test.dms","organizer_4_72700@test.dms","not-an-email","debater_5_11300@test.dms","debater_6_27100@test.dms","organizer_7_14700@test.dms","organizer_8_43900@test.dms","judge_9_29000@test.dms"]>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:107)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$0(JsonPathResultMatchers.java:88)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.dms.integration.OwnershipSecurityIntegrationTest.publicUserListHidesEmails(OwnershipSecurityIntegrationTest.java:121)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.dms.integration.OwnershipSecurityIntegrationTest.cannotDeleteOthersComment -- Time elapsed: 0.034 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[DELETE bob's comment as alice] 
+expected: 403
+ but was: 204
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotDeleteOthersComment(OwnershipSecurityIntegrationTest.java:79)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.dms.integration.OwnershipSecurityIntegrationTest.judgeImpersonationStatusCode -- Time elapsed: 0.130 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[submitting as another judge] 
+expected: 403
+ but was: 400
+	at com.dms.integration.OwnershipSecurityIntegrationTest.judgeImpersonationStatusCode(OwnershipSecurityIntegrationTest.java:113)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConnectionService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.service</a> &gt; <span class="el_source">ConnectionService.java</span></div><h1>ConnectionService.java</h1><pre class="source lang-java linenums">package com.dms.service;
+
+import com.dms.dto.BlockDTO;
+import com.dms.dto.ConnectionDTO;
+import com.dms.dto.UserDTO;
+import com.dms.entity.Block;
+import com.dms.entity.Connection;
+import com.dms.entity.User;
+import com.dms.repository.BlockRepository;
+import com.dms.repository.ConnectionRepository;
+import com.dms.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class ConnectionService {
+
+    private final ConnectionRepository connectionRepository;
+    private final BlockRepository blockRepository;
+    private final UserRepository userRepository;
+    private final NotificationService notificationService;
+
+    @Transactional
+    public ConnectionDTO sendRequest(String requesterUsername, Long receiverId) {
+<span class="fc" id="L31">        User requester = userRepository.findByUsername(requesterUsername)</span>
+<span class="pc" id="L32">                .orElseThrow(() -&gt; new RuntimeException(&quot;Requester not found&quot;));</span>
+<span class="fc" id="L33">        User receiver = userRepository.findById(receiverId)</span>
+<span class="pc" id="L34">                .orElseThrow(() -&gt; new RuntimeException(&quot;Receiver not found&quot;));</span>
+
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (requester.getId().equals(receiver.getId())) {</span>
+<span class="fc" id="L37">            throw new RuntimeException(&quot;Cannot connect with yourself&quot;);</span>
+        }
+
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (blockRepository.existsByBlockerAndBlockedOrBlockerAndBlocked(requester, receiver, receiver, requester)) {</span>
+<span class="fc" id="L41">            throw new RuntimeException(&quot;Action blocked&quot;);</span>
+        }
+
+<span class="fc" id="L44">        Optional&lt;Connection&gt; existing = connectionRepository.findConnectionBetween(requester, receiver);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (existing.isPresent()) {</span>
+<span class="fc" id="L46">            throw new RuntimeException(&quot;Connection or request already exists&quot;);</span>
+        }
+
+<span class="fc" id="L49">        Connection connection = Connection.builder()</span>
+<span class="fc" id="L50">                .requester(requester)</span>
+<span class="fc" id="L51">                .receiver(receiver)</span>
+<span class="fc" id="L52">                .status(Connection.ConnectionStatus.PENDING)</span>
+<span class="fc" id="L53">                .build();</span>
+        
+<span class="fc" id="L55">        connection = connectionRepository.save(connection);</span>
+
+<span class="fc" id="L57">        notificationService.send(receiver, &quot;New Connection Request&quot;, requester.getFullName() + &quot; wants to connect with you.&quot;);</span>
+
+<span class="fc" id="L59">        return ConnectionDTO.from(connection);</span>
+    }
+
+    @Transactional
+    public ConnectionDTO acceptRequest(String receiverUsername, Long connectionId) {
+<span class="fc" id="L64">        User receiver = userRepository.findByUsername(receiverUsername)</span>
+<span class="pc" id="L65">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L66">        Connection connection = connectionRepository.findById(connectionId)</span>
+<span class="pc" id="L67">                .orElseThrow(() -&gt; new RuntimeException(&quot;Connection not found&quot;));</span>
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (!connection.getReceiver().getId().equals(receiver.getId())) {</span>
+<span class="fc" id="L70">            throw new RuntimeException(&quot;Not authorized to accept this request&quot;);</span>
+        }
+
+<span class="fc" id="L73">        connection.setStatus(Connection.ConnectionStatus.ACCEPTED);</span>
+<span class="fc" id="L74">        connection = connectionRepository.save(connection);</span>
+
+<span class="fc" id="L76">        notificationService.send(connection.getRequester(), &quot;Connection Accepted&quot;, receiver.getFullName() + &quot; accepted your connection request.&quot;);</span>
+
+<span class="fc" id="L78">        return ConnectionDTO.from(connection);</span>
+    }
+
+    @Transactional
+    public void rejectRequest(String receiverUsername, Long connectionId) {
+<span class="nc" id="L83">        User receiver = userRepository.findByUsername(receiverUsername)</span>
+<span class="nc" id="L84">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="nc" id="L85">        Connection connection = connectionRepository.findById(connectionId)</span>
+<span class="nc" id="L86">                .orElseThrow(() -&gt; new RuntimeException(&quot;Connection not found&quot;));</span>
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (!connection.getReceiver().getId().equals(receiver.getId())) {</span>
+<span class="nc" id="L89">            throw new RuntimeException(&quot;Not authorized to reject this request&quot;);</span>
+        }
+
+<span class="nc" id="L92">        connectionRepository.delete(connection);</span>
+<span class="nc" id="L93">    }</span>
+    
+    @Transactional
+    public void disconnect(String username, Long otherUserId) {
+<span class="nc" id="L97">        User user = userRepository.findByUsername(username)</span>
+<span class="nc" id="L98">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="nc" id="L99">        User otherUser = userRepository.findById(otherUserId)</span>
+<span class="nc" id="L100">                .orElseThrow(() -&gt; new RuntimeException(&quot;Other user not found&quot;));</span>
+                
+<span class="nc" id="L102">        Connection connection = connectionRepository.findConnectionBetween(user, otherUser)</span>
+<span class="nc" id="L103">                .orElseThrow(() -&gt; new RuntimeException(&quot;Connection not found&quot;));</span>
+                
+<span class="nc" id="L105">        connectionRepository.delete(connection);</span>
+<span class="nc" id="L106">    }</span>
+
+    @Transactional
+    public BlockDTO blockUser(String blockerUsername, Long blockedId) {
+<span class="fc" id="L110">        User blocker = userRepository.findByUsername(blockerUsername)</span>
+<span class="pc" id="L111">                .orElseThrow(() -&gt; new RuntimeException(&quot;Blocker not found&quot;));</span>
+<span class="fc" id="L112">        User blocked = userRepository.findById(blockedId)</span>
+<span class="pc" id="L113">                .orElseThrow(() -&gt; new RuntimeException(&quot;Blocked user not found&quot;));</span>
+
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (blocker.getId().equals(blocked.getId())) {</span>
+<span class="nc" id="L116">            throw new RuntimeException(&quot;Cannot block yourself&quot;);</span>
+        }
+
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (blockRepository.existsByBlockerAndBlocked(blocker, blocked)) {</span>
+<span class="nc" id="L120">            throw new RuntimeException(&quot;User already blocked&quot;);</span>
+        }
+
+        // Delete any existing connections/requests
+<span class="fc" id="L124">        connectionRepository.findConnectionBetween(blocker, blocked)</span>
+<span class="fc" id="L125">                .ifPresent(connectionRepository::delete);</span>
+
+<span class="fc" id="L127">        Block block = Block.builder()</span>
+<span class="fc" id="L128">                .blocker(blocker)</span>
+<span class="fc" id="L129">                .blocked(blocked)</span>
+<span class="fc" id="L130">                .build();</span>
+<span class="fc" id="L131">        return BlockDTO.from(blockRepository.save(block));</span>
+    }
+
+    @Transactional
+    public void unblockUser(String blockerUsername, Long blockedId) {
+<span class="nc" id="L136">        User blocker = userRepository.findByUsername(blockerUsername)</span>
+<span class="nc" id="L137">                .orElseThrow(() -&gt; new RuntimeException(&quot;Blocker not found&quot;));</span>
+<span class="nc" id="L138">        User blocked = userRepository.findById(blockedId)</span>
+<span class="nc" id="L139">                .orElseThrow(() -&gt; new RuntimeException(&quot;Blocked user not found&quot;));</span>
+
+<span class="nc" id="L141">        Block block = blockRepository.findByBlockerAndBlocked(blocker, blocked)</span>
+<span class="nc" id="L142">                .orElseThrow(() -&gt; new RuntimeException(&quot;Block not found&quot;));</span>
+
+<span class="nc" id="L144">        blockRepository.delete(block);</span>
+<span class="nc" id="L145">    }</span>
+
+    public List&lt;ConnectionDTO&gt; getPendingRequests(String username) {
+<span class="nc" id="L148">        User user = userRepository.findByUsername(username)</span>
+<span class="nc" id="L149">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="nc" id="L150">        return connectionRepository.findByReceiverAndStatus(user, Connection.ConnectionStatus.PENDING)</span>
+<span class="nc" id="L151">                .stream().map(ConnectionDTO::from).collect(Collectors.toList());</span>
+    }
+
+    public List&lt;UserDTO&gt; getConnections(String username) {
+<span class="fc" id="L155">        User user = userRepository.findByUsername(username)</span>
+<span class="pc" id="L156">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L157">        return connectionRepository.findAcceptedConnectionsForUser(user).stream()</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">                .map(c -&gt; c.getRequester().getId().equals(user.getId()) ? c.getReceiver() : c.getRequester())</span>
+<span class="fc" id="L159">                .map(UserDTO::from)</span>
+<span class="fc" id="L160">                .collect(Collectors.toList());</span>
+    }
+
+    public long getConnectionCount(Long userId) {
+<span class="fc" id="L164">        User user = userRepository.findById(userId)</span>
+<span class="pc" id="L165">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L166">        return connectionRepository.countAcceptedConnectionsForUser(user);</span>
+    }
+
+    public List&lt;BlockDTO&gt; getBlockedUsers(String username) {
+<span class="nc" id="L170">        User user = userRepository.findByUsername(username)</span>
+<span class="nc" id="L171">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="nc" id="L172">        return blockRepository.findByBlocker(user)</span>
+<span class="nc" id="L173">                .stream().map(BlockDTO::from).collect(Collectors.toList());</span>
+    }
+
+    public String getConnectionStatus(String username, Long otherUserId) {
+<span class="fc" id="L177">        User user = userRepository.findByUsername(username).orElse(null);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">        if (user == null) return &quot;NONE&quot;;</span>
+        
+<span class="fc" id="L180">        User otherUser = userRepository.findById(otherUserId).orElse(null);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        if (otherUser == null) return &quot;NONE&quot;;</span>
+        
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (user.getId().equals(otherUser.getId())) return &quot;SELF&quot;;</span>
+
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (blockRepository.existsByBlockerAndBlockedOrBlockerAndBlocked(user, otherUser, otherUser, user)) {</span>
+<span class="fc" id="L186">            return &quot;BLOCKED&quot;;</span>
+        }
+
+<span class="fc" id="L189">        Optional&lt;Connection&gt; connection = connectionRepository.findConnectionBetween(user, otherUser);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (connection.isEmpty()) {</span>
+<span class="fc" id="L191">            return &quot;NONE&quot;;</span>
+        }
+
+<span class="fc" id="L194">        Connection c = connection.get();</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        if (c.getStatus() == Connection.ConnectionStatus.ACCEPTED) {</span>
+<span class="fc" id="L196">            return &quot;ACCEPTED&quot;;</span>
+        } else {
+<span class="fc bfc" id="L198" title="All 2 branches covered.">            if (c.getRequester().getId().equals(user.getId())) {</span>
+<span class="fc" id="L199">                return &quot;PENDING_SENT&quot;;</span>
+            } else {
+<span class="fc" id="L201">                return &quot;PENDING_RECEIVED&quot;;</span>
+            }
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConnectionController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.controller</a> &gt; <span class="el_source">ConnectionController.java</span></div><h1>ConnectionController.java</h1><pre class="source lang-java linenums">package com.dms.controller;
+
+import com.dms.dto.BlockDTO;
+import com.dms.dto.ConnectionDTO;
+import com.dms.dto.UserDTO;
+import com.dms.service.ConnectionService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping(&quot;/api/connections&quot;)
+@RequiredArgsConstructor
+public class ConnectionController {
+
+    private final ConnectionService connectionService;
+
+    @PostMapping(&quot;/request/{userId}&quot;)
+    public ResponseEntity&lt;ConnectionDTO&gt; sendRequest(@PathVariable Long userId, Principal principal) {
+<span class="fc" id="L24">        return ResponseEntity.ok(connectionService.sendRequest(principal.getName(), userId));</span>
+    }
+
+    @PutMapping(&quot;/accept/{connectionId}&quot;)
+    public ResponseEntity&lt;ConnectionDTO&gt; acceptRequest(@PathVariable Long connectionId, Principal principal) {
+<span class="fc" id="L29">        return ResponseEntity.ok(connectionService.acceptRequest(principal.getName(), connectionId));</span>
+    }
+
+    @DeleteMapping(&quot;/reject/{connectionId}&quot;)
+    public ResponseEntity&lt;?&gt; rejectRequest(@PathVariable Long connectionId, Principal principal) {
+<span class="nc" id="L34">        connectionService.rejectRequest(principal.getName(), connectionId);</span>
+<span class="nc" id="L35">        return ResponseEntity.ok().build();</span>
+    }
+    
+    @DeleteMapping(&quot;/disconnect/{userId}&quot;)
+    public ResponseEntity&lt;?&gt; disconnect(@PathVariable Long userId, Principal principal) {
+<span class="nc" id="L40">        connectionService.disconnect(principal.getName(), userId);</span>
+<span class="nc" id="L41">        return ResponseEntity.ok().build();</span>
+    }
+
+    @PostMapping(&quot;/block/{userId}&quot;)
+    public ResponseEntity&lt;BlockDTO&gt; blockUser(@PathVariable Long userId, Principal principal) {
+<span class="fc" id="L46">        return ResponseEntity.ok(connectionService.blockUser(principal.getName(), userId));</span>
+    }
+
+    @DeleteMapping(&quot;/unblock/{userId}&quot;)
+    public ResponseEntity&lt;?&gt; unblockUser(@PathVariable Long userId, Principal principal) {
+<span class="nc" id="L51">        connectionService.unblockUser(principal.getName(), userId);</span>
+<span class="nc" id="L52">        return ResponseEntity.ok().build();</span>
+    }
+
+    @GetMapping(&quot;/pending&quot;)
+    public ResponseEntity&lt;List&lt;ConnectionDTO&gt;&gt; getPendingRequests(Principal principal) {
+<span class="nc" id="L57">        return ResponseEntity.ok(connectionService.getPendingRequests(principal.getName()));</span>
+    }
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;UserDTO&gt;&gt; getConnections(Principal principal) {
+<span class="fc" id="L62">        return ResponseEntity.ok(connectionService.getConnections(principal.getName()));</span>
+    }
+
+    @GetMapping(&quot;/count/{userId}&quot;)
+    public ResponseEntity&lt;Map&lt;String, Long&gt;&gt; getConnectionCount(@PathVariable Long userId) {
+<span class="fc" id="L67">        return ResponseEntity.ok(Map.of(&quot;count&quot;, connectionService.getConnectionCount(userId)));</span>
+    }
+
+    @GetMapping(&quot;/blocked&quot;)
+    public ResponseEntity&lt;List&lt;BlockDTO&gt;&gt; getBlockedUsers(Principal principal) {
+<span class="nc" id="L72">        return ResponseEntity.ok(connectionService.getBlockedUsers(principal.getName()));</span>
+    }
+
+    @GetMapping(&quot;/status/{userId}&quot;)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; getConnectionStatus(@PathVariable Long userId, Principal principal) {
+<span class="fc" id="L77">        String status = connectionService.getConnectionStatus(principal.getName(), userId);</span>
+<span class="fc" id="L78">        return ResponseEntity.ok(Map.of(&quot;status&quot;, status));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

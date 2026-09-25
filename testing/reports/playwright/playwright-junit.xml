@@ -1,0 +1,384 @@
+<testsuites id="" name="" tests="25" failures="4" skipped="0" errors="0" time="73.195096">
+<testsuite name="01-auth.spec.ts" timestamp="2026-09-25T15:59:03.847Z" hostname="" tests="8" failures="0" skipped="0" time="9.938" errors="0">
+<testcase name="Authentication &amp; access control (browser) › organizer logs in through the UI and lands on their dashboard" classname="01-auth.spec.ts" time="1.291">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\01-auth-Authentication-acc-3e74a-nd-lands-on-their-dashboard\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; access control (browser) › judge logs in through the UI and lands on their dashboard" classname="01-auth.spec.ts" time="1.092">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\01-auth-Authentication-acc-0543b-nd-lands-on-their-dashboard\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; access control (browser) › debaterA logs in through the UI and lands on their dashboard" classname="01-auth.spec.ts" time="1.037">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\01-auth-Authentication-acc-43138-nd-lands-on-their-dashboard\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; access control (browser) › wrong password shows an error and stays on the login page" classname="01-auth.spec.ts" time="0.998">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\01-auth-Authentication-acc-7d9ff-and-stays-on-the-login-page\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; access control (browser) › new user can sign up and is taken to their dashboard" classname="01-auth.spec.ts" time="1.224">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\01-auth-Authentication-acc-626e1-is-taken-to-their-dashboard\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; access control (browser) › logged-out visitor cannot open the organizer dashboard" classname="01-auth.spec.ts" time="1.132">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\01-auth-Authentication-acc-77f01-pen-the-organizer-dashboard\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; access control (browser) › debater cannot open the create-tournament page" classname="01-auth.spec.ts" time="1.155">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\01-auth-Authentication-acc-64eff--the-create-tournament-page\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; access control (browser) › user can log out from the navbar menu" classname="01-auth.spec.ts" time="2.009">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\01-auth-Authentication-acc-9b956-og-out-from-the-navbar-menu\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="02-session.spec.ts" timestamp="2026-09-25T15:59:03.847Z" hostname="" tests="3" failures="1" skipped="0" time="18.49" errors="0">
+<testcase name="Multi-tab session handling (browser) › logging in as another user in a second tab warns the first tab" classname="02-session.spec.ts" time="1.333">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\02-session-Multi-tab-sessi-2c54f-ond-tab-warns-the-first-tab\test-finished-2.png]]
+
+[[ATTACHMENT|artifacts\02-session-Multi-tab-sessi-2c54f-ond-tab-warns-the-first-tab\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Multi-tab session handling (browser) › logging out in a second tab tells the first tab the session ended" classname="02-session.spec.ts" time="1.242">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\02-session-Multi-tab-sessi-76c44-first-tab-the-session-ended\test-finished-2.png]]
+
+[[ATTACHMENT|artifacts\02-session-Multi-tab-sessi-76c44-first-tab-the-session-ended\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Multi-tab session handling (browser) › an expired token sends the user back to login" classname="02-session.spec.ts" time="15.915">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\test-failed-1.png]]
+
+[[ATTACHMENT|artifacts\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\error-context.md]]
+
+[[ATTACHMENT|artifacts\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(page).toHaveURL(expected) failed" type="expect.toHaveURL">
+<![CDATA[  02-session.spec.ts:38:7 › Multi-tab session handling (browser) › an expired token sends the user back to login 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/login$/
+    Received string:  "http://localhost:5174/notifications"
+    Timeout: 15000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 15000ms
+        33 × locator resolved to <html lang="en">…</html>
+           - unexpected value "http://localhost:5174/notifications"
+
+
+      41 |     await page.evaluate(() => localStorage.setItem('dms_token', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4IiwiZXhwIjoxfQ.expired'));
+      42 |     await page.goto('/notifications');
+    > 43 |     await expect(page).toHaveURL(/\/login$/, { timeout: 15_000 });
+         |                        ^
+      44 |   });
+      45 | });
+      46 |
+        at D:\Testing\e22-co2060-DMS\testing\e2e\02-session.spec.ts:43:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\reports\playwright\artifacts\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\reports\playwright\artifacts\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\reports\playwright\artifacts\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\reports\playwright\artifacts\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="03-tournament.spec.ts" timestamp="2026-09-25T15:59:03.847Z" hostname="" tests="5" failures="0" skipped="0" time="6.404" errors="0">
+<testcase name="Tournament workflow (browser) › organizer creates a tournament with the 6-step wizard" classname="03-tournament.spec.ts" time="2.221">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\03-tournament-Tournament-w-52457-ment-with-the-6-step-wizard\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Tournament workflow (browser) › a visitor can find the new tournament with search" classname="03-tournament.spec.ts" time="0.972">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\03-tournament-Tournament-w-c5cd6--new-tournament-with-search\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Tournament workflow (browser) › judge opens the score sheet for an assigned match" classname="03-tournament.spec.ts" time="1.068">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\03-tournament-Tournament-w-b9883-sheet-for-an-assigned-match\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Tournament workflow (browser) › judge submits the score sheet" classname="03-tournament.spec.ts" time="1.153">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\03-tournament-Tournament-w-dae41-dge-submits-the-score-sheet\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Tournament workflow (browser) › match result appears on the tournament page" classname="03-tournament.spec.ts" time="0.99">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\03-tournament-Tournament-w-a8b3e-ears-on-the-tournament-page\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="04-public.spec.ts" timestamp="2026-09-25T15:59:03.847Z" hostname="" tests="7" failures="1" skipped="0" time="8.66" errors="0">
+<testcase name="Public pages (browser) › / loads without errors" classname="04-public.spec.ts" time="1.052">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\04-public-Public-pages-browser-loads-without-errors\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Public pages (browser) › /news loads without errors" classname="04-public.spec.ts" time="1.141">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\04-public-Public-pages-browser-news-loads-without-errors\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Public pages (browser) › /about loads without errors" classname="04-public.spec.ts" time="1.184">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\04-public-Public-pages-browser-about-loads-without-errors\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Public pages (browser) › /scoring loads without errors" classname="04-public.spec.ts" time="1.152">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\04-public-Public-pages-browser-scoring-loads-without-errors\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Public pages (browser) › search finds seeded debaters" classname="04-public.spec.ts" time="1.213">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\04-public-Public-pages-browser-search-finds-seeded-debaters\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Public pages (browser) › home page loads live matches for visitors without API errors" classname="04-public.spec.ts" time="1.699">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\test-failed-1.png]]
+
+[[ATTACHMENT|artifacts\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\error-context.md]]
+
+[[ATTACHMENT|artifacts\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\trace.zip]]
+]]>
+</system-out>
+<failure message="API calls that failed on the public home page" type="expect.toEqual">
+<![CDATA[  04-public.spec.ts:24:7 › Public pages (browser) › home page loads live matches for visitors without API errors 
+
+    Error: API calls that failed on the public home page
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "403 http://localhost:8081/api/matches/live",
+    +   "403 http://localhost:8081/api/matches/live",
+    + ]
+
+      27 |     await page.goto('/');
+      28 |     await page.waitForLoadState('networkidle');
+    > 29 |     expect(failed, 'API calls that failed on the public home page').toEqual([]);
+         |                                                                     ^
+      30 |   });
+      31 |
+      32 |   test('layout works on a phone-sized screen', async ({ page }) => {
+        at D:\Testing\e22-co2060-DMS\testing\e2e\04-public.spec.ts:29:69
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\reports\playwright\artifacts\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\reports\playwright\artifacts\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\reports\playwright\artifacts\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\reports\playwright\artifacts\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="Public pages (browser) › layout works on a phone-sized screen" classname="04-public.spec.ts" time="1.219">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\04-public-Public-pages-bro-87322-rks-on-a-phone-sized-screen\test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="05-score-sheet.spec.ts" timestamp="2026-09-25T15:59:03.847Z" hostname="" tests="2" failures="2" skipped="0" time="22.823" errors="0">
+<testcase name="Judge score sheet (browser) › score sheet shows the organizer&apos;s custom criteria" classname="05-score-sheet.spec.ts" time="11.389">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\test-failed-1.png]]
+
+[[ATTACHMENT|artifacts\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\error-context.md]]
+
+[[ATTACHMENT|artifacts\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  05-score-sheet.spec.ts:54:7 › Judge score sheet (browser) › score sheet shows the organizer's custom criteria 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('columnheader', { name: 'Persuasion' }).first()
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('columnheader', { name: 'Persuasion' }).first() with timeout 10000ms
+      - waiting for getByRole('columnheader', { name: 'Persuasion' }).first()
+
+
+      57 |     await page.goto(`/score-sheet/${matchId}/${seed().judge.id}`);
+      58 |     await expect(page.getByText('Custom criteria check')).toBeVisible();
+    > 59 |     await expect(page.getByRole('columnheader', { name: 'Persuasion' }).first()).toBeVisible();
+         |                                                                                  ^
+      60 |     await expect(page.getByRole('columnheader', { name: 'Rebuttal' })).toHaveCount(0);
+      61 |   });
+      62 |
+        at D:\Testing\e22-co2060-DMS\testing\e2e\05-score-sheet.spec.ts:59:82
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\reports\playwright\artifacts\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\reports\playwright\artifacts\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\reports\playwright\artifacts\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\reports\playwright\artifacts\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="Judge score sheet (browser) › after submitting, reopening the sheet shows &quot;already submitted&quot;" classname="05-score-sheet.spec.ts" time="11.434">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\test-failed-1.png]]
+
+[[ATTACHMENT|artifacts\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\error-context.md]]
+
+[[ATTACHMENT|artifacts\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  05-score-sheet.spec.ts:63:7 › Judge score sheet (browser) › after submitting, reopening the sheet shows "already submitted" 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Score Sheet Submitted')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Score Sheet Submitted') with timeout 10000ms
+      - waiting for getByText('Score Sheet Submitted')
+
+
+      74 |     await loginViaStorage(page, s.judge);
+      75 |     await page.goto(`/score-sheet/${matchId}/${s.judge.id}`);
+    > 76 |     await expect(page.getByText('Score Sheet Submitted')).toBeVisible();
+         |                                                           ^
+      77 |   });
+      78 | });
+      79 |
+        at D:\Testing\e22-co2060-DMS\testing\e2e\05-score-sheet.spec.ts:76:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\reports\playwright\artifacts\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\reports\playwright\artifacts\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\reports\playwright\artifacts\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\reports\playwright\artifacts\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+</testsuite>
+</testsuites>

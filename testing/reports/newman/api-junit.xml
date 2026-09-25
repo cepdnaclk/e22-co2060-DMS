@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="DMS API End-to-End Tests" tests="69" time="3.036">
+  <testsuite name="01 Health &amp; public pages / List tournaments (public)" id="e4516f3c-279a-49ae-9f04-cf08d7fa255c" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.345">
+    <testcase name="Response time is under 2000 ms" time="0.345" classname="01HealthAmpPublicPagesListTournamentsPublic"/>
+    <testcase name="Status is 200" time="0.345" classname="01HealthAmpPublicPagesListTournamentsPublic"/>
+    <testcase name="Body is an array" time="0.345" classname="01HealthAmpPublicPagesListTournamentsPublic"/>
+  </testsuite>
+  <testsuite name="01 Health &amp; public pages / Top debaters (public)" id="3999be2b-4f43-49e7-93f1-9efdbf156817" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.105">
+    <testcase name="Response time is under 2000 ms" time="0.105" classname="01HealthAmpPublicPagesTopDebatersPublic"/>
+    <testcase name="Status is 200" time="0.105" classname="01HealthAmpPublicPagesTopDebatersPublic"/>
+  </testsuite>
+  <testsuite name="01 Health &amp; public pages / News feed (public)" id="808c6d25-0eed-44b0-bf55-d6988b7c68a0" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.027">
+    <testcase name="Response time is under 2000 ms" time="0.027" classname="01HealthAmpPublicPagesNewsFeedPublic"/>
+    <testcase name="Status is 200" time="0.027" classname="01HealthAmpPublicPagesNewsFeedPublic"/>
+  </testsuite>
+  <testsuite name="01 Health &amp; public pages / Live matches (used by public home page)" id="5b790618-b619-4699-b099-c3ee46d110b6" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="1" errors="0" time="0.013">
+    <testcase name="Response time is under 2000 ms" time="0.013" classname="01HealthAmpPublicPagesLiveMatchesUsedByPublicHomePage"/>
+    <testcase name="Visitors can load live matches (200)" time="0.013" classname="01HealthAmpPublicPagesLiveMatchesUsedByPublicHomePage">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 403">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 01 Health & public pages / Live matches (used by public home page).]]>
+        <![CDATA[Test description: Visitors can load live matches (200).]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 403.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 403
+   at Object.eval sandbox-script.js:1:4).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="02 Authentication / Sign up organizer (organizer)" id="3fde8a49-aeaf-42ae-a383-c817fd132bd5" timestamp="2026-09-25T15:49:13.891Z" tests="5" failures="0" errors="0" time="0.298">
+    <testcase name="Response time is under 2000 ms" time="0.298" classname="02AuthenticationSignUpOrganizerOrganizer"/>
+    <testcase name="Status is 200" time="0.298" classname="02AuthenticationSignUpOrganizerOrganizer"/>
+    <testcase name="Returns a JWT token" time="0.298" classname="02AuthenticationSignUpOrganizerOrganizer"/>
+    <testcase name="Role is ORGANIZER" time="0.298" classname="02AuthenticationSignUpOrganizerOrganizer"/>
+    <testcase name="Password hash is never returned" time="0.298" classname="02AuthenticationSignUpOrganizerOrganizer"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Sign up judge (judge1)" id="6083104b-5f31-4fcc-93e4-f21301b97b2c" timestamp="2026-09-25T15:49:13.891Z" tests="5" failures="0" errors="0" time="0.112">
+    <testcase name="Response time is under 2000 ms" time="0.112" classname="02AuthenticationSignUpJudgeJudge1"/>
+    <testcase name="Status is 200" time="0.112" classname="02AuthenticationSignUpJudgeJudge1"/>
+    <testcase name="Returns a JWT token" time="0.112" classname="02AuthenticationSignUpJudgeJudge1"/>
+    <testcase name="Role is JUDGE" time="0.112" classname="02AuthenticationSignUpJudgeJudge1"/>
+    <testcase name="Password hash is never returned" time="0.112" classname="02AuthenticationSignUpJudgeJudge1"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Sign up judge (judge2)" id="12b29b14-1fca-46ad-b8cb-9b124ee9a263" timestamp="2026-09-25T15:49:13.891Z" tests="5" failures="0" errors="0" time="0.102">
+    <testcase name="Response time is under 2000 ms" time="0.102" classname="02AuthenticationSignUpJudgeJudge2"/>
+    <testcase name="Status is 200" time="0.102" classname="02AuthenticationSignUpJudgeJudge2"/>
+    <testcase name="Returns a JWT token" time="0.102" classname="02AuthenticationSignUpJudgeJudge2"/>
+    <testcase name="Role is JUDGE" time="0.102" classname="02AuthenticationSignUpJudgeJudge2"/>
+    <testcase name="Password hash is never returned" time="0.102" classname="02AuthenticationSignUpJudgeJudge2"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Sign up debater (debaterA)" id="88f37f98-21e7-411e-8477-03decc5c943e" timestamp="2026-09-25T15:49:13.891Z" tests="5" failures="0" errors="0" time="0.110">
+    <testcase name="Response time is under 2000 ms" time="0.110" classname="02AuthenticationSignUpDebaterDebaterA"/>
+    <testcase name="Status is 200" time="0.110" classname="02AuthenticationSignUpDebaterDebaterA"/>
+    <testcase name="Returns a JWT token" time="0.110" classname="02AuthenticationSignUpDebaterDebaterA"/>
+    <testcase name="Role is DEBATER" time="0.110" classname="02AuthenticationSignUpDebaterDebaterA"/>
+    <testcase name="Password hash is never returned" time="0.110" classname="02AuthenticationSignUpDebaterDebaterA"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Sign up debater (debaterB)" id="a9f86da5-a530-4f89-b41e-9fa2dd123422" timestamp="2026-09-25T15:49:13.891Z" tests="5" failures="0" errors="0" time="0.108">
+    <testcase name="Response time is under 2000 ms" time="0.108" classname="02AuthenticationSignUpDebaterDebaterB"/>
+    <testcase name="Status is 200" time="0.108" classname="02AuthenticationSignUpDebaterDebaterB"/>
+    <testcase name="Returns a JWT token" time="0.108" classname="02AuthenticationSignUpDebaterDebaterB"/>
+    <testcase name="Role is DEBATER" time="0.108" classname="02AuthenticationSignUpDebaterDebaterB"/>
+    <testcase name="Password hash is never returned" time="0.108" classname="02AuthenticationSignUpDebaterDebaterB"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Duplicate username is rejected" id="f14012d7-0b2f-4365-b325-4d78a10a5ca0" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.022">
+    <testcase name="Response time is under 2000 ms" time="0.022" classname="02AuthenticationDuplicateUsernameIsRejected"/>
+    <testcase name="Status is 400" time="0.022" classname="02AuthenticationDuplicateUsernameIsRejected"/>
+    <testcase name="Error explains the problem" time="0.022" classname="02AuthenticationDuplicateUsernameIsRejected"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Invalid e-mail is rejected at signup" id="922a00c8-c0ca-4d57-b983-92787484ce68" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="1" errors="0" time="0.106">
+    <testcase name="Response time is under 2000 ms" time="0.106" classname="02AuthenticationInvalidEMailIsRejectedAtSignup"/>
+    <testcase name="Invalid e-mail gives 400" time="0.106" classname="02AuthenticationInvalidEMailIsRejectedAtSignup">
+      <failure type="AssertionFailure" message="expected response to have status code 400 but got 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 02 Authentication / Invalid e-mail is rejected at signup.]]>
+        <![CDATA[Test description: Invalid e-mail gives 400.]]>
+        <![CDATA[Error message: expected response to have status code 400 but got 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 400 but got 200
+   at Object.eval sandbox-script.js:1:11).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="02 Authentication / Login with username" id="f3c41c34-6da6-42be-9da6-3d24bcb33304" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.100">
+    <testcase name="Response time is under 2000 ms" time="0.100" classname="02AuthenticationLoginWithUsername"/>
+    <testcase name="Status is 200" time="0.100" classname="02AuthenticationLoginWithUsername"/>
+    <testcase name="Logged in as the judge" time="0.100" classname="02AuthenticationLoginWithUsername"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Login with e-mail" id="ed3e84ce-035e-49ea-b03c-1fe6d2ca6f62" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.106">
+    <testcase name="Response time is under 2000 ms" time="0.106" classname="02AuthenticationLoginWithEMail"/>
+    <testcase name="Status is 200" time="0.106" classname="02AuthenticationLoginWithEMail"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Login with seeded demo account (organizer1)" id="15eeda4a-daa4-4b00-935d-4381eaa98e78" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.099">
+    <testcase name="Response time is under 2000 ms" time="0.099" classname="02AuthenticationLoginWithSeededDemoAccountOrganizer1"/>
+    <testcase name="Status is 200" time="0.099" classname="02AuthenticationLoginWithSeededDemoAccountOrganizer1"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Login with wrong password" id="14ceccd7-ca0b-42fa-8e95-7f8fea08b9a9" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.098">
+    <testcase name="Response time is under 2000 ms" time="0.098" classname="02AuthenticationLoginWithWrongPassword"/>
+    <testcase name="Status is 400" time="0.098" classname="02AuthenticationLoginWithWrongPassword"/>
+    <testcase name="Generic 'Invalid credentials' message" time="0.098" classname="02AuthenticationLoginWithWrongPassword"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Current user (/auth/me)" id="73673c47-3e72-4bdb-867d-bebbac72304e" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.067">
+    <testcase name="Response time is under 2000 ms" time="0.067" classname="02AuthenticationCurrentUserAuthMe"/>
+    <testcase name="Status is 200" time="0.067" classname="02AuthenticationCurrentUserAuthMe"/>
+    <testcase name="Returns the logged-in user" time="0.067" classname="02AuthenticationCurrentUserAuthMe"/>
+  </testsuite>
+  <testsuite name="02 Authentication / Current user without token" id="e65d81ea-be21-4de9-88eb-8d64337ccd8a" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="1" errors="0" time="0.008">
+    <testcase name="Response time is under 2000 ms" time="0.008" classname="02AuthenticationCurrentUserWithoutToken"/>
+    <testcase name="No token gives 401 Unauthorized" time="0.008" classname="02AuthenticationCurrentUserWithoutToken">
+      <failure type="AssertionFailure" message="expected response to have status code 401 but got 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 02 Authentication / Current user without token.]]>
+        <![CDATA[Test description: No token gives 401 Unauthorized.]]>
+        <![CDATA[Error message: expected response to have status code 401 but got 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 401 but got 400
+   at Object.eval sandbox-script.js:1:17).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Role-based access control / Debater tries to create a tournament" id="5f2bc582-1bee-40fa-b599-b9dc0399e28c" timestamp="2026-09-25T15:49:13.891Z" tests="4" failures="1" errors="0" time="0.058">
+    <testcase name="Response time is under 2000 ms" time="0.058" classname="03RoleBasedAccessControlDebaterTriesToCreateATournament"/>
+    <testcase name="Request is blocked (no 2xx)" time="0.058" classname="03RoleBasedAccessControlDebaterTriesToCreateATournament"/>
+    <testcase name="Blocked by the role check" time="0.058" classname="03RoleBasedAccessControlDebaterTriesToCreateATournament"/>
+    <testcase name="Uses HTTP 403 Forbidden" time="0.058" classname="03RoleBasedAccessControlDebaterTriesToCreateATournament">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 03 Role-based access control / Debater tries to create a tournament.]]>
+        <![CDATA[Test description: Uses HTTP 403 Forbidden.]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 400
+   at Object.eval sandbox-script.js:3:18).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Role-based access control / Judge tries to create a match" id="965b4985-d968-4129-8bc8-412315ff703c" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="1" errors="0" time="0.013">
+    <testcase name="Response time is under 2000 ms" time="0.013" classname="03RoleBasedAccessControlJudgeTriesToCreateAMatch"/>
+    <testcase name="Request is blocked (no 2xx)" time="0.013" classname="03RoleBasedAccessControlJudgeTriesToCreateAMatch"/>
+    <testcase name="Uses HTTP 403 Forbidden" time="0.013" classname="03RoleBasedAccessControlJudgeTriesToCreateAMatch">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 03 Role-based access control / Judge tries to create a match.]]>
+        <![CDATA[Test description: Uses HTTP 403 Forbidden.]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 400
+   at Object.eval sandbox-script.js:2:19).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Role-based access control / Anonymous tries to create a tournament" id="79c9cf17-9f09-4a19-b3aa-887a1cf9a4f6" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="1" errors="0" time="0.008">
+    <testcase name="Response time is under 2000 ms" time="0.008" classname="03RoleBasedAccessControlAnonymousTriesToCreateATournament"/>
+    <testcase name="Request is blocked (no 2xx)" time="0.008" classname="03RoleBasedAccessControlAnonymousTriesToCreateATournament"/>
+    <testcase name="Uses HTTP 401 Unauthorized" time="0.008" classname="03RoleBasedAccessControlAnonymousTriesToCreateATournament">
+      <failure type="AssertionFailure" message="expected response to have status code 401 but got 403">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 03 Role-based access control / Anonymous tries to create a tournament.]]>
+        <![CDATA[Test description: Uses HTTP 401 Unauthorized.]]>
+        <![CDATA[Error message: expected response to have status code 401 but got 403.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 401 but got 403
+   at Object.eval sandbox-script.js:2:20).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Role-based access control / Forged token is rejected" id="781acc4d-4d07-473c-9d21-be35a5d87640" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.007">
+    <testcase name="Response time is under 2000 ms" time="0.007" classname="03RoleBasedAccessControlForgedTokenIsRejected"/>
+    <testcase name="Forged token is blocked" time="0.007" classname="03RoleBasedAccessControlForgedTokenIsRejected"/>
+  </testsuite>
+  <testsuite name="03 Role-based access control / Expired token is rejected with 401" id="34515428-521c-4a71-9a8b-91a63d85aadc" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="1" errors="0" time="0.007">
+    <testcase name="Response time is under 2000 ms" time="0.007" classname="03RoleBasedAccessControlExpiredTokenIsRejectedWith401"/>
+    <testcase name="Expired token is blocked" time="0.007" classname="03RoleBasedAccessControlExpiredTokenIsRejectedWith401"/>
+    <testcase name="Uses HTTP 401 so the frontend logs the user out" time="0.007" classname="03RoleBasedAccessControlExpiredTokenIsRejectedWith401">
+      <failure type="AssertionFailure" message="expected response to have status code 401 but got 403">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 03 Role-based access control / Expired token is rejected with 401.]]>
+        <![CDATA[Test description: Uses HTTP 401 so the frontend logs the user out.]]>
+        <![CDATA[Error message: expected response to have status code 401 but got 403.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 401 but got 403
+   at Object.eval sandbox-script.js:2:22).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Organizer creates tournament with schools, judges and template" id="475886db-c4b7-49b6-b358-fa5287aba2cd" timestamp="2026-09-25T15:49:13.891Z" tests="5" failures="0" errors="0" time="0.082">
+    <testcase name="Response time is under 2000 ms" time="0.082" classname="04TournamentLifecycleOrganizerCreatesTournamentWithSchoolsJudgesAndTemplate"/>
+    <testcase name="Status is 200" time="0.082" classname="04TournamentLifecycleOrganizerCreatesTournamentWithSchoolsJudgesAndTemplate"/>
+    <testcase name="Two schools created" time="0.082" classname="04TournamentLifecycleOrganizerCreatesTournamentWithSchoolsJudgesAndTemplate"/>
+    <testcase name="Judges get sequential codes" time="0.082" classname="04TournamentLifecycleOrganizerCreatesTournamentWithSchoolsJudgesAndTemplate"/>
+    <testcase name="Tournament starts ACTIVE" time="0.082" classname="04TournamentLifecycleOrganizerCreatesTournamentWithSchoolsJudgesAndTemplate"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Tournament is visible publicly" id="f4ef9c4e-62fd-401d-acc7-8555fed17a33" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.042">
+    <testcase name="Response time is under 2000 ms" time="0.042" classname="04TournamentLifecycleTournamentIsVisiblePublicly"/>
+    <testcase name="Status is 200" time="0.042" classname="04TournamentLifecycleTournamentIsVisiblePublicly"/>
+    <testcase name="Correct name" time="0.042" classname="04TournamentLifecycleTournamentIsVisiblePublicly"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Organizer's tournaments list" id="1b0c09f1-0d99-4631-a133-ee15bc14b90b" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.026">
+    <testcase name="Response time is under 2000 ms" time="0.026" classname="04TournamentLifecycleOrganizersTournamentsList"/>
+    <testcase name="Status is 200" time="0.026" classname="04TournamentLifecycleOrganizersTournamentsList"/>
+    <testcase name="Contains the new tournament" time="0.026" classname="04TournamentLifecycleOrganizersTournamentsList"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Adding the same judge twice is rejected" id="d2fe4bb8-c072-4cdb-98ed-cecba4b2052f" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.026">
+    <testcase name="Response time is under 2000 ms" time="0.026" classname="04TournamentLifecycleAddingTheSameJudgeTwiceIsRejected"/>
+    <testcase name="Status is 400" time="0.026" classname="04TournamentLifecycleAddingTheSameJudgeTwiceIsRejected"/>
+    <testcase name="Explains duplicate" time="0.026" classname="04TournamentLifecycleAddingTheSameJudgeTwiceIsRejected"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Score template can be read back (judge score sheet)" id="993c7478-a6b9-4eb5-9072-1c9d6ff1071e" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="2" errors="0" time="0.034">
+    <testcase name="Response time is under 2000 ms" time="0.034" classname="04TournamentLifecycleScoreTemplateCanBeReadBackJudgeScoreSheet"/>
+    <testcase name="Template loads (200)" time="0.034" classname="04TournamentLifecycleScoreTemplateCanBeReadBackJudgeScoreSheet">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 04 Tournament lifecycle / Score template can be read back (judge score sheet).]]>
+        <![CDATA[Test description: Template loads (200).]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 400
+   at Object.eval sandbox-script.js:1:27).]]>
+      </failure>
+    </testcase>
+    <testcase name="Template has the organizer's criteria" time="0.034" classname="04TournamentLifecycleScoreTemplateCanBeReadBackJudgeScoreSheet">
+      <failure type="AssertionFailure" message="expected '{&quot;timestamp&quot;:&quot;2026-09-25T21:19:17.452…' to include 'Matter'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 04 Tournament lifecycle / Score template can be read back (judge score sheet).]]>
+        <![CDATA[Test description: Template has the organizer's criteria.]]>
+        <![CDATA[Error message: expected '{"timestamp":"2026-09-25T21:19:17.452…' to include 'Matter'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '{"timestamp":"2026-09-25T21:19:17.452…' to include 'Matter'
+   at Object.eval sandbox-script.js:2:27).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / A school cannot debate itself" id="8b0a5c74-bb22-490d-9149-d943f9744358" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="Response time is under 2000 ms" time="0.017" classname="04TournamentLifecycleASchoolCannotDebateItself"/>
+    <testcase name="Status is 400" time="0.017" classname="04TournamentLifecycleASchoolCannotDebateItself"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Organizer creates a match with two judges" id="3f4a0165-a3cb-459d-960a-1ddfbc778cc3" timestamp="2026-09-25T15:49:13.891Z" tests="4" failures="0" errors="0" time="0.059">
+    <testcase name="Response time is under 2000 ms" time="0.059" classname="04TournamentLifecycleOrganizerCreatesAMatchWithTwoJudges"/>
+    <testcase name="Status is 200" time="0.059" classname="04TournamentLifecycleOrganizerCreatesAMatchWithTwoJudges"/>
+    <testcase name="Round 1, UPCOMING" time="0.059" classname="04TournamentLifecycleOrganizerCreatesAMatchWithTwoJudges"/>
+    <testcase name="Match code format MATCH-{tournament}-{n}" time="0.059" classname="04TournamentLifecycleOrganizerCreatesAMatchWithTwoJudges"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Judge receives assignment notification" id="2c00b83b-1617-4ac5-b505-e55983376aed" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.021">
+    <testcase name="Response time is under 2000 ms" time="0.021" classname="04TournamentLifecycleJudgeReceivesAssignmentNotification"/>
+    <testcase name="Status is 200" time="0.021" classname="04TournamentLifecycleJudgeReceivesAssignmentNotification"/>
+    <testcase name="Has 'New Judging Assignment'" time="0.021" classname="04TournamentLifecycleJudgeReceivesAssignmentNotification"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Debater sees the match on the tournament page" id="9d8a8987-a9b7-4c30-902f-421fc6901b09" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.022">
+    <testcase name="Response time is under 2000 ms" time="0.022" classname="04TournamentLifecycleDebaterSeesTheMatchOnTheTournamentPage"/>
+    <testcase name="Status is 200" time="0.022" classname="04TournamentLifecycleDebaterSeesTheMatchOnTheTournamentPage"/>
+    <testcase name="One match" time="0.022" classname="04TournamentLifecycleDebaterSeesTheMatchOnTheTournamentPage"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Judge 2 cannot submit on behalf of judge 1" id="d31813ab-3eed-430a-91b0-ac08ffde7367" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="1" errors="0" time="0.017">
+    <testcase name="Response time is under 2000 ms" time="0.017" classname="04TournamentLifecycleJudge2CannotSubmitOnBehalfOfJudge1"/>
+    <testcase name="Impersonation is blocked" time="0.017" classname="04TournamentLifecycleJudge2CannotSubmitOnBehalfOfJudge1"/>
+    <testcase name="Uses HTTP 403 Forbidden" time="0.017" classname="04TournamentLifecycleJudge2CannotSubmitOnBehalfOfJudge1">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 04 Tournament lifecycle / Judge 2 cannot submit on behalf of judge 1.]]>
+        <![CDATA[Test description: Uses HTTP 403 Forbidden.]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 400
+   at Object.eval sandbox-script.js:2:32).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Judge 1 submits scores" id="5bcf9883-f4c6-4603-8bb1-b66c602cd71f" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.056">
+    <testcase name="Response time is under 2000 ms" time="0.056" classname="04TournamentLifecycleJudge1SubmitsScores"/>
+    <testcase name="Status is 200" time="0.056" classname="04TournamentLifecycleJudge1SubmitsScores"/>
+    <testcase name="Confirmation message" time="0.056" classname="04TournamentLifecycleJudge1SubmitsScores"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Match stays open until all judges submit" id="e636d1f1-6811-4ee5-8f74-678f9b68331d" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.022">
+    <testcase name="Response time is under 2000 ms" time="0.022" classname="04TournamentLifecycleMatchStaysOpenUntilAllJudgesSubmit"/>
+    <testcase name="Status is 200" time="0.022" classname="04TournamentLifecycleMatchStaysOpenUntilAllJudgesSubmit"/>
+    <testcase name="Still UPCOMING" time="0.022" classname="04TournamentLifecycleMatchStaysOpenUntilAllJudgesSubmit"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Judge 1 can see their submitted sheet" id="5ff4ad98-cdd5-4cd1-ba0d-c0711a362b14" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="1" errors="0" time="0.030">
+    <testcase name="Response time is under 2000 ms" time="0.030" classname="04TournamentLifecycleJudge1CanSeeTheirSubmittedSheet"/>
+    <testcase name="Submission loads (200)" time="0.030" classname="04TournamentLifecycleJudge1CanSeeTheirSubmittedSheet">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 04 Tournament lifecycle / Judge 1 can see their submitted sheet.]]>
+        <![CDATA[Test description: Submission loads (200).]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 400
+   at Object.eval sandbox-script.js:1:35).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Judge 2 submits scores" id="9677a1c1-1cf7-47ea-b4fd-193a99b611e6" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.072">
+    <testcase name="Response time is under 2000 ms" time="0.072" classname="04TournamentLifecycleJudge2SubmitsScores"/>
+    <testcase name="Status is 200" time="0.072" classname="04TournamentLifecycleJudge2SubmitsScores"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Match is completed with winner and best speaker" id="c3e1da7c-d234-4fe9-a133-b01dc40a9919" timestamp="2026-09-25T15:49:13.891Z" tests="5" failures="0" errors="0" time="0.019">
+    <testcase name="Response time is under 2000 ms" time="0.019" classname="04TournamentLifecycleMatchIsCompletedWithWinnerAndBestSpeaker"/>
+    <testcase name="Status is 200" time="0.019" classname="04TournamentLifecycleMatchIsCompletedWithWinnerAndBestSpeaker"/>
+    <testcase name="Status COMPLETED" time="0.019" classname="04TournamentLifecycleMatchIsCompletedWithWinnerAndBestSpeaker"/>
+    <testcase name="Trinity wins on average score" time="0.019" classname="04TournamentLifecycleMatchIsCompletedWithWinnerAndBestSpeaker"/>
+    <testcase name="Best speaker chosen by judges' votes" time="0.019" classname="04TournamentLifecycleMatchIsCompletedWithWinnerAndBestSpeaker"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Judge cannot submit twice" id="4ff957cd-9f82-4f8c-85cb-f7b0a849e170" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.022">
+    <testcase name="Response time is under 2000 ms" time="0.022" classname="04TournamentLifecycleJudgeCannotSubmitTwice"/>
+    <testcase name="Status is 400" time="0.022" classname="04TournamentLifecycleJudgeCannotSubmitTwice"/>
+    <testcase name="Explains duplicate" time="0.022" classname="04TournamentLifecycleJudgeCannotSubmitTwice"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Leaderboard updated" id="62f7c81c-7d29-4669-9c75-e9c751b00b7f" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.016">
+    <testcase name="Response time is under 2000 ms" time="0.016" classname="04TournamentLifecycleLeaderboardUpdated"/>
+    <testcase name="Status is 200" time="0.016" classname="04TournamentLifecycleLeaderboardUpdated"/>
+    <testcase name="Trinity first with 2 points" time="0.016" classname="04TournamentLifecycleLeaderboardUpdated"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Winning debater stats updated" id="cc6d06e6-06e6-4c81-9790-1b47fa19e6e6" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.010">
+    <testcase name="Response time is under 2000 ms" time="0.010" classname="04TournamentLifecycleWinningDebaterStatsUpdated"/>
+    <testcase name="Status is 200" time="0.010" classname="04TournamentLifecycleWinningDebaterStatsUpdated"/>
+    <testcase name="1 win, 1 best-speaker award" time="0.010" classname="04TournamentLifecycleWinningDebaterStatsUpdated"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Losing debater stats updated" id="1c7c77be-5dba-41d0-bfdf-411b856dbe90" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.010">
+    <testcase name="Response time is under 2000 ms" time="0.010" classname="04TournamentLifecycleLosingDebaterStatsUpdated"/>
+    <testcase name="Status is 200" time="0.010" classname="04TournamentLifecycleLosingDebaterStatsUpdated"/>
+    <testcase name="1 loss" time="0.010" classname="04TournamentLifecycleLosingDebaterStatsUpdated"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Judge stats updated" id="2753c3a4-482b-4e16-aaf3-a0a4a0bff7b4" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.011">
+    <testcase name="Response time is under 2000 ms" time="0.011" classname="04TournamentLifecycleJudgeStatsUpdated"/>
+    <testcase name="Status is 200" time="0.011" classname="04TournamentLifecycleJudgeStatsUpdated"/>
+    <testcase name="1 match judged" time="0.011" classname="04TournamentLifecycleJudgeStatsUpdated"/>
+  </testsuite>
+  <testsuite name="04 Tournament lifecycle / Next round needs at least two winners" id="b15712b5-8174-40c1-b1f5-f44c1412f881" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.021">
+    <testcase name="Response time is under 2000 ms" time="0.021" classname="04TournamentLifecycleNextRoundNeedsAtLeastTwoWinners"/>
+    <testcase name="Status is 400" time="0.021" classname="04TournamentLifecycleNextRoundNeedsAtLeastTwoWinners"/>
+    <testcase name="Explains why" time="0.021" classname="04TournamentLifecycleNextRoundNeedsAtLeastTwoWinners"/>
+  </testsuite>
+  <testsuite name="05 Social features / Debater A sends connection request to B" id="8db27b2e-a52f-43c1-b776-2abca3867518" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.029">
+    <testcase name="Response time is under 2000 ms" time="0.029" classname="05SocialFeaturesDebaterASendsConnectionRequestToB"/>
+    <testcase name="Status is 200" time="0.029" classname="05SocialFeaturesDebaterASendsConnectionRequestToB"/>
+    <testcase name="PENDING" time="0.029" classname="05SocialFeaturesDebaterASendsConnectionRequestToB"/>
+  </testsuite>
+  <testsuite name="05 Social features / B sees the pending request" id="fd2bdd62-cec6-4798-b65e-370359d935db" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.018">
+    <testcase name="Response time is under 2000 ms" time="0.018" classname="05SocialFeaturesBSeesThePendingRequest"/>
+    <testcase name="Status is 200" time="0.018" classname="05SocialFeaturesBSeesThePendingRequest"/>
+    <testcase name="Has one pending" time="0.018" classname="05SocialFeaturesBSeesThePendingRequest"/>
+  </testsuite>
+  <testsuite name="05 Social features / A cannot accept their own request" id="542ebb0d-05ed-4c08-96d0-154294b2030c" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.016">
+    <testcase name="Response time is under 2000 ms" time="0.016" classname="05SocialFeaturesACannotAcceptTheirOwnRequest"/>
+    <testcase name="Status is 400" time="0.016" classname="05SocialFeaturesACannotAcceptTheirOwnRequest"/>
+  </testsuite>
+  <testsuite name="05 Social features / B accepts" id="e0907068-041c-4987-8ee3-1f623c61beb9" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.020">
+    <testcase name="Response time is under 2000 ms" time="0.020" classname="05SocialFeaturesBAccepts"/>
+    <testcase name="Status is 200" time="0.020" classname="05SocialFeaturesBAccepts"/>
+    <testcase name="ACCEPTED" time="0.020" classname="05SocialFeaturesBAccepts"/>
+  </testsuite>
+  <testsuite name="05 Social features / Connection status is ACCEPTED" id="2b8b6627-ff41-48f1-ae42-5ee63fc1367d" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.019">
+    <testcase name="Response time is under 2000 ms" time="0.019" classname="05SocialFeaturesConnectionStatusIsAccepted"/>
+    <testcase name="ACCEPTED" time="0.019" classname="05SocialFeaturesConnectionStatusIsAccepted"/>
+  </testsuite>
+  <testsuite name="05 Social features / A sends a message to B" id="9c4d7352-d55a-4248-be7e-ece728c54521" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.022">
+    <testcase name="Response time is under 2000 ms" time="0.022" classname="05SocialFeaturesASendsAMessageToB"/>
+    <testcase name="Status is 200" time="0.022" classname="05SocialFeaturesASendsAMessageToB"/>
+  </testsuite>
+  <testsuite name="05 Social features / B reads messages" id="909a809d-d2df-4b03-9644-23635ba609fb" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.017">
+    <testcase name="Response time is under 2000 ms" time="0.017" classname="05SocialFeaturesBReadsMessages"/>
+    <testcase name="Status is 200" time="0.017" classname="05SocialFeaturesBReadsMessages"/>
+    <testcase name="Message delivered" time="0.017" classname="05SocialFeaturesBReadsMessages"/>
+  </testsuite>
+  <testsuite name="05 Social features / A writes a diary post" id="bc569195-59fb-4bad-b6fb-efd6f237f4a8" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.029">
+    <testcase name="Response time is under 2000 ms" time="0.029" classname="05SocialFeaturesAWritesADiaryPost"/>
+    <testcase name="Status is 200" time="0.029" classname="05SocialFeaturesAWritesADiaryPost"/>
+  </testsuite>
+  <testsuite name="05 Social features / B likes the diary post" id="6191e06d-14be-4407-81b4-35cf43bc2529" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.026">
+    <testcase name="Response time is under 2000 ms" time="0.026" classname="05SocialFeaturesBLikesTheDiaryPost"/>
+    <testcase name="Status is 200" time="0.026" classname="05SocialFeaturesBLikesTheDiaryPost"/>
+    <testcase name="Like counted" time="0.026" classname="05SocialFeaturesBLikesTheDiaryPost"/>
+  </testsuite>
+  <testsuite name="05 Social features / B comments on the diary post" id="feba9f33-f1fd-41be-a7d6-2628642e4afd" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.022">
+    <testcase name="Response time is under 2000 ms" time="0.022" classname="05SocialFeaturesBCommentsOnTheDiaryPost"/>
+    <testcase name="Status is 200" time="0.022" classname="05SocialFeaturesBCommentsOnTheDiaryPost"/>
+  </testsuite>
+  <testsuite name="05 Social features / Debater cannot verify a diary post (organizer-only)" id="00464113-27ac-48b3-8725-e468dee828cd" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="Response time is under 2000 ms" time="0.017" classname="05SocialFeaturesDebaterCannotVerifyADiaryPostOrganizerOnly"/>
+    <testcase name="Blocked" time="0.017" classname="05SocialFeaturesDebaterCannotVerifyADiaryPostOrganizerOnly"/>
+  </testsuite>
+  <testsuite name="05 Social features / Organizer verifies the diary post" id="116b170e-7dcf-458e-a845-e30c2eae8aed" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.018">
+    <testcase name="Response time is under 2000 ms" time="0.018" classname="05SocialFeaturesOrganizerVerifiesTheDiaryPost"/>
+    <testcase name="Status is 200" time="0.018" classname="05SocialFeaturesOrganizerVerifiesTheDiaryPost"/>
+    <testcase name="Verified" time="0.018" classname="05SocialFeaturesOrganizerVerifiesTheDiaryPost"/>
+  </testsuite>
+  <testsuite name="05 Social features / Public diary list for A" id="6898a765-45a6-47ef-8790-e7363a5854ab" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.012">
+    <testcase name="Response time is under 2000 ms" time="0.012" classname="05SocialFeaturesPublicDiaryListForA"/>
+    <testcase name="Status is 200" time="0.012" classname="05SocialFeaturesPublicDiaryListForA"/>
+    <testcase name="Post listed" time="0.012" classname="05SocialFeaturesPublicDiaryListForA"/>
+  </testsuite>
+  <testsuite name="05 Social features / Create calendar event" id="a456a8ce-bc21-4a36-bfe3-66f5361ba4a8" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.022">
+    <testcase name="Response time is under 2000 ms" time="0.022" classname="05SocialFeaturesCreateCalendarEvent"/>
+    <testcase name="Status is 200" time="0.022" classname="05SocialFeaturesCreateCalendarEvent"/>
+  </testsuite>
+  <testsuite name="05 Social features / Calendar lists the event" id="80206209-937c-4a83-beb3-b3c4a72a3656" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.016">
+    <testcase name="Response time is under 2000 ms" time="0.016" classname="05SocialFeaturesCalendarListsTheEvent"/>
+    <testcase name="Event present" time="0.016" classname="05SocialFeaturesCalendarListsTheEvent"/>
+  </testsuite>
+  <testsuite name="05 Social features / Post news article" id="f26b9dd6-0031-4b70-bc9f-c1b71b3b9941" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="Response time is under 2000 ms" time="0.017" classname="05SocialFeaturesPostNewsArticle"/>
+    <testcase name="Status is 200" time="0.017" classname="05SocialFeaturesPostNewsArticle"/>
+  </testsuite>
+  <testsuite name="05 Social features / Unread notification count" id="85f02977-cf67-4339-b6e8-30153d24630a" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.021">
+    <testcase name="Response time is under 2000 ms" time="0.021" classname="05SocialFeaturesUnreadNotificationCount"/>
+    <testcase name="Status is 200" time="0.021" classname="05SocialFeaturesUnreadNotificationCount"/>
+    <testcase name="Count is a number > 0" time="0.021" classname="05SocialFeaturesUnreadNotificationCount"/>
+  </testsuite>
+  <testsuite name="05 Social features / Mark own notification read" id="b66a3f0c-a12e-4d13-85e3-7e5044d58cc6" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.014">
+    <testcase name="Response time is under 2000 ms" time="0.014" classname="05SocialFeaturesMarkOwnNotificationRead"/>
+    <testcase name="Status is 200" time="0.014" classname="05SocialFeaturesMarkOwnNotificationRead"/>
+  </testsuite>
+  <testsuite name="05 Social features / Search by tournament name" id="e838cbeb-695b-48ce-85c7-83ad3d917216" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.023">
+    <testcase name="Response time is under 2000 ms" time="0.023" classname="05SocialFeaturesSearchByTournamentName"/>
+    <testcase name="Status is 200" time="0.023" classname="05SocialFeaturesSearchByTournamentName"/>
+    <testcase name="Finds the tournament" time="0.023" classname="05SocialFeaturesSearchByTournamentName"/>
+  </testsuite>
+  <testsuite name="05 Social features / Newsletter subscribe" id="a59d72f6-3127-4827-997e-3590779a2fdd" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="0" errors="0" time="0.011">
+    <testcase name="Response time is under 2000 ms" time="0.011" classname="05SocialFeaturesNewsletterSubscribe"/>
+    <testcase name="Status is 200" time="0.011" classname="05SocialFeaturesNewsletterSubscribe"/>
+    <testcase name="Subscribed" time="0.011" classname="05SocialFeaturesNewsletterSubscribe"/>
+  </testsuite>
+  <testsuite name="05 Social features / Newsletter rejects bad e-mail" id="1e005999-3a07-402f-8a51-c6d85423735a" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="0" errors="0" time="0.005">
+    <testcase name="Response time is under 2000 ms" time="0.005" classname="05SocialFeaturesNewsletterRejectsBadEMail"/>
+    <testcase name="Status is 400" time="0.005" classname="05SocialFeaturesNewsletterRejectsBadEMail"/>
+  </testsuite>
+  <testsuite name="06 Ownership &amp; privacy / Debater A edits debater B's profile" id="efefbb93-4ede-42a0-9311-a912306facd0" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="1" errors="0" time="0.017">
+    <testcase name="Response time is under 2000 ms" time="0.017" classname="06OwnershipAmpPrivacyDebaterAEditsDebaterBsProfile"/>
+    <testcase name="Cannot edit another user's profile (403)" time="0.017" classname="06OwnershipAmpPrivacyDebaterAEditsDebaterBsProfile">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 06 Ownership & privacy / Debater A edits debater B's profile.]]>
+        <![CDATA[Test description: Cannot edit another user's profile (403).]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 200
+   at Object.eval sandbox-script.js:1:65).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="06 Ownership &amp; privacy / Debater B posts a discussion comment as debater A" id="fa667f66-ed57-4353-9f9b-fbd3e094b822" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="1" errors="0" time="0.023">
+    <testcase name="Response time is under 2000 ms" time="0.023" classname="06OwnershipAmpPrivacyDebaterBPostsADiscussionCommentAsDebaterA"/>
+    <testcase name="Cannot post as another user (403)" time="0.023" classname="06OwnershipAmpPrivacyDebaterBPostsADiscussionCommentAsDebaterA">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 06 Ownership & privacy / Debater B posts a discussion comment as debater A.]]>
+        <![CDATA[Test description: Cannot post as another user (403).]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 200
+   at Object.eval sandbox-script.js:1:66).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="06 Ownership &amp; privacy / Judge 2 deletes a comment they don't own" id="252fff6e-ec64-497f-b349-e3373bfe621f" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="1" errors="0" time="0.024">
+    <testcase name="Response time is under 2000 ms" time="0.024" classname="06OwnershipAmpPrivacyJudge2DeletesACommentTheyDontOwn"/>
+    <testcase name="Cannot delete another user's comment (403)" time="0.024" classname="06OwnershipAmpPrivacyJudge2DeletesACommentTheyDontOwn">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 204">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 06 Ownership & privacy / Judge 2 deletes a comment they don't own.]]>
+        <![CDATA[Test description: Cannot delete another user's comment (403).]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 204.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 204
+   at Object.eval sandbox-script.js:1:67).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="06 Ownership &amp; privacy / Debater marks judge's notification as read" id="e77d23cd-29a7-4aad-b8bc-fd704a2b97b7" timestamp="2026-09-25T15:49:13.891Z" tests="2" failures="1" errors="0" time="0.012">
+    <testcase name="Response time is under 2000 ms" time="0.012" classname="06OwnershipAmpPrivacyDebaterMarksJudgesNotificationAsRead"/>
+    <testcase name="Cannot modify another user's notification (403)" time="0.012" classname="06OwnershipAmpPrivacyDebaterMarksJudgesNotificationAsRead">
+      <failure type="AssertionFailure" message="expected response to have status code 403 but got 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 06 Ownership & privacy / Debater marks judge's notification as read.]]>
+        <![CDATA[Test description: Cannot modify another user's notification (403).]]>
+        <![CDATA[Error message: expected response to have status code 403 but got 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 403 but got 200
+   at Object.eval sandbox-script.js:1:68).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="06 Ownership &amp; privacy / Anonymous user list hides e-mail addresses" id="c7a03f97-f572-42c5-920e-8df54d04940f" timestamp="2026-09-25T15:49:13.891Z" tests="3" failures="1" errors="0" time="0.012">
+    <testcase name="Response time is under 2000 ms" time="0.012" classname="06OwnershipAmpPrivacyAnonymousUserListHidesEMailAddresses"/>
+    <testcase name="Status is 200" time="0.012" classname="06OwnershipAmpPrivacyAnonymousUserListHidesEMailAddresses"/>
+    <testcase name="No e-mail addresses exposed to visitors" time="0.012" classname="06OwnershipAmpPrivacyAnonymousUserListHidesEMailAddresses">
+      <failure type="AssertionFailure" message="expected true to deeply equal false">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 2f18484b-834b-4d2d-8230-2481faaf1c74.]]>
+        <![CDATA[Collection name: DMS API End-to-End Tests.]]>
+        <![CDATA[Request name: 06 Ownership & privacy / Anonymous user list hides e-mail addresses.]]>
+        <![CDATA[Test description: No e-mail addresses exposed to visitors.]]>
+        <![CDATA[Error message: expected true to deeply equal false.]]>
+        <![CDATA[Stacktrace: AssertionError: expected true to deeply equal false
+   at Object.eval sandbox-script.js:2:69).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>

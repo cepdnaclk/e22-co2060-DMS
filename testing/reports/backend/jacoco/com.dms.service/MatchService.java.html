@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatchService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.service</a> &gt; <span class="el_source">MatchService.java</span></div><h1>MatchService.java</h1><pre class="source lang-java linenums">package com.dms.service;
+
+import com.dms.dto.*;
+import com.dms.entity.*;
+import com.dms.repository.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class MatchService {
+
+    private final MatchRepository matchRepository;
+    private final MatchJudgeRepository matchJudgeRepository;
+    private final TournamentRepository tournamentRepository;
+    private final SchoolRepository schoolRepository;
+    private final UserRepository userRepository;
+    private final NotificationService notificationService;
+    private final SchoolDebaterRepository schoolDebaterRepository;
+
+    @Transactional
+    public MatchDTO createMatch(CreateMatchRequest req) {
+<span class="fc" id="L27">        Tournament tournament = tournamentRepository.findById(req.getTournamentId())</span>
+<span class="pc" id="L28">            .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="fc" id="L29">        School prop = schoolRepository.findById(req.getPropositionSchoolId())</span>
+<span class="pc" id="L30">            .orElseThrow(() -&gt; new RuntimeException(&quot;School not found&quot;));</span>
+<span class="fc" id="L31">        School opp = schoolRepository.findById(req.getOppositionSchoolId())</span>
+<span class="pc" id="L32">            .orElseThrow(() -&gt; new RuntimeException(&quot;School not found&quot;));</span>
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (prop.getId().equals(opp.getId())) {</span>
+<span class="fc" id="L35">            throw new RuntimeException(&quot;Proposition and opposition schools cannot be the same&quot;);</span>
+        }
+
+<span class="fc" id="L38">        Integer maxRound = matchRepository.findMaxRoundNumber(tournament).orElse(0);</span>
+<span class="fc" id="L39">        String matchCode = &quot;MATCH-&quot; + tournament.getId() + &quot;-&quot; + (matchRepository.findByTournament(tournament).size() + 1);</span>
+
+<span class="fc" id="L41">        Match match = Match.builder()</span>
+<span class="fc" id="L42">            .matchCode(matchCode)</span>
+<span class="fc" id="L43">            .tournament(tournament)</span>
+<span class="fc" id="L44">            .propositionSchool(prop)</span>
+<span class="fc" id="L45">            .oppositionSchool(opp)</span>
+<span class="fc" id="L46">            .topic(req.getTopic())</span>
+<span class="fc" id="L47">            .roundNumber(maxRound + 1)</span>
+<span class="fc" id="L48">            .startTime(req.getStartTime())</span>
+<span class="fc" id="L49">            .build();</span>
+
+<span class="fc" id="L51">        match = matchRepository.save(match);</span>
+
+        // Assign judges
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (req.getJudgeIds() != null) {</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            for (Long judgeId : req.getJudgeIds()) {</span>
+<span class="fc" id="L56">                User judge = userRepository.findById(judgeId)</span>
+<span class="pc" id="L57">                    .orElseThrow(() -&gt; new RuntimeException(&quot;Judge not found&quot;));</span>
+<span class="fc" id="L58">                String link = &quot;/score-sheet/&quot; + match.getId() + &quot;/&quot; + judgeId;</span>
+<span class="fc" id="L59">                matchJudgeRepository.save(MatchJudge.builder()</span>
+<span class="fc" id="L60">                    .match(match).judge(judge).scoreSheetLink(link).build());</span>
+
+<span class="fc" id="L62">                notificationService.send(judge,</span>
+                    &quot;New Judging Assignment&quot;,
+                    &quot;You have been assigned as a judge for &quot; + matchCode + &quot; in &quot; +
+<span class="fc" id="L65">                    tournament.getName() + &quot; organised by &quot; + tournament.getOrganizer().getFullName() + &quot;.&quot;);</span>
+<span class="fc" id="L66">            }</span>
+        }
+
+        // Notify debaters
+<span class="fc" id="L70">        List&lt;SchoolDebater&gt; propDebaters = schoolDebaterRepository.findBySchool(prop);</span>
+<span class="fc" id="L71">        List&lt;SchoolDebater&gt; oppDebaters = schoolDebaterRepository.findBySchool(opp);</span>
+<span class="fc" id="L72">        String debaterMsg = &quot;Your school has been assigned to &quot; + matchCode + &quot; in &quot; +</span>
+<span class="fc" id="L73">            tournament.getName() + &quot;. Topic: &quot; + req.getTopic() + &quot;.&quot;;</span>
+
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (SchoolDebater sd : propDebaters) {</span>
+<span class="fc" id="L76">            notificationService.send(sd.getDebater(), &quot;Match Assigned&quot;, debaterMsg);</span>
+<span class="fc" id="L77">        }</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (SchoolDebater sd : oppDebaters) {</span>
+<span class="fc" id="L79">            notificationService.send(sd.getDebater(), &quot;Match Assigned&quot;, debaterMsg);</span>
+<span class="fc" id="L80">        }</span>
+
+<span class="fc" id="L82">        return MatchDTO.from(matchRepository.findById(match.getId()).orElseThrow());</span>
+    }
+
+    public List&lt;MatchDTO&gt; getTournamentMatches(Long tournamentId) {
+<span class="nc" id="L86">        Tournament tournament = tournamentRepository.findById(tournamentId)</span>
+<span class="nc" id="L87">            .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="nc" id="L88">        return matchRepository.findByTournamentOrderByRoundNumberAscCreatedAtAsc(tournament)</span>
+<span class="nc" id="L89">            .stream().map(MatchDTO::from).collect(Collectors.toList());</span>
+    }
+
+    public MatchDTO getMatch(Long id) {
+<span class="fc" id="L93">        return MatchDTO.from(matchRepository.findById(id)</span>
+<span class="fc" id="L94">            .orElseThrow(() -&gt; new RuntimeException(&quot;Match not found&quot;)));</span>
+    }
+
+    public List&lt;MatchDTO&gt; getLiveMatches() {
+<span class="nc" id="L98">        return matchRepository.findByStatus(Match.Status.LIVE)</span>
+<span class="nc" id="L99">            .stream().map(MatchDTO::from).collect(Collectors.toList());</span>
+    }
+
+    @Transactional
+    public MatchDTO generateNextRound(Long tournamentId) {
+<span class="fc" id="L104">        Tournament tournament = tournamentRepository.findById(tournamentId)</span>
+<span class="pc" id="L105">            .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+
+<span class="fc" id="L107">        Integer currentRound = matchRepository.findMaxRoundNumber(tournament).orElse(1);</span>
+<span class="fc" id="L108">        List&lt;Match&gt; currentRoundMatches = matchRepository.findByTournamentAndRound(tournament, currentRound);</span>
+
+<span class="fc" id="L110">        boolean allCompleted = currentRoundMatches.stream()</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            .allMatch(m -&gt; m.getStatus() == Match.Status.COMPLETED);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (!allCompleted) {</span>
+<span class="fc" id="L113">            throw new RuntimeException(&quot;Not all matches in current round are completed&quot;);</span>
+        }
+
+<span class="fc" id="L116">        List&lt;School&gt; winners = currentRoundMatches.stream()</span>
+<span class="fc" id="L117">            .map(Match::getWinnerSchool)</span>
+<span class="fc" id="L118">            .filter(Objects::nonNull)</span>
+<span class="fc" id="L119">            .collect(Collectors.toList());</span>
+
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (winners.size() &lt; 2) {</span>
+<span class="nc" id="L122">            throw new RuntimeException(&quot;Not enough winners to generate next round&quot;);</span>
+        }
+
+        // Pair winners for next round
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        for (int i = 0; i + 1 &lt; winners.size(); i += 2) {</span>
+<span class="fc" id="L127">            String matchCode = &quot;MATCH-&quot; + tournament.getId() + &quot;-R&quot; + (currentRound + 1) + &quot;-&quot; + (i/2 + 1);</span>
+<span class="fc" id="L128">            Match nextMatch = Match.builder()</span>
+<span class="fc" id="L129">                .matchCode(matchCode)</span>
+<span class="fc" id="L130">                .tournament(tournament)</span>
+<span class="fc" id="L131">                .propositionSchool(winners.get(i))</span>
+<span class="fc" id="L132">                .oppositionSchool(winners.get(i + 1))</span>
+<span class="fc" id="L133">                .topic(&quot;TBD&quot;)</span>
+<span class="fc" id="L134">                .roundNumber(currentRound + 1)</span>
+<span class="fc" id="L135">                .build();</span>
+<span class="fc" id="L136">            matchRepository.save(nextMatch);</span>
+        }
+
+<span class="fc" id="L139">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

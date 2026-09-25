@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Match.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.entity</a> &gt; <span class="el_source">Match.java</span></div><h1>Match.java</h1><pre class="source lang-java linenums">package com.dms.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
+@Table(name = &quot;matches&quot;)
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+public class Match {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String matchCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;tournament_id&quot;, nullable = false)
+    private Tournament tournament;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;proposition_school_id&quot;, nullable = false)
+    private School propositionSchool;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;opposition_school_id&quot;, nullable = false)
+    private School oppositionSchool;
+
+    @Column(nullable = false)
+    private String topic;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Status status = Status.UPCOMING;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;winner_school_id&quot;)
+    private School winnerSchool;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;best_speaker_id&quot;)
+    private User bestSpeaker;
+
+    @Builder.Default
+    private Integer roundNumber = 1;
+
+    @OneToMany(mappedBy = &quot;match&quot;, cascade = CascadeType.ALL)
+    private List&lt;MatchJudge&gt; judges;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    private LocalDateTime startTime;
+
+<span class="fc" id="L60">    public enum Status {</span>
+<span class="fc" id="L61">        UPCOMING, LIVE, COMPLETED</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

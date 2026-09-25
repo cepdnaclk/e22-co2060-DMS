@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TournamentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.service</a> &gt; <span class="el_source">TournamentService.java</span></div><h1>TournamentService.java</h1><pre class="source lang-java linenums">package com.dms.service;
+
+import com.dms.dto.*;
+import com.dms.entity.*;
+import com.dms.repository.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class TournamentService {
+
+    private final TournamentRepository tournamentRepository;
+    private final SchoolRepository schoolRepository;
+    private final SchoolDebaterRepository schoolDebaterRepository;
+    private final TournamentJudgeRepository tournamentJudgeRepository;
+    private final ScoreSheetTemplateRepository scoreSheetTemplateRepository;
+    private final UserRepository userRepository;
+    private final NotificationService notificationService;
+
+    @Transactional
+    public TournamentDTO createTournament(CreateTournamentRequest req, String organizerUsername) {
+<span class="fc" id="L28">        User organizer = userRepository.findByUsername(organizerUsername)</span>
+<span class="pc" id="L29">                .orElseThrow(() -&gt; new RuntimeException(&quot;Organizer not found&quot;));</span>
+
+<span class="fc" id="L31">        Tournament tournament = Tournament.builder()</span>
+<span class="fc" id="L32">                .name(req.getName())</span>
+<span class="fc" id="L33">                .debateType(req.getDebateType())</span>
+<span class="fc" id="L34">                .customDebateType(req.getCustomDebateType())</span>
+<span class="fc" id="L35">                .tournamentType(req.getTournamentType())</span>
+<span class="fc" id="L36">                .organizer(organizer)</span>
+<span class="fc" id="L37">                .numberOfLeagues(req.getNumberOfLeagues())</span>
+<span class="fc" id="L38">                .build();</span>
+
+<span class="fc" id="L40">        tournament = tournamentRepository.save(tournament);</span>
+
+        // Add schools and debaters
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (req.getSchools() != null) {</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            for (CreateTournamentRequest.SchoolInput si : req.getSchools()) {</span>
+<span class="fc" id="L45">                School school = School.builder()</span>
+<span class="fc" id="L46">                        .name(si.getName())</span>
+<span class="fc" id="L47">                        .tournament(tournament)</span>
+<span class="fc" id="L48">                        .build();</span>
+<span class="fc" id="L49">                school = schoolRepository.save(school);</span>
+
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">                if (si.getDebaterIds() != null) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                    for (Long debaterId : si.getDebaterIds()) {</span>
+<span class="fc" id="L53">                        User debater = userRepository.findById(debaterId)</span>
+<span class="fc" id="L54">                                .orElseThrow(() -&gt; new RuntimeException(&quot;Debater not found: &quot; + debaterId));</span>
+                        // Prevent duplicate in same tournament
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                        if (!schoolDebaterRepository.findByTournamentAndDebater(tournament, debater).isEmpty()) {</span>
+<span class="fc" id="L57">                            throw new RuntimeException(&quot;This debater is already assigned to a school&quot;);</span>
+                        }
+<span class="fc" id="L59">                        schoolDebaterRepository.save(SchoolDebater.builder()</span>
+<span class="fc" id="L60">                                .school(school).debater(debater).build());</span>
+<span class="fc" id="L61">                        notificationService.send(debater,</span>
+                                &quot;Tournament Assigned&quot;,
+<span class="fc" id="L63">                                &quot;You have been registered for tournament '&quot; + tournament.getName() + &quot;' under school '&quot; + school.getName() + &quot;' organised by &quot; + organizer.getFullName() + &quot;.&quot;);</span>
+<span class="fc" id="L64">                    }</span>
+                }
+<span class="fc" id="L66">            }</span>
+        }
+
+        // Add judges
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (req.getJudgeIds() != null) {</span>
+<span class="fc" id="L71">            int count = 1;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            for (Long judgeId : req.getJudgeIds()) {</span>
+<span class="fc" id="L73">                User judge = userRepository.findById(judgeId)</span>
+<span class="pc" id="L74">                        .orElseThrow(() -&gt; new RuntimeException(&quot;Judge not found: &quot; + judgeId));</span>
+<span class="fc" id="L75">                String judgeCode = String.format(&quot;JUDGE-%03d&quot;, count++);</span>
+<span class="fc" id="L76">                tournamentJudgeRepository.save(TournamentJudge.builder()</span>
+<span class="fc" id="L77">                        .tournament(tournament).judge(judge).judgeCode(judgeCode).build());</span>
+<span class="fc" id="L78">                notificationService.send(judge,</span>
+                        &quot;Tournament Judge Assignment&quot;,
+<span class="fc" id="L80">                        &quot;You have been assigned as a judge for tournament '&quot; + tournament.getName() + &quot;' organised by &quot; + organizer.getFullName() + &quot;.&quot;);</span>
+<span class="fc" id="L81">            }</span>
+        }
+
+        // Save score sheet template
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (req.getScoreTemplate() != null) {</span>
+<span class="fc" id="L86">            scoreSheetTemplateRepository.save(ScoreSheetTemplate.builder()</span>
+<span class="fc" id="L87">                    .tournament(tournament)</span>
+<span class="fc" id="L88">                    .name(req.getScoreTemplate().getName())</span>
+<span class="fc" id="L89">                    .criteriaJson(req.getScoreTemplate().getCriteriaJson())</span>
+<span class="fc" id="L90">                    .build());</span>
+        }
+
+<span class="fc" id="L93">        notificationService.send(organizer,</span>
+                &quot;Tournament Created&quot;,
+<span class="fc" id="L95">                &quot;Your tournament '&quot; + tournament.getName() + &quot;' has been created successfully!&quot;);</span>
+
+<span class="fc" id="L97">        return getTournamentById(tournament.getId());</span>
+    }
+
+    public List&lt;TournamentDTO&gt; getAllTournaments() {
+<span class="fc" id="L101">        return tournamentRepository.findAll().stream()</span>
+<span class="fc" id="L102">                .map(this::toFullDTO).collect(Collectors.toList());</span>
+    }
+
+    public List&lt;TournamentDTO&gt; getByOrganizer(Long organizerId) {
+<span class="nc" id="L106">        User organizer = userRepository.findById(organizerId)</span>
+<span class="nc" id="L107">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="nc" id="L108">        return tournamentRepository.findByOrganizer(organizer).stream()</span>
+<span class="nc" id="L109">                .map(this::toFullDTO).collect(Collectors.toList());</span>
+    }
+
+    public TournamentDTO getTournamentById(Long id) {
+<span class="fc" id="L113">        Tournament t = tournamentRepository.findById(id)</span>
+<span class="fc" id="L114">                .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="fc" id="L115">        return toFullDTO(t);</span>
+    }
+
+    @Transactional
+    public TournamentDTO updateStatus(Long id, Tournament.Status status) {
+<span class="nc" id="L120">        Tournament t = tournamentRepository.findById(id)</span>
+<span class="nc" id="L121">                .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="nc" id="L122">        t.setStatus(status);</span>
+<span class="nc" id="L123">        return TournamentDTO.from(tournamentRepository.save(t));</span>
+    }
+
+    @Transactional
+    public void deleteTournament(Long id) {
+<span class="fc" id="L128">        tournamentRepository.deleteById(id);</span>
+<span class="fc" id="L129">    }</span>
+
+    public List&lt;TournamentDTO&gt; getActiveTournaments() {
+<span class="nc" id="L132">        return tournamentRepository.findActiveTournaments().stream()</span>
+<span class="nc" id="L133">                .map(TournamentDTO::from).collect(Collectors.toList());</span>
+    }
+
+    private TournamentDTO toFullDTO(Tournament t) {
+<span class="fc" id="L137">        TournamentDTO dto = TournamentDTO.from(t);</span>
+<span class="fc" id="L138">        List&lt;School&gt; schools = schoolRepository.findByTournament(t);</span>
+<span class="fc" id="L139">        dto.setSchools(schools.stream().map(SchoolDTO::from).collect(Collectors.toList()));</span>
+<span class="fc" id="L140">        List&lt;TournamentJudge&gt; judges = tournamentJudgeRepository.findByTournament(t);</span>
+<span class="fc" id="L141">        dto.setJudges(judges.stream().map(TournamentJudgeDTO::from).collect(Collectors.toList()));</span>
+<span class="fc" id="L142">        return dto;</span>
+    }
+
+    @Transactional
+    public TournamentJudgeDTO addJudge(Long tournamentId, Long judgeId) {
+<span class="fc" id="L147">        Tournament tournament = tournamentRepository.findById(tournamentId)</span>
+<span class="pc" id="L148">                .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="fc" id="L149">        User judge = userRepository.findById(judgeId)</span>
+<span class="pc" id="L150">                .orElseThrow(() -&gt; new RuntimeException(&quot;Judge not found&quot;));</span>
+
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (tournamentJudgeRepository.existsByTournamentAndJudge(tournament, judge)) {</span>
+<span class="fc" id="L153">            throw new RuntimeException(&quot;Judge already added to this tournament&quot;);</span>
+        }
+
+<span class="fc" id="L156">        long count = tournamentJudgeRepository.countByTournament(tournament);</span>
+<span class="fc" id="L157">        String judgeCode = String.format(&quot;JUDGE-%03d&quot;, count + 1);</span>
+
+<span class="fc" id="L159">        TournamentJudge tj = tournamentJudgeRepository.save(</span>
+<span class="fc" id="L160">                TournamentJudge.builder().tournament(tournament).judge(judge).judgeCode(judgeCode).build());</span>
+<span class="fc" id="L161">        notificationService.send(judge,</span>
+                &quot;Tournament Judge Assignment&quot;,
+<span class="fc" id="L163">                &quot;You have been assigned as a judge for tournament '&quot; + tournament.getName() + &quot;' organised by &quot; + tournament.getOrganizer().getFullName() + &quot;.&quot;);</span>
+<span class="fc" id="L164">        return TournamentJudgeDTO.from(tj);</span>
+    }
+
+    public List&lt;TournamentJudgeDTO&gt; getJudges(Long tournamentId) {
+<span class="nc" id="L168">        Tournament tournament = tournamentRepository.findById(tournamentId)</span>
+<span class="nc" id="L169">                .orElseThrow(() -&gt; new RuntimeException(&quot;Tournament not found&quot;));</span>
+<span class="nc" id="L170">        return tournamentJudgeRepository.findByTournament(tournament)</span>
+<span class="nc" id="L171">                .stream().map(TournamentJudgeDTO::from).collect(Collectors.toList());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

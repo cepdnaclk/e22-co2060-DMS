@@ -1,0 +1,17 @@
+{
+  "name": "dms-testing",
+  "private": true,
+  "description": "End-to-end API (Postman/Newman) and browser (Playwright) tests for DMS",
+  "scripts": {
+    "api": "newman run postman/DMS_API_E2E.postman_collection.json -e postman/DMS_local.postman_environment.json -r cli,htmlextra,junit --reporter-htmlextra-export reports/newman/api-report.html --reporter-htmlextra-title \"DMS API End-to-End Tests\" --reporter-junit-export reports/newman/api-junit.xml",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "docx": "^9.7.2",
+    "exceljs": "^4.4.0",
+    "lighthouse": "^13.5.0",
+    "newman": "^6.2.2",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}

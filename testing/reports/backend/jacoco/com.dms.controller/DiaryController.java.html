@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiaryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.controller</a> &gt; <span class="el_source">DiaryController.java</span></div><h1>DiaryController.java</h1><pre class="source lang-java linenums">package com.dms.controller;
+
+import com.dms.dto.DiaryCommentDTO;
+import com.dms.dto.DiaryPostDTO;
+import com.dms.service.DiaryService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping(&quot;/api/diaries&quot;)
+@RequiredArgsConstructor
+public class DiaryController {
+
+    private final DiaryService diaryService;
+
+    @GetMapping(&quot;/user/{userId}&quot;)
+    public ResponseEntity&lt;List&lt;DiaryPostDTO&gt;&gt; getByUserId(@PathVariable Long userId, Authentication auth) {
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        String currentUsername = auth != null ? auth.getName() : null;</span>
+<span class="fc" id="L24">        return ResponseEntity.ok(diaryService.getDiariesByUserId(userId, currentUsername));</span>
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;DiaryPostDTO&gt; create(@RequestBody DiaryPostDTO req, Authentication auth) {
+<span class="fc" id="L29">        return ResponseEntity.ok(diaryService.createDiaryPost(req, auth.getName()));</span>
+    }
+
+    @PostMapping(&quot;/{id}/like&quot;)
+    public ResponseEntity&lt;DiaryPostDTO&gt; like(@PathVariable Long id, Authentication auth) {
+<span class="fc" id="L34">        return ResponseEntity.ok(diaryService.toggleLike(id, auth.getName()));</span>
+    }
+
+    @PostMapping(&quot;/{id}/comment&quot;)
+    public ResponseEntity&lt;DiaryCommentDTO&gt; comment(@PathVariable Long id, @RequestBody Map&lt;String, String&gt; body, Authentication auth) {
+<span class="fc" id="L39">        String commentText = body.get(&quot;comment&quot;);</span>
+<span class="fc" id="L40">        return ResponseEntity.ok(diaryService.addComment(id, commentText, auth.getName()));</span>
+    }
+
+    @PostMapping(&quot;/{id}/share&quot;)
+    public ResponseEntity&lt;DiaryPostDTO&gt; share(@PathVariable Long id, Authentication auth) {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        String currentUsername = auth != null ? auth.getName() : null;</span>
+<span class="nc" id="L46">        return ResponseEntity.ok(diaryService.incrementShare(id, currentUsername));</span>
+    }
+
+    @PutMapping(&quot;/{id}/verify&quot;)
+    public ResponseEntity&lt;DiaryPostDTO&gt; verify(@PathVariable Long id, @RequestParam boolean verified, Authentication auth) {
+<span class="nc" id="L51">        return ResponseEntity.ok(diaryService.setVerified(id, verified, auth.getName()));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id, Authentication auth) {
+<span class="nc" id="L56">        diaryService.deleteDiaryPost(id, auth.getName());</span>
+<span class="nc" id="L57">        return ResponseEntity.ok().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

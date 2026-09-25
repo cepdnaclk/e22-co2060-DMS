@@ -1,0 +1,6 @@
+node_modules/
+.lh-dist/
+# Regenerated on every Playwright run; traces contain test login tokens
+reports/playwright/artifacts/
+reports/playwright/html/
+reports/playwright/seed-users.json

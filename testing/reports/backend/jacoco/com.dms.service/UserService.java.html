@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.service</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.dms.service;
+
+import com.dms.dto.UserDTO;
+import com.dms.entity.User;
+import com.dms.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    public List&lt;UserDTO&gt; getAllUsers() {
+<span class="fc" id="L24">        return userRepository.findAll().stream().map(UserDTO::from).collect(Collectors.toList());</span>
+    }
+
+    public UserDTO getById(Long id) {
+<span class="pc" id="L28">        return UserDTO.from(userRepository.findById(id)</span>
+<span class="pc" id="L29">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;)));</span>
+    }
+
+    public List&lt;UserDTO&gt; searchDebaters(String query) {
+<span class="nc" id="L33">        return userRepository.searchByRoleAndQuery(User.Role.DEBATER, query)</span>
+<span class="nc" id="L34">            .stream().map(UserDTO::from).collect(Collectors.toList());</span>
+    }
+
+    public List&lt;UserDTO&gt; searchJudges(String query) {
+<span class="nc" id="L38">        return userRepository.searchByRoleAndQuery(User.Role.JUDGE, query)</span>
+<span class="nc" id="L39">            .stream().map(UserDTO::from).collect(Collectors.toList());</span>
+    }
+
+    @Transactional
+    public UserDTO updateUser(Long id, UserDTO req) {
+<span class="fc" id="L44">        User user = userRepository.findById(id)</span>
+<span class="pc" id="L45">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (req.getFullName() != null) user.setFullName(req.getFullName());</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (req.getAge() != null) user.setAge(req.getAge());</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (req.getBio() != null) user.setBio(req.getBio());</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if (req.getLocation() != null) user.setLocation(req.getLocation());</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (req.getProfilePictureUrl() != null) user.setProfilePictureUrl(req.getProfilePictureUrl());</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (req.getSocialLinksJson() != null) user.setSocialLinksJson(req.getSocialLinksJson());</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (req.getPrivacyStatus() != null) user.setPrivacyStatus(req.getPrivacyStatus());</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (req.getLanguage() != null) user.setLanguage(req.getLanguage());</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (req.getExpertise() != null) user.setExpertise(req.getExpertise());</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (req.getYearsOfExperience() != null) user.setYearsOfExperience(req.getYearsOfExperience());</span>
+
+<span class="fc" id="L58">        return UserDTO.from(userRepository.save(user));</span>
+    }
+
+    @Transactional
+    public UserDTO uploadProfilePicture(Long id, MultipartFile file) throws IOException {
+<span class="nc" id="L63">        User user = userRepository.findById(id)</span>
+<span class="nc" id="L64">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="nc" id="L65">        user.setProfilePicture(file.getBytes());</span>
+<span class="nc" id="L66">        user.setProfilePictureContentType(</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            file.getContentType() != null ? file.getContentType() : &quot;image/jpeg&quot;);</span>
+        // Store the serving URL so the Avatar component can use it as &lt;img src&gt;
+<span class="nc" id="L69">        user.setProfilePictureUrl(&quot;/api/users/&quot; + id + &quot;/profile-picture&quot;);</span>
+<span class="nc" id="L70">        return UserDTO.from(userRepository.save(user));</span>
+    }
+
+    public ResponseEntity&lt;byte[]&gt; getProfilePicture(Long id) {
+<span class="nc" id="L74">        User user = userRepository.findById(id)</span>
+<span class="nc" id="L75">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">        if (user.getProfilePicture() == null || user.getProfilePicture().length == 0) {</span>
+<span class="nc" id="L77">            return ResponseEntity.notFound().build();</span>
+        }
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        String contentType = user.getProfilePictureContentType() != null</span>
+<span class="nc" id="L80">            ? user.getProfilePictureContentType() : &quot;image/jpeg&quot;;</span>
+<span class="nc" id="L81">        return ResponseEntity.ok()</span>
+<span class="nc" id="L82">            .header(HttpHeaders.CONTENT_TYPE, contentType)</span>
+<span class="nc" id="L83">            .header(HttpHeaders.CACHE_CONTROL, &quot;public, max-age=3600&quot;)</span>
+<span class="nc" id="L84">            .body(user.getProfilePicture());</span>
+    }
+
+    public List&lt;UserDTO&gt; getTopDebaters() {
+<span class="nc" id="L88">        return userRepository.findTopDebaters().stream()</span>
+<span class="nc" id="L89">            .limit(10).map(UserDTO::from).collect(Collectors.toList());</span>
+    }
+
+    public List&lt;UserDTO&gt; getOrganizers() {
+<span class="fc" id="L93">        return userRepository.findAllOrganizers().stream()</span>
+<span class="fc" id="L94">            .map(UserDTO::from).collect(Collectors.toList());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

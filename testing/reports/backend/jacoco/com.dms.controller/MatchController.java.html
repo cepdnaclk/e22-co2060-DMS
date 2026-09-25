@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatchController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.controller</a> &gt; <span class="el_source">MatchController.java</span></div><h1>MatchController.java</h1><pre class="source lang-java linenums">package com.dms.controller;
+
+import com.dms.dto.*;
+import com.dms.service.MatchService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api&quot;)
+@RequiredArgsConstructor
+public class MatchController {
+
+    private final MatchService matchService;
+
+    @PostMapping(&quot;/matches&quot;)
+    @PreAuthorize(&quot;hasRole('ORGANIZER')&quot;)
+    public ResponseEntity&lt;MatchDTO&gt; createMatch(@RequestBody CreateMatchRequest req) {
+<span class="fc" id="L22">        return ResponseEntity.ok(matchService.createMatch(req));</span>
+    }
+
+    @GetMapping(&quot;/matches/{id}&quot;)
+    public ResponseEntity&lt;MatchDTO&gt; getMatch(@PathVariable Long id) {
+<span class="fc" id="L27">        return ResponseEntity.ok(matchService.getMatch(id));</span>
+    }
+
+    @GetMapping(&quot;/tournaments/{id}/matches&quot;)
+    public ResponseEntity&lt;List&lt;MatchDTO&gt;&gt; getTournamentMatches(@PathVariable Long id) {
+<span class="nc" id="L32">        return ResponseEntity.ok(matchService.getTournamentMatches(id));</span>
+    }
+
+    @PostMapping(&quot;/tournaments/{id}/generate-next-round&quot;)
+    @PreAuthorize(&quot;hasRole('ORGANIZER')&quot;)
+    public ResponseEntity&lt;String&gt; generateNextRound(@PathVariable Long id) {
+<span class="nc" id="L38">        matchService.generateNextRound(id);</span>
+<span class="nc" id="L39">        return ResponseEntity.ok(&quot;Next round generated successfully&quot;);</span>
+    }
+
+    @GetMapping(&quot;/matches/live&quot;)
+    public ResponseEntity&lt;List&lt;MatchDTO&gt;&gt; getLiveMatches() {
+<span class="nc" id="L44">        return ResponseEntity.ok(matchService.getLiveMatches());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="52" failures="0" errors="0" time="0.908649">
+    <testsuite name="src/App.test.tsx" timestamp="2026-09-25T15:37:51.667Z" hostname="LEO-DAS" tests="18" failures="0" errors="0" skipped="0" time="0.068843">
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; logged-out visitor opening /dashboard/organizer is sent to role selection" time="0.0279668">
+            <system-err>
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+            </system-err>
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; logged-out visitor opening /dashboard/judge is sent to role selection" time="0.0028036">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; logged-out visitor opening /dashboard/debater is sent to role selection" time="0.0028634">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; logged-out visitor opening /create-tournament is sent to role selection" time="0.0032006">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; logged-out visitor opening /notifications is sent to role selection" time="0.0022158">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; logged-out visitor opening /messages is sent to role selection" time="0.0035257">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; logged-out visitor opening /score-sheet/1/2 is sent to role selection" time="0.002001">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /dashboard/organizer is refused for a DEBATER and redirects home" time="0.0023055">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /dashboard/organizer is refused for a JUDGE and redirects home" time="0.0035822">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /create-tournament is refused for a DEBATER and redirects home" time="0.0021076">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /dashboard/judge is refused for a ORGANIZER and redirects home" time="0.0031461">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /dashboard/debater is refused for a JUDGE and redirects home" time="0.0020903">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /dashboard/organizer is allowed for a ORGANIZER" time="0.0016512">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /create-tournament is allowed for a ORGANIZER" time="0.0012486">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /dashboard/judge is allowed for a JUDGE" time="0.0014189">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /dashboard/debater is allowed for a DEBATER" time="0.0011683">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; /notifications is allowed for a DEBATER" time="0.0011598">
+        </testcase>
+        <testcase classname="src/App.test.tsx" name="Protected routes (frontend RBAC) &gt; unknown URLs fall back to the home page" time="0.0017361">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/api/axios.test.ts" timestamp="2026-09-25T15:37:51.670Z" hostname="LEO-DAS" tests="4" failures="0" errors="0" skipped="0" time="0.0146034">
+        <testcase classname="src/api/axios.test.ts" name="API client (axios interceptors) &gt; attaches the stored JWT as a Bearer token" time="0.0040762">
+        </testcase>
+        <testcase classname="src/api/axios.test.ts" name="API client (axios interceptors) &gt; sends no Authorization header when logged out" time="0.0007974">
+        </testcase>
+        <testcase classname="src/api/axios.test.ts" name="API client (axios interceptors) &gt; on 401 clears the session and sends the user to /login" time="0.0055356">
+        </testcase>
+        <testcase classname="src/api/axios.test.ts" name="API client (axios interceptors) &gt; on 403 keeps the session (only 401 is treated as an expired login)" time="0.0014311">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/context/AuthContext.test.tsx" timestamp="2026-09-25T15:37:51.671Z" hostname="LEO-DAS" tests="8" failures="0" errors="0" skipped="0" time="0.1087121">
+        <testcase classname="src/context/AuthContext.test.tsx" name="AuthContext &gt; starts logged out when nothing is stored" time="0.0337829">
+        </testcase>
+        <testcase classname="src/context/AuthContext.test.tsx" name="AuthContext &gt; restores a saved session from localStorage on page reload" time="0.0042171">
+        </testcase>
+        <testcase classname="src/context/AuthContext.test.tsx" name="AuthContext &gt; survives corrupted user data in localStorage" time="0.0036141">
+        </testcase>
+        <testcase classname="src/context/AuthContext.test.tsx" name="AuthContext &gt; login stores token and user; logout clears everything" time="0.021048">
+        </testcase>
+        <testcase classname="src/context/AuthContext.test.tsx" name="AuthContext &gt; updateUser merges changes and persists them" time="0.0052397">
+        </testcase>
+        <testcase classname="src/context/AuthContext.test.tsx" name="AuthContext &gt; warns when another tab logs in as a different user (multi-login conflict fix)" time="0.0148656">
+        </testcase>
+        <testcase classname="src/context/AuthContext.test.tsx" name="AuthContext &gt; warns when another tab logs out (session expired fix)" time="0.0117979">
+        </testcase>
+        <testcase classname="src/context/AuthContext.test.tsx" name="AuthContext &gt; useAuth outside the provider throws a clear error" time="0.010964">
+            <system-err>
+The above error occurred in the &lt;Broken&gt; component:
+
+    at Broken (D:/Testing/e22-co2060-DMS/frontend/src/context/AuthContext.test.tsx:172:37)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+            </system-err>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/utils/utils.test.tsx" timestamp="2026-09-25T15:37:51.672Z" hostname="LEO-DAS" tests="7" failures="0" errors="0" skipped="0" time="0.059757">
+        <testcase classname="src/utils/utils.test.tsx" name="getNotificationRoute &gt; uses an explicit tournament id" time="0.0026345">
+        </testcase>
+        <testcase classname="src/utils/utils.test.tsx" name="getNotificationRoute &gt; extracts the tournament id from a match code in the message" time="0.0005115">
+        </testcase>
+        <testcase classname="src/utils/utils.test.tsx" name="getNotificationRoute &gt; falls back to the notifications page" time="0.0004061">
+        </testcase>
+        <testcase classname="src/utils/utils.test.tsx" name="toAbsoluteAvatarUrl &gt; returns empty string for missing urls" time="0.0003503">
+        </testcase>
+        <testcase classname="src/utils/utils.test.tsx" name="toAbsoluteAvatarUrl &gt; leaves absolute, blob and data urls untouched" time="0.0003459">
+        </testcase>
+        <testcase classname="src/utils/utils.test.tsx" name="toAbsoluteAvatarUrl &gt; turns a relative backend path into a path on the backend origin" time="0.0003456">
+        </testcase>
+        <testcase classname="src/utils/utils.test.tsx" name="Toast notifications &gt; shows a message and hides it after 4 seconds" time="0.0511855">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/pages/auth/LoginPage.test.tsx" timestamp="2026-09-25T15:37:51.673Z" hostname="LEO-DAS" tests="7" failures="0" errors="0" skipped="0" time="0.3340012">
+        <testcase classname="src/pages/auth/LoginPage.test.tsx" name="LoginPage &gt; shows the role the user selected on the previous screen" time="0.058949">
+            <system-err>
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+            </system-err>
+        </testcase>
+        <testcase classname="src/pages/auth/LoginPage.test.tsx" name="LoginPage &gt; rejects an empty form without calling the API" time="0.1287947">
+        </testcase>
+        <testcase classname="src/pages/auth/LoginPage.test.tsx" name="LoginPage &gt; shows the server error message when login fails" time="0.032001">
+        </testcase>
+        <testcase classname="src/pages/auth/LoginPage.test.tsx" name="LoginPage &gt; logs a DEBATER in, stores the session and opens their dashboard" time="0.0323857">
+        </testcase>
+        <testcase classname="src/pages/auth/LoginPage.test.tsx" name="LoginPage &gt; logs a JUDGE in, stores the session and opens their dashboard" time="0.0345293">
+        </testcase>
+        <testcase classname="src/pages/auth/LoginPage.test.tsx" name="LoginPage &gt; logs a ORGANIZER in, stores the session and opens their dashboard" time="0.0341447">
+        </testcase>
+        <testcase classname="src/pages/auth/LoginPage.test.tsx" name="LoginPage &gt; toggles password visibility" time="0.0098547">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/pages/auth/SignupPage.test.tsx" timestamp="2026-09-25T15:37:51.674Z" hostname="LEO-DAS" tests="8" failures="0" errors="0" skipped="0" time="0.3227323">
+        <testcase classname="src/pages/auth/SignupPage.test.tsx" name="SignupPage &gt; rejects mismatched passwords before calling the API" time="0.0843898">
+            <system-err>
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+            </system-err>
+        </testcase>
+        <testcase classname="src/pages/auth/SignupPage.test.tsx" name="SignupPage &gt; rejects passwords shorter than 6 characters" time="0.0227434">
+        </testcase>
+        <testcase classname="src/pages/auth/SignupPage.test.tsx" name="SignupPage &gt; shows judge-only fields when the JUDGE role is selected" time="0.0095468">
+        </testcase>
+        <testcase classname="src/pages/auth/SignupPage.test.tsx" name="SignupPage &gt; creates the account with the selected role and opens the dashboard" time="0.034146">
+        </testcase>
+        <testcase classname="src/pages/auth/SignupPage.test.tsx" name="SignupPage &gt; shows the server error when the username is taken" time="0.0302434">
+        </testcase>
+        <testcase classname="src/pages/auth/SignupPage.test.tsx" name="RoleSelectionPage &gt; choosing Debater remembers the role and goes to login" time="0.1028833">
+        </testcase>
+        <testcase classname="src/pages/auth/SignupPage.test.tsx" name="RoleSelectionPage &gt; choosing Judge remembers the role and goes to login" time="0.0194193">
+        </testcase>
+        <testcase classname="src/pages/auth/SignupPage.test.tsx" name="RoleSelectionPage &gt; choosing Organizer remembers the role and goes to login" time="0.0152316">
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Debate Management System</a> &gt; <a href="index.source.html" class="el_package">com.dms.service</a> &gt; <span class="el_source">AuthService.java</span></div><h1>AuthService.java</h1><pre class="source lang-java linenums">package com.dms.service;
+
+import com.dms.dto.*;
+import com.dms.entity.*;
+import com.dms.repository.*;
+import com.dms.security.JwtUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+
+    private final UserRepository userRepository;
+    private final DebaterStatsRepository debaterStatsRepository;
+    private final JudgeStatsRepository judgeStatsRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
+
+    @Transactional
+    public AuthResponse signup(SignupRequest req) {
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (userRepository.existsByUsername(req.getUsername())) {</span>
+<span class="fc" id="L25">            throw new RuntimeException(&quot;Username already taken&quot;);</span>
+        }
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (userRepository.existsByEmail(req.getEmail())) {</span>
+<span class="fc" id="L28">            throw new RuntimeException(&quot;Email already registered&quot;);</span>
+        }
+
+<span class="fc" id="L31">        User user = User.builder()</span>
+<span class="fc" id="L32">            .fullName(req.getFullName())</span>
+<span class="fc" id="L33">            .username(req.getUsername())</span>
+<span class="fc" id="L34">            .age(req.getAge())</span>
+<span class="fc" id="L35">            .bio(req.getBio())</span>
+<span class="fc" id="L36">            .location(req.getLocation())</span>
+<span class="fc" id="L37">            .email(req.getEmail())</span>
+<span class="fc" id="L38">            .passwordHash(passwordEncoder.encode(req.getPassword()))</span>
+<span class="fc" id="L39">            .role(req.getRole())</span>
+<span class="fc" id="L40">            .profilePictureUrl(req.getProfilePictureUrl())</span>
+<span class="fc" id="L41">            .socialLinksJson(req.getSocialLinksJson())</span>
+<span class="fc" id="L42">            .expertise(req.getExpertise())</span>
+<span class="fc" id="L43">            .yearsOfExperience(req.getYearsOfExperience())</span>
+<span class="fc" id="L44">            .build();</span>
+
+<span class="fc" id="L46">        user = userRepository.save(user);</span>
+
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (user.getRole() == User.Role.DEBATER) {</span>
+<span class="fc" id="L49">            debaterStatsRepository.save(DebaterStats.builder().debater(user).build());</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        } else if (user.getRole() == User.Role.JUDGE) {</span>
+<span class="fc" id="L51">            judgeStatsRepository.save(JudgeStats.builder().judge(user).build());</span>
+        }
+
+<span class="fc" id="L54">        String token = jwtUtil.generateToken(user.getUsername(), user.getRole().name());</span>
+<span class="fc" id="L55">        return new AuthResponse(token, UserDTO.from(user));</span>
+    }
+
+    public AuthResponse login(AuthRequest req) {
+<span class="fc" id="L59">        User user = userRepository.findByUsername(req.getUsernameOrEmail())</span>
+<span class="fc" id="L60">            .or(() -&gt; userRepository.findByEmail(req.getUsernameOrEmail()))</span>
+<span class="fc" id="L61">            .orElseThrow(() -&gt; new RuntimeException(&quot;Invalid credentials&quot;));</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (!passwordEncoder.matches(req.getPassword(), user.getPasswordHash())) {</span>
+<span class="fc" id="L64">            throw new RuntimeException(&quot;Invalid credentials&quot;);</span>
+        }
+
+<span class="fc" id="L67">        String token = jwtUtil.generateToken(user.getUsername(), user.getRole().name());</span>
+<span class="fc" id="L68">        return new AuthResponse(token, UserDTO.from(user));</span>
+    }
+
+    public UserDTO getMe(String username) {
+<span class="fc" id="L72">        User user = userRepository.findByUsername(username)</span>
+<span class="pc" id="L73">            .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+<span class="fc" id="L74">        return UserDTO.from(user);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,1413 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "D:\\Testing\\e22-co2060-DMS\\testing\\node_modules\\@playwright\\test\\cli.js",
+      "test"
+    ],
+    "configFile": "D:\\Testing\\e22-co2060-DMS\\testing\\playwright.config.ts",
+    "rootDir": "D:/Testing/e22-co2060-DMS/testing/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "apiBaseUrl": "http://localhost:8081/api",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Testing/e22-co2060-DMS/testing/reports/playwright/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "apiBaseUrl": "http://localhost:8081/api",
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/Testing/e22-co2060-DMS/testing/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "./reports/playwright/html",
+          "open": "never"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "./reports/playwright/playwright-junit.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "./reports/playwright/playwright-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "01-auth.spec.ts",
+      "file": "01-auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication & access control (browser)",
+          "file": "01-auth.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "organizer logs in through the UI and lands on their dashboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1291,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:04.192Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\01-auth-Authentication-acc-3e74a-nd-lands-on-their-dashboard\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "791b3c4e0869e77b2651-ec89027de26b6cb3b8d3",
+              "file": "01-auth.spec.ts",
+              "line": 6,
+              "column": 9
+            },
+            {
+              "title": "judge logs in through the UI and lands on their dashboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1092,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:05.883Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\01-auth-Authentication-acc-0543b-nd-lands-on-their-dashboard\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "791b3c4e0869e77b2651-d820099741185c307f93",
+              "file": "01-auth.spec.ts",
+              "line": 6,
+              "column": 9
+            },
+            {
+              "title": "debaterA logs in through the UI and lands on their dashboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1037,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:06.986Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\01-auth-Authentication-acc-43138-nd-lands-on-their-dashboard\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "791b3c4e0869e77b2651-684955dd8e03e46f1998",
+              "file": "01-auth.spec.ts",
+              "line": 6,
+              "column": 9
+            },
+            {
+              "title": "wrong password shows an error and stays on the login page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 998,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:08.031Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\01-auth-Authentication-acc-7d9ff-and-stays-on-the-login-page\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "791b3c4e0869e77b2651-260e9037410dd513e6e4",
+              "file": "01-auth.spec.ts",
+              "line": 13,
+              "column": 7
+            },
+            {
+              "title": "new user can sign up and is taken to their dashboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1224,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:09.037Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\01-auth-Authentication-acc-626e1-is-taken-to-their-dashboard\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "791b3c4e0869e77b2651-2847a32cd09abac0cc6d",
+              "file": "01-auth.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "logged-out visitor cannot open the organizer dashboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1132,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:10.270Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\01-auth-Authentication-acc-77f01-pen-the-organizer-dashboard\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "791b3c4e0869e77b2651-748873a591a33c3cf0f7",
+              "file": "01-auth.spec.ts",
+              "line": 36,
+              "column": 7
+            },
+            {
+              "title": "debater cannot open the create-tournament page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1155,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:11.409Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\01-auth-Authentication-acc-64eff--the-create-tournament-page\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "791b3c4e0869e77b2651-6696d55e85e56ff3bcf9",
+              "file": "01-auth.spec.ts",
+              "line": 41,
+              "column": 7
+            },
+            {
+              "title": "user can log out from the navbar menu",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2009,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:12.574Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\01-auth-Authentication-acc-9b956-og-out-from-the-navbar-menu\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "791b3c4e0869e77b2651-be8cfe6d7fc974d79d74",
+              "file": "01-auth.spec.ts",
+              "line": 47,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "02-session.spec.ts",
+      "file": "02-session.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Multi-tab session handling (browser)",
+          "file": "02-session.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "logging in as another user in a second tab warns the first tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1333,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:14.598Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\02-session-Multi-tab-sessi-2c54f-ond-tab-warns-the-first-tab\\test-finished-2.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\02-session-Multi-tab-sessi-2c54f-ond-tab-warns-the-first-tab\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62b4a5473b59c9df0a9b-a769a4333859dabc4e98",
+              "file": "02-session.spec.ts",
+              "line": 11,
+              "column": 7
+            },
+            {
+              "title": "logging out in a second tab tells the first tab the session ended",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1242,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:15.944Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\02-session-Multi-tab-sessi-76c44-first-tab-the-session-ended\\test-finished-2.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\02-session-Multi-tab-sessi-76c44-first-tab-the-session-ended\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62b4a5473b59c9df0a9b-acc44d498d95a65eb641",
+              "file": "02-session.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "an expired token sends the user back to login",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15915,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/login$/\u001b[39m\nReceived string:  \u001b[31m\"http://localhost:5174/notifications\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 15000ms\u001b[22m\n\u001b[2m    33 × locator resolved to <html lang=\"en\">…</html>\u001b[22m\n\u001b[2m       - unexpected value \"http://localhost:5174/notifications\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/login$/\u001b[39m\nReceived string:  \u001b[31m\"http://localhost:5174/notifications\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 15000ms\u001b[22m\n\u001b[2m    33 × locator resolved to <html lang=\"en\">…</html>\u001b[22m\n\u001b[2m       - unexpected value \"http://localhost:5174/notifications\"\u001b[22m\n\n    at D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\02-session.spec.ts:43:24",
+                        "location": {
+                          "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\02-session.spec.ts",
+                          "column": 24,
+                          "line": 43
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 41 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m localStorage\u001b[33m.\u001b[39msetItem(\u001b[32m'dms_token'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4IiwiZXhwIjoxfQ.expired'\u001b[39m))\u001b[33m;\u001b[39m\n \u001b[90m 42 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/notifications'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/\\/login$/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\02-session.spec.ts",
+                            "column": 24,
+                            "line": 43
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/login$/\u001b[39m\nReceived string:  \u001b[31m\"http://localhost:5174/notifications\"\u001b[39m\nTimeout: 15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 15000ms\u001b[22m\n\u001b[2m    33 × locator resolved to <html lang=\"en\">…</html>\u001b[22m\n\u001b[2m       - unexpected value \"http://localhost:5174/notifications\"\u001b[22m\n\n\n  41 |     await page.evaluate(() => localStorage.setItem('dms_token', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4IiwiZXhwIjoxfQ.expired'));\n  42 |     await page.goto('/notifications');\n> 43 |     await expect(page).toHaveURL(/\\/login$/, { timeout: 15_000 });\n     |                        ^\n  44 |   });\n  45 | });\n  46 |\n    at D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\02-session.spec.ts:43:24"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:17.199Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\02-session-Multi-tab-sessi-4d377-ends-the-user-back-to-login\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\02-session.spec.ts",
+                        "column": 24,
+                        "line": 43
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62b4a5473b59c9df0a9b-f1c9e8c1e79d99e91c4a",
+              "file": "02-session.spec.ts",
+              "line": 38,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "03-tournament.spec.ts",
+      "file": "03-tournament.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Tournament workflow (browser)",
+          "file": "03-tournament.spec.ts",
+          "line": 4,
+          "column": 15,
+          "specs": [
+            {
+              "title": "organizer creates a tournament with the 6-step wizard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                        "line": 4,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2221,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:33.865Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                            "line": 4,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\03-tournament-Tournament-w-52457-ment-with-the-6-step-wizard\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f325f465b8ecb5ea042-2cca58775fafb581615e",
+              "file": "03-tournament.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "a visitor can find the new tournament with search",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                        "line": 4,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 972,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:36.385Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                            "line": 4,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\03-tournament-Tournament-w-c5cd6--new-tournament-with-search\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f325f465b8ecb5ea042-62a8040f131c15b3bf25",
+              "file": "03-tournament.spec.ts",
+              "line": 47,
+              "column": 7
+            },
+            {
+              "title": "judge opens the score sheet for an assigned match",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                        "line": 4,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1068,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:37.365Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                            "line": 4,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\03-tournament-Tournament-w-b9883-sheet-for-an-assigned-match\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f325f465b8ecb5ea042-b3fad767ae9e560f7bdb",
+              "file": "03-tournament.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "judge submits the score sheet",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                        "line": 4,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1153,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:38.443Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                            "line": 4,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\03-tournament-Tournament-w-dae41-dge-submits-the-score-sheet\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f325f465b8ecb5ea042-460a80dee300025df466",
+              "file": "03-tournament.spec.ts",
+              "line": 74,
+              "column": 7
+            },
+            {
+              "title": "match result appears on the tournament page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                        "line": 4,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 990,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:39.605Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\03-tournament.spec.ts",
+                            "line": 4,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\03-tournament-Tournament-w-a8b3e-ears-on-the-tournament-page\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f325f465b8ecb5ea042-ba84410794b5dc08fddd",
+              "file": "03-tournament.spec.ts",
+              "line": 86,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "04-public.spec.ts",
+      "file": "04-public.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Public pages (browser)",
+          "file": "04-public.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "/ loads without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1052,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:40.612Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-browser-loads-without-errors\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6374b637eada17c1e14f-2239a975db38c920c706",
+              "file": "04-public.spec.ts",
+              "line": 10,
+              "column": 9
+            },
+            {
+              "title": "/news loads without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1141,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:41.673Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-browser-news-loads-without-errors\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6374b637eada17c1e14f-d6fb83e618fa8795a364",
+              "file": "04-public.spec.ts",
+              "line": 10,
+              "column": 9
+            },
+            {
+              "title": "/about loads without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1184,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:42.825Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-browser-about-loads-without-errors\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6374b637eada17c1e14f-b43903aaa047a282f9cb",
+              "file": "04-public.spec.ts",
+              "line": 10,
+              "column": 9
+            },
+            {
+              "title": "/scoring loads without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1152,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:44.021Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-browser-scoring-loads-without-errors\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6374b637eada17c1e14f-1086489fa05cc38fd0f7",
+              "file": "04-public.spec.ts",
+              "line": 10,
+              "column": 9
+            },
+            {
+              "title": "search finds seeded debaters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1213,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:45.183Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-browser-search-finds-seeded-debaters\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6374b637eada17c1e14f-7684fc89034e6be1b668",
+              "file": "04-public.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "home page loads live matches for visitors without API errors",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1699,
+                      "error": {
+                        "message": "Error: API calls that failed on the public home page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"403 http://localhost:8081/api/matches/live\",\u001b[39m\n\u001b[31m+   \"403 http://localhost:8081/api/matches/live\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: API calls that failed on the public home page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"403 http://localhost:8081/api/matches/live\",\u001b[39m\n\u001b[31m+   \"403 http://localhost:8081/api/matches/live\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\04-public.spec.ts:29:69",
+                        "location": {
+                          "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\04-public.spec.ts",
+                          "column": 69,
+                          "line": 29
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'networkidle'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m     expect(failed\u001b[33m,\u001b[39m \u001b[32m'API calls that failed on the public home page'\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m\n \u001b[90m 32 |\u001b[39m   test(\u001b[32m'layout works on a phone-sized screen'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\04-public.spec.ts",
+                            "column": 69,
+                            "line": 29
+                          },
+                          "message": "Error: API calls that failed on the public home page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"403 http://localhost:8081/api/matches/live\",\u001b[39m\n\u001b[31m+   \"403 http://localhost:8081/api/matches/live\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  27 |     await page.goto('/');\n  28 |     await page.waitForLoadState('networkidle');\n> 29 |     expect(failed, 'API calls that failed on the public home page').toEqual([]);\n     |                                                                     ^\n  30 |   });\n  31 |\n  32 |   test('layout works on a phone-sized screen', async ({ page }) => {\n    at D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\04-public.spec.ts:29:69"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:46.409Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-bro-d5b6a-visitors-without-API-errors\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\04-public.spec.ts",
+                        "column": 69,
+                        "line": 29
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "6374b637eada17c1e14f-50c6c400881354a5e17f",
+              "file": "04-public.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "layout works on a phone-sized screen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1219,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:48.804Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\04-public-Public-pages-bro-87322-rks-on-a-phone-sized-screen\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6374b637eada17c1e14f-99c20291c927daabb071",
+              "file": "04-public.spec.ts",
+              "line": 32,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "05-score-sheet.spec.ts",
+      "file": "05-score-sheet.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Judge score sheet (browser)",
+          "file": "05-score-sheet.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "score sheet shows the organizer's custom criteria",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11389,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('columnheader', { name: 'Persuasion' }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('columnheader', { name: 'Persuasion' }).first() with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('columnheader', { name: 'Persuasion' }).first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('columnheader', { name: 'Persuasion' }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('columnheader', { name: 'Persuasion' }).first() with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('columnheader', { name: 'Persuasion' }).first()\u001b[22m\n\n    at D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts:59:82",
+                        "location": {
+                          "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts",
+                          "column": 82,
+                          "line": 59
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 57 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`/score-sheet/${matchId}/${seed().judge.id}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 58 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Custom criteria check'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 59 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'columnheader'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'Persuasion'\u001b[39m })\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 60 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'columnheader'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'Rebuttal'\u001b[39m }))\u001b[33m.\u001b[39mtoHaveCount(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 61 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 62 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts",
+                            "column": 82,
+                            "line": 59
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('columnheader', { name: 'Persuasion' }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('columnheader', { name: 'Persuasion' }).first() with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('columnheader', { name: 'Persuasion' }).first()\u001b[22m\n\n\n  57 |     await page.goto(`/score-sheet/${matchId}/${seed().judge.id}`);\n  58 |     await expect(page.getByText('Custom criteria check')).toBeVisible();\n> 59 |     await expect(page.getByRole('columnheader', { name: 'Persuasion' }).first()).toBeVisible();\n     |                                                                                  ^\n  60 |     await expect(page.getByRole('columnheader', { name: 'Rebuttal' })).toHaveCount(0);\n  61 |   });\n  62 |\n    at D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts:59:82"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T15:59:50.526Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\05-score-sheet-Judge-score-42fc4-organizer-s-custom-criteria\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts",
+                        "column": 82,
+                        "line": 59
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "83f9f29bff08dbea1387-c631e511726047beb2c6",
+              "file": "05-score-sheet.spec.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "after submitting, reopening the sheet shows \"already submitted\"",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11434,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Score Sheet Submitted')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Score Sheet Submitted') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Score Sheet Submitted')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Score Sheet Submitted')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Score Sheet Submitted') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Score Sheet Submitted')\u001b[22m\n\n    at D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts:76:59",
+                        "location": {
+                          "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts",
+                          "column": 59,
+                          "line": 76
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 74 |\u001b[39m     \u001b[36mawait\u001b[39m loginViaStorage(page\u001b[33m,\u001b[39m s\u001b[33m.\u001b[39mjudge)\u001b[33m;\u001b[39m\n \u001b[90m 75 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`/score-sheet/${matchId}/${s.judge.id}`\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 76 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Score Sheet Submitted'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 77 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 78 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 79 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts",
+                            "column": 59,
+                            "line": 76
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Score Sheet Submitted')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Score Sheet Submitted') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Score Sheet Submitted')\u001b[22m\n\n\n  74 |     await loginViaStorage(page, s.judge);\n  75 |     await page.goto(`/score-sheet/${matchId}/${s.judge.id}`);\n> 76 |     await expect(page.getByText('Score Sheet Submitted')).toBeVisible();\n     |                                                           ^\n  77 |   });\n  78 | });\n  79 |\n    at D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts:76:59"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-25T16:00:02.813Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Testing\\e22-co2060-DMS\\testing\\reports\\playwright\\artifacts\\05-score-sheet-Judge-score-b4871-et-shows-already-submitted-\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Testing\\e22-co2060-DMS\\testing\\e2e\\05-score-sheet.spec.ts",
+                        "column": 59,
+                        "line": 76
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "83f9f29bff08dbea1387-099430551e52306b1ff0",
+              "file": "05-score-sheet.spec.ts",
+              "line": 63,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-25T15:59:02.309Z",
+    "duration": 73195.096,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

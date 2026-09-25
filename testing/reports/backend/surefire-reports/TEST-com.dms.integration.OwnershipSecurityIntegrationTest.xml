@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.dms.integration.OwnershipSecurityIntegrationTest" time="1.089" tests="8" errors="0" skipped="0" failures="7">
+  <properties>
+    <property name="java.specification.version" value="25"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\Testing\e22-co2060-DMS\backend\target\test-classes;D:\Testing\e22-co2060-DMS\backend\target\classes;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.4.5\spring-boot-starter-web-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter\3.4.5\spring-boot-starter-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.4.5\spring-boot-starter-logging-3.4.5.jar;C:\Users\ADMIN\.m2\repository\ch\qos\logback\logback-classic\1.5.18\logback-classic-1.5.18.jar;C:\Users\ADMIN\.m2\repository\ch\qos\logback\logback-core\1.5.18\logback-core-1.5.18.jar;C:\Users\ADMIN\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.24.3\log4j-to-slf4j-2.24.3.jar;C:\Users\ADMIN\.m2\repository\org\apache\logging\log4j\log4j-api\2.24.3\log4j-api-2.24.3.jar;C:\Users\ADMIN\.m2\repository\org\slf4j\jul-to-slf4j\2.0.17\jul-to-slf4j-2.0.17.jar;C:\Users\ADMIN\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\ADMIN\.m2\repository\org\yaml\snakeyaml\2.3\snakeyaml-2.3.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.4.5\spring-boot-starter-json-3.4.5.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.18.3\jackson-datatype-jdk8-2.18.3.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.18.3\jackson-datatype-jsr310-2.18.3.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.18.3\jackson-module-parameter-names-2.18.3.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.4.5\spring-boot-starter-tomcat-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.40\tomcat-embed-core-10.1.40.jar;C:\Users\ADMIN\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.40\tomcat-embed-websocket-10.1.40.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-web\6.2.6\spring-web-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-beans\6.2.6\spring-beans-6.2.6.jar;C:\Users\ADMIN\.m2\repository\io\micrometer\micrometer-observation\1.14.6\micrometer-observation-1.14.6.jar;C:\Users\ADMIN\.m2\repository\io\micrometer\micrometer-commons\1.14.6\micrometer-commons-1.14.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-webmvc\6.2.6\spring-webmvc-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-context\6.2.6\spring-context-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-expression\6.2.6\spring-expression-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.4.5\spring-boot-starter-data-jpa-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.4.5\spring-boot-starter-jdbc-3.4.5.jar;C:\Users\ADMIN\.m2\repository\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-jdbc\6.2.6\spring-jdbc-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\hibernate\orm\hibernate-core\6.6.13.Final\hibernate-core-6.6.13.Final.jar;C:\Users\ADMIN\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\ADMIN\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\ADMIN\.m2\repository\org\jboss\logging\jboss-logging\3.6.1.Final\jboss-logging-3.6.1.Final.jar;C:\Users\ADMIN\.m2\repository\org\hibernate\common\hibernate-commons-annotations\7.0.3.Final\hibernate-commons-annotations-7.0.3.Final.jar;C:\Users\ADMIN\.m2\repository\io\smallrye\jandex\3.2.0\jandex-3.2.0.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\classmate\1.7.0\classmate-1.7.0.jar;C:\Users\ADMIN\.m2\repository\net\bytebuddy\byte-buddy\1.15.11\byte-buddy-1.15.11.jar;C:\Users\ADMIN\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\ADMIN\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\ADMIN\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\ADMIN\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\ADMIN\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\ADMIN\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\ADMIN\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\ADMIN\.m2\repository\org\springframework\data\spring-data-jpa\3.4.5\spring-data-jpa-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\data\spring-data-commons\3.4.5\spring-data-commons-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-orm\6.2.6\spring-orm-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-tx\6.2.6\spring-tx-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\slf4j\slf4j-api\2.0.17\slf4j-api-2.0.17.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-aspects\6.2.6\spring-aspects-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\aspectj\aspectjweaver\1.9.24\aspectjweaver-1.9.24.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.4.5\spring-boot-starter-security-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-aop\6.2.6\spring-aop-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-config\6.4.5\spring-security-config-6.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-web\6.4.5\spring-security-web-6.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.4.5\spring-boot-starter-validation-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.40\tomcat-embed-el-10.1.40.jar;C:\Users\ADMIN\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.2.Final\hibernate-validator-8.0.2.Final.jar;C:\Users\ADMIN\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\ADMIN\.m2\repository\org\postgresql\postgresql\42.7.5\postgresql-42.7.5.jar;C:\Users\ADMIN\.m2\repository\org\checkerframework\checker-qual\3.48.3\checker-qual-3.48.3.jar;C:\Users\ADMIN\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\ADMIN\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\ADMIN\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.18.3\jackson-databind-2.18.3.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.18.3\jackson-annotations-2.18.3.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.18.3\jackson-core-2.18.3.jar;C:\Users\ADMIN\.m2\repository\org\projectlombok\lombok\1.18.38\lombok-1.18.38.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-devtools\3.4.5\spring-boot-devtools-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot\3.4.5\spring-boot-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.4.5\spring-boot-autoconfigure-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.4.5\spring-boot-starter-test-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-test\3.4.5\spring-boot-test-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.4.5\spring-boot-test-autoconfigure-3.4.5.jar;C:\Users\ADMIN\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\ADMIN\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\ADMIN\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\ADMIN\.m2\repository\net\minidev\json-smart\2.5.2\json-smart-2.5.2.jar;C:\Users\ADMIN\.m2\repository\net\minidev\accessors-smart\2.5.2\accessors-smart-2.5.2.jar;C:\Users\ADMIN\.m2\repository\org\ow2\asm\asm\9.7.1\asm-9.7.1.jar;C:\Users\ADMIN\.m2\repository\org\assertj\assertj-core\3.26.3\assertj-core-3.26.3.jar;C:\Users\ADMIN\.m2\repository\org\awaitility\awaitility\4.2.2\awaitility-4.2.2.jar;C:\Users\ADMIN\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\ADMIN\.m2\repository\org\junit\jupiter\junit-jupiter\5.11.4\junit-jupiter-5.11.4.jar;C:\Users\ADMIN\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.4\junit-jupiter-api-5.11.4.jar;C:\Users\ADMIN\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\ADMIN\.m2\repository\org\junit\platform\junit-platform-commons\1.11.4\junit-platform-commons-1.11.4.jar;C:\Users\ADMIN\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\ADMIN\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.4\junit-jupiter-params-5.11.4.jar;C:\Users\ADMIN\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.4\junit-jupiter-engine-5.11.4.jar;C:\Users\ADMIN\.m2\repository\org\junit\platform\junit-platform-engine\1.11.4\junit-platform-engine-1.11.4.jar;C:\Users\ADMIN\.m2\repository\org\mockito\mockito-core\5.14.2\mockito-core-5.14.2.jar;C:\Users\ADMIN\.m2\repository\net\bytebuddy\byte-buddy-agent\1.15.11\byte-buddy-agent-1.15.11.jar;C:\Users\ADMIN\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\ADMIN\.m2\repository\org\mockito\mockito-junit-jupiter\5.14.2\mockito-junit-jupiter-5.14.2.jar;C:\Users\ADMIN\.m2\repository\org\skyscreamer\jsonassert\1.5.3\jsonassert-1.5.3.jar;C:\Users\ADMIN\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-core\6.2.6\spring-core-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-jcl\6.2.6\spring-jcl-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-test\6.2.6\spring-test-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\xmlunit\xmlunit-core\2.10.0\xmlunit-core-2.10.0.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-test\6.4.5\spring-security-test-6.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-core\6.4.5\spring-security-core-6.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-crypto\6.4.5\spring-security-crypto-6.4.5.jar;C:\Users\ADMIN\.m2\repository\com\h2database\h2\2.3.232\h2-2.3.232.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="net.bytebuddy.experimental" value="true"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Asia/Colombo"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="25"/>
+    <property name="APPLICATION_NAME" value="Debate Management System (test)"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-25\bin"/>
+    <property name="sun.java.command" value="C:\Users\ADMIN\AppData\Local\Temp\surefire7564304696636426960\surefirebooter-20260925210013371_3.jar C:\Users\ADMIN\AppData\Local\Temp\surefire7564304696636426960 2026-09-25T21-00-13_290-jvmRun1 surefire-20260925210013371_1tmp surefire_0-20260925210013371_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\Testing\e22-co2060-DMS\backend\target\test-classes;D:\Testing\e22-co2060-DMS\backend\target\classes;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.4.5\spring-boot-starter-web-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter\3.4.5\spring-boot-starter-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.4.5\spring-boot-starter-logging-3.4.5.jar;C:\Users\ADMIN\.m2\repository\ch\qos\logback\logback-classic\1.5.18\logback-classic-1.5.18.jar;C:\Users\ADMIN\.m2\repository\ch\qos\logback\logback-core\1.5.18\logback-core-1.5.18.jar;C:\Users\ADMIN\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.24.3\log4j-to-slf4j-2.24.3.jar;C:\Users\ADMIN\.m2\repository\org\apache\logging\log4j\log4j-api\2.24.3\log4j-api-2.24.3.jar;C:\Users\ADMIN\.m2\repository\org\slf4j\jul-to-slf4j\2.0.17\jul-to-slf4j-2.0.17.jar;C:\Users\ADMIN\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\ADMIN\.m2\repository\org\yaml\snakeyaml\2.3\snakeyaml-2.3.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.4.5\spring-boot-starter-json-3.4.5.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.18.3\jackson-datatype-jdk8-2.18.3.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.18.3\jackson-datatype-jsr310-2.18.3.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.18.3\jackson-module-parameter-names-2.18.3.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.4.5\spring-boot-starter-tomcat-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.40\tomcat-embed-core-10.1.40.jar;C:\Users\ADMIN\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.40\tomcat-embed-websocket-10.1.40.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-web\6.2.6\spring-web-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-beans\6.2.6\spring-beans-6.2.6.jar;C:\Users\ADMIN\.m2\repository\io\micrometer\micrometer-observation\1.14.6\micrometer-observation-1.14.6.jar;C:\Users\ADMIN\.m2\repository\io\micrometer\micrometer-commons\1.14.6\micrometer-commons-1.14.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-webmvc\6.2.6\spring-webmvc-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-context\6.2.6\spring-context-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-expression\6.2.6\spring-expression-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.4.5\spring-boot-starter-data-jpa-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.4.5\spring-boot-starter-jdbc-3.4.5.jar;C:\Users\ADMIN\.m2\repository\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-jdbc\6.2.6\spring-jdbc-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\hibernate\orm\hibernate-core\6.6.13.Final\hibernate-core-6.6.13.Final.jar;C:\Users\ADMIN\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\ADMIN\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\ADMIN\.m2\repository\org\jboss\logging\jboss-logging\3.6.1.Final\jboss-logging-3.6.1.Final.jar;C:\Users\ADMIN\.m2\repository\org\hibernate\common\hibernate-commons-annotations\7.0.3.Final\hibernate-commons-annotations-7.0.3.Final.jar;C:\Users\ADMIN\.m2\repository\io\smallrye\jandex\3.2.0\jandex-3.2.0.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\classmate\1.7.0\classmate-1.7.0.jar;C:\Users\ADMIN\.m2\repository\net\bytebuddy\byte-buddy\1.15.11\byte-buddy-1.15.11.jar;C:\Users\ADMIN\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\ADMIN\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\ADMIN\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\ADMIN\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\ADMIN\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\ADMIN\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\ADMIN\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\ADMIN\.m2\repository\org\springframework\data\spring-data-jpa\3.4.5\spring-data-jpa-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\data\spring-data-commons\3.4.5\spring-data-commons-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-orm\6.2.6\spring-orm-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-tx\6.2.6\spring-tx-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\slf4j\slf4j-api\2.0.17\slf4j-api-2.0.17.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-aspects\6.2.6\spring-aspects-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\aspectj\aspectjweaver\1.9.24\aspectjweaver-1.9.24.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.4.5\spring-boot-starter-security-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-aop\6.2.6\spring-aop-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-config\6.4.5\spring-security-config-6.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-web\6.4.5\spring-security-web-6.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.4.5\spring-boot-starter-validation-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.40\tomcat-embed-el-10.1.40.jar;C:\Users\ADMIN\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.2.Final\hibernate-validator-8.0.2.Final.jar;C:\Users\ADMIN\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\ADMIN\.m2\repository\org\postgresql\postgresql\42.7.5\postgresql-42.7.5.jar;C:\Users\ADMIN\.m2\repository\org\checkerframework\checker-qual\3.48.3\checker-qual-3.48.3.jar;C:\Users\ADMIN\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\ADMIN\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\ADMIN\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.18.3\jackson-databind-2.18.3.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.18.3\jackson-annotations-2.18.3.jar;C:\Users\ADMIN\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.18.3\jackson-core-2.18.3.jar;C:\Users\ADMIN\.m2\repository\org\projectlombok\lombok\1.18.38\lombok-1.18.38.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-devtools\3.4.5\spring-boot-devtools-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot\3.4.5\spring-boot-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.4.5\spring-boot-autoconfigure-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.4.5\spring-boot-starter-test-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-test\3.4.5\spring-boot-test-3.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.4.5\spring-boot-test-autoconfigure-3.4.5.jar;C:\Users\ADMIN\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\ADMIN\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\ADMIN\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\ADMIN\.m2\repository\net\minidev\json-smart\2.5.2\json-smart-2.5.2.jar;C:\Users\ADMIN\.m2\repository\net\minidev\accessors-smart\2.5.2\accessors-smart-2.5.2.jar;C:\Users\ADMIN\.m2\repository\org\ow2\asm\asm\9.7.1\asm-9.7.1.jar;C:\Users\ADMIN\.m2\repository\org\assertj\assertj-core\3.26.3\assertj-core-3.26.3.jar;C:\Users\ADMIN\.m2\repository\org\awaitility\awaitility\4.2.2\awaitility-4.2.2.jar;C:\Users\ADMIN\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\ADMIN\.m2\repository\org\junit\jupiter\junit-jupiter\5.11.4\junit-jupiter-5.11.4.jar;C:\Users\ADMIN\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.4\junit-jupiter-api-5.11.4.jar;C:\Users\ADMIN\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\ADMIN\.m2\repository\org\junit\platform\junit-platform-commons\1.11.4\junit-platform-commons-1.11.4.jar;C:\Users\ADMIN\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\ADMIN\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.4\junit-jupiter-params-5.11.4.jar;C:\Users\ADMIN\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.4\junit-jupiter-engine-5.11.4.jar;C:\Users\ADMIN\.m2\repository\org\junit\platform\junit-platform-engine\1.11.4\junit-platform-engine-1.11.4.jar;C:\Users\ADMIN\.m2\repository\org\mockito\mockito-core\5.14.2\mockito-core-5.14.2.jar;C:\Users\ADMIN\.m2\repository\net\bytebuddy\byte-buddy-agent\1.15.11\byte-buddy-agent-1.15.11.jar;C:\Users\ADMIN\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\ADMIN\.m2\repository\org\mockito\mockito-junit-jupiter\5.14.2\mockito-junit-jupiter-5.14.2.jar;C:\Users\ADMIN\.m2\repository\org\skyscreamer\jsonassert\1.5.3\jsonassert-1.5.3.jar;C:\Users\ADMIN\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-core\6.2.6\spring-core-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-jcl\6.2.6\spring-jcl-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\springframework\spring-test\6.2.6\spring-test-6.2.6.jar;C:\Users\ADMIN\.m2\repository\org\xmlunit\xmlunit-core\2.10.0\xmlunit-core-2.10.0.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-test\6.4.5\spring-security-test-6.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-core\6.4.5\spring-security-core-6.4.5.jar;C:\Users\ADMIN\.m2\repository\org\springframework\security\spring-security-crypto\6.4.5\spring-security-crypto-6.4.5.jar;C:\Users\ADMIN\.m2\repository\com\h2database\h2\2.3.232\h2-2.3.232.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\ADMIN"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-25"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\Testing\e22-co2060-DMS\backend"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="C:\Users\ADMIN\AppData\Local\Temp\surefire7564304696636426960\surefirebooter-20260925210013371_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="25.0.1+8-LTS-27"/>
+    <property name="user.name" value="ADMIN"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\ADMIN\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\ADMIN\AppData\Local\Temp\"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="java.version" value="25.0.1"/>
+    <property name="user.dir" value="D:\Testing\e22-co2060-DMS\backend"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="30640"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-25\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Users\ADMIN\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\ADMIN\bin;C:\Users\ADMIN\AppData\Local\Programs\Python\Python311;C:\Users\ADMIN\AppData\Local\Programs\Python\Python311\Scripts;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\PuTTY;C:\Program Files\cursor\resources\app\bin;C:\Program Files\nodejs;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\Apache\Maven\apache-maven-3.9.15\bin;C:\Program Files\PostgreSQL\18\bin;C:\Users\ADMIN\AppData\Local\Programs\Python\Python311;C:\Users\ADMIN\AppData\Local\Programs\Python\Python311\Scripts;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\PuTTY;C:\Program Files\cursor\resources\app\bin;C:\Program Files\nodejs;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\Apache\Maven\apache-maven-3.9.15\bin;C:\Program Files\PostgreSQL\18\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\ADMIN\AppData\Local\Programs\Python\Python313\Scripts;C:\Users\ADMIN\AppData\Local\Programs\Python\Python313;C:\Users\ADMIN\AppData\Local\Microsoft\WindowsApps;C:\Users\ADMIN\AppData\Local\Programs\Microsoft VS Code\bin;C:\msys64\ucrt64\bin;C:\Users\ADMIN\AppData\Local\Programs\Antigravity\bin;C:\Users\ADMIN\AppData\Roaming\npm;C:\iverilog\bin;C:\iverilog\gtkwave\bin;C:\Users\ADMIN\AppDa;C:\Users\ADMIN\.local\bin;C:\Users\ADMIN\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\ADMIN\.antigravity-ide;C:\Users\ADMIN\AppData\Local\Programs\Python\Python313;C:\Program Files\nodejs;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.0.1+8-LTS-27"/>
+    <property name="stdin.encoding" value="Cp1252"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="69.0"/>
+    <property name="maven.test.failure.ignore" value="true"/>
+    <property name="LOGGED_APPLICATION_NAME" value="[Debate Management System (test)] "/>
+  </properties>
+  <testcase name="cannotImpersonateInDiscussion" classname="com.dms.integration.OwnershipSecurityIntegrationTest" time="0.123">
+    <failure message="[POST /api/discussion with someone else&apos;s userId] &#10;expected: 403&#10; but was: 200" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+[POST /api/discussion with someone else's userId] 
+expected: 403
+ but was: 200
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotImpersonateInDiscussion(OwnershipSecurityIntegrationTest.java:67)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+]]></failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/auth/signup
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"141"]
+             Body = {"username":"debater_5_11300","email":"debater_5_11300@test.dms","fullName":"Test debater_5_11300","role":"DEBATER","password":"password123"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.AuthController
+           Method = com.dms.controller.AuthController#signup(SignupRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWJhdGVyXzVfMTEzMDAiLCJyb2xlIjoiREVCQVRFUiIsImlhdCI6MTc5MDM1MDIyMywiZXhwIjoxNzkwMzUzODIzfQ.-gjKncPPoxtj6lAKUSfaJK7Ma1XNlH4sxaOb_6t75n4","user":{"id":7,"fullName":"Test debater_5_11300","username":"debater_5_11300","age":null,"bio":null,"location":null,"email":"debater_5_11300@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.486488"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/auth/signup
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"141"]
+             Body = {"username":"debater_6_27100","email":"debater_6_27100@test.dms","fullName":"Test debater_6_27100","role":"DEBATER","password":"password123"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.AuthController
+           Method = com.dms.controller.AuthController#signup(SignupRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWJhdGVyXzZfMjcxMDAiLCJyb2xlIjoiREVCQVRFUiIsImlhdCI6MTc5MDM1MDIyMywiZXhwIjoxNzkwMzUzODIzfQ.8s273sFp9vnVFesVGLYQqsNqnl_hDTYJdggX2wOPQ9I","user":{"id":8,"fullName":"Test debater_6_27100","username":"debater_6_27100","age":null,"bio":null,"location":null,"email":"debater_6_27100@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.580023"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/auth/signup
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"149"]
+             Body = {"username":"organizer_7_14700","email":"organizer_7_14700@test.dms","fullName":"Test organizer_7_14700","role":"ORGANIZER","password":"password123"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.AuthController
+           Method = com.dms.controller.AuthController#signup(SignupRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJfN18xNDcwMCIsInJvbGUiOiJPUkdBTklaRVIiLCJpYXQiOjE3OTAzNTAyMjMsImV4cCI6MTc5MDM1MzgyM30.a1GddXvMoWcR_3yUjktwztDxn_5JzDh26F8_Ctxd-Rg","user":{"id":9,"fullName":"Test organizer_7_14700","username":"organizer_7_14700","age":null,"bio":null,"location":null,"email":"organizer_7_14700@test.dms","role":"ORGANIZER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.670745"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/auth/signup
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"149"]
+             Body = {"username":"organizer_8_43900","email":"organizer_8_43900@test.dms","fullName":"Test organizer_8_43900","role":"ORGANIZER","password":"password123"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.AuthController
+           Method = com.dms.controller.AuthController#signup(SignupRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJfOF80MzkwMCIsInJvbGUiOiJPUkdBTklaRVIiLCJpYXQiOjE3OTAzNTAyMjMsImV4cCI6MTc5MDM1MzgyM30.A_YcS8ekFnow4pUrxjMpkBgbtonkQ5ujqXG4cLvKrE4","user":{"id":10,"fullName":"Test organizer_8_43900","username":"organizer_8_43900","age":null,"bio":null,"location":null,"email":"organizer_8_43900@test.dms","role":"ORGANIZER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.761386"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/auth/signup
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"133"]
+             Body = {"username":"judge_9_29000","email":"judge_9_29000@test.dms","fullName":"Test judge_9_29000","role":"JUDGE","password":"password123"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.AuthController
+           Method = com.dms.controller.AuthController#signup(SignupRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWRnZV85XzI5MDAwIiwicm9sZSI6IkpVREdFIiwiaWF0IjoxNzkwMzUwMjIzLCJleHAiOjE3OTAzNTM4MjN9.osGMC75dXKqfE5SI34O9bl8BBA59Hkz5d-zIdeBsZoA","user":{"id":11,"fullName":"Test judge_9_29000","username":"judge_9_29000","age":null,"bio":null,"location":null,"email":"judge_9_29000@test.dms","role":"JUDGE","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.849398"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/tournaments
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJfN18xNDcwMCIsInJvbGUiOiJPUkdBTklaRVIiLCJpYXQiOjE3OTAzNTAyMjMsImV4cCI6MTc5MDM1MzgyM30.a1GddXvMoWcR_3yUjktwztDxn_5JzDh26F8_Ctxd-Rg", Content-Length:"293"]
+             Body = {"scoreTemplate":{"criteriaJson":"[{\"name\":\"Matter\",\"max\":40}]","name":"Default"},"name":"Integration Cup 10","tournamentType":"KNOCKOUT","debateType":"ASIAN_PARLIAMENTARY","schools":[{"debaterIds":[7],"name":"Royal College"},{"debaterIds":[8],"name":"Trinity College"}],"judgeIds":[11]}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.TournamentController
+           Method = com.dms.controller.TournamentController#create(CreateTournamentRequest, Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"id":1,"name":"Integration Cup 10","debateType":"ASIAN_PARLIAMENTARY","customDebateType":null,"tournamentType":"KNOCKOUT","organizer":{"id":9,"fullName":"Test organizer_7_14700","username":"organizer_7_14700","age":null,"bio":null,"location":null,"email":"organizer_7_14700@test.dms","role":"ORGANIZER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.670745"},"status":"ACTIVE","numberOfLeagues":null,"createdAt":"2026-09-25T21:00:23.922186","schools":[{"id":1,"name":"Royal College","tournamentId":1,"debaters":null},{"id":2,"name":"Trinity College","tournamentId":1,"debaters":null}],"judges":[{"id":1,"judge":{"id":11,"fullName":"Test judge_9_29000","username":"judge_9_29000","age":null,"bio":null,"location":null,"email":"judge_9_29000@test.dms","role":"JUDGE","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.849398"},"judgeCode":"JUDGE-001"}]}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/discussion
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWJhdGVyXzVfMTEzMDAiLCJyb2xlIjoiREVCQVRFUiIsImlhdCI6MTc5MDM1MDIyMywiZXhwIjoxNzkwMzUzODIzfQ.-gjKncPPoxtj6lAKUSfaJK7Ma1XNlH4sxaOb_6t75n4", Content-Length:"55"]
+             Body = {"userId":8,"comment":"Posted as Bob","tournamentId":1}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.DiscussionController
+           Method = com.dms.controller.DiscussionController#addComment(Map, Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"id":1,"tournamentId":1,"matchId":null,"user":{"id":8,"fullName":"Test debater_6_27100","username":"debater_6_27100","age":null,"bio":null,"location":null,"email":"debater_6_27100@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.580023"},"comment":"Posted as Bob","createdAt":"2026-09-25T21:00:24.036461","replies":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+  <testcase name="cannotReadOthersNotification" classname="com.dms.integration.OwnershipSecurityIntegrationTest" time="0.056">
+    <failure message="[PUT alice&apos;s notification /read as bob] &#10;expected: 403&#10; but was: 200" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+[PUT alice's notification /read as bob] 
+expected: 403
+ but was: 200
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotReadOthersNotification(OwnershipSecurityIntegrationTest.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+]]></failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/notifications
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWJhdGVyXzVfMTEzMDAiLCJyb2xlIjoiREVCQVRFUiIsImlhdCI6MTc5MDM1MDIyMywiZXhwIjoxNzkwMzUzODIzfQ.-gjKncPPoxtj6lAKUSfaJK7Ma1XNlH4sxaOb_6t75n4"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.NotificationController
+           Method = com.dms.controller.NotificationController#getNotifications(Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = [{"id":1,"title":"Tournament Assigned","message":"You have been registered for tournament 'Integration Cup 10' under school 'Royal College' organised by Test organizer_7_14700.","readStatus":false,"createdAt":"2026-09-25T21:00:23.959823"}]
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/notifications/1/read
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWJhdGVyXzZfMjcxMDAiLCJyb2xlIjoiREVCQVRFUiIsImlhdCI6MTc5MDM1MDIyMywiZXhwIjoxNzkwMzUzODIzfQ.8s273sFp9vnVFesVGLYQqsNqnl_hDTYJdggX2wOPQ9I"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.NotificationController
+           Method = com.dms.controller.NotificationController#markRead(Long, Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+  <testcase name="cannotEditOthersProfile" classname="com.dms.integration.OwnershipSecurityIntegrationTest" time="0.026">
+    <failure message="[PUT /api/users/{bob} as alice] &#10;expected: 403&#10; but was: 200" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+[PUT /api/users/{bob} as alice] 
+expected: 403
+ but was: 200
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotEditOthersProfile(OwnershipSecurityIntegrationTest.java:50)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+]]></failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/users/8
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWJhdGVyXzVfMTEzMDAiLCJyb2xlIjoiREVCQVRFUiIsImlhdCI6MTc5MDM1MDIyMywiZXhwIjoxNzkwMzUzODIzfQ.-gjKncPPoxtj6lAKUSfaJK7Ma1XNlH4sxaOb_6t75n4", Content-Length:"25"]
+             Body = {"bio":"hacked by alice"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.UserController
+           Method = com.dms.controller.UserController#updateUser(Long, UserDTO)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"id":8,"fullName":"Test debater_6_27100","username":"debater_6_27100","age":null,"bio":"hacked by alice","location":null,"email":"debater_6_27100@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.580023"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+  <testcase name="cannotDeleteOtherOrganizersTournament" classname="com.dms.integration.OwnershipSecurityIntegrationTest" time="0.062">
+    <failure message="[DELETE organizer A&apos;s tournament as organizer B] &#10;expected: 403&#10; but was: 204" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+[DELETE organizer A's tournament as organizer B] 
+expected: 403
+ but was: 204
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotDeleteOtherOrganizersTournament(OwnershipSecurityIntegrationTest.java:91)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+]]></failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/tournaments
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJfN18xNDcwMCIsInJvbGUiOiJPUkdBTklaRVIiLCJpYXQiOjE3OTAzNTAyMjMsImV4cCI6MTc5MDM1MzgyM30.a1GddXvMoWcR_3yUjktwztDxn_5JzDh26F8_Ctxd-Rg", Content-Length:"79"]
+             Body = {"debateType":"TRADITIONAL","name":"A's private cup","tournamentType":"LEAGUE"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.TournamentController
+           Method = com.dms.controller.TournamentController#create(CreateTournamentRequest, Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"id":2,"name":"A's private cup","debateType":"TRADITIONAL","customDebateType":null,"tournamentType":"LEAGUE","organizer":{"id":9,"fullName":"Test organizer_7_14700","username":"organizer_7_14700","age":null,"bio":null,"location":null,"email":"organizer_7_14700@test.dms","role":"ORGANIZER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.670745"},"status":"ACTIVE","numberOfLeagues":null,"createdAt":"2026-09-25T21:00:24.225911","schools":[],"judges":[]}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = DELETE
+      Request URI = /api/tournaments/2
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvcmdhbml6ZXJfOF80MzkwMCIsInJvbGUiOiJPUkdBTklaRVIiLCJpYXQiOjE3OTAzNTAyMjMsImV4cCI6MTc5MDM1MzgyM30.A_YcS8ekFnow4pUrxjMpkBgbtonkQ5ujqXG4cLvKrE4"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.TournamentController
+           Method = com.dms.controller.TournamentController#delete(Long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 204
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+  <testcase name="publicUserListHidesEmails" classname="com.dms.integration.OwnershipSecurityIntegrationTest" time="0.019">
+    <failure message="JSON path &quot;$[*].email&quot;&#10;Expected: not a collection containing &quot;debater_5_11300@test.dms&quot;&#10;     but: was &lt;[&quot;debater_1_11000@test.dms&quot;,&quot;debater_2_73500@test.dms&quot;,&quot;judge_3_55900@test.dms&quot;,&quot;newdeb@test.dms&quot;,&quot;organizer_4_72700@test.dms&quot;,&quot;not-an-email&quot;,&quot;debater_5_11300@test.dms&quot;,&quot;debater_6_27100@test.dms&quot;,&quot;organizer_7_14700@test.dms&quot;,&quot;organizer_8_43900@test.dms&quot;,&quot;judge_9_29000@test.dms&quot;]&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+JSON path "$[*].email"
+Expected: not a collection containing "debater_5_11300@test.dms"
+     but: was <["debater_1_11000@test.dms","debater_2_73500@test.dms","judge_3_55900@test.dms","newdeb@test.dms","organizer_4_72700@test.dms","not-an-email","debater_5_11300@test.dms","debater_6_27100@test.dms","organizer_7_14700@test.dms","organizer_8_43900@test.dms","judge_9_29000@test.dms"]>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:107)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$0(JsonPathResultMatchers.java:88)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.dms.integration.OwnershipSecurityIntegrationTest.publicUserListHidesEmails(OwnershipSecurityIntegrationTest.java:121)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+]]></failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/users
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.UserController
+           Method = com.dms.controller.UserController#getAllUsers()
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = [{"id":1,"fullName":"Test debater_1_11000","username":"debater_1_11000","age":null,"bio":null,"location":null,"email":"debater_1_11000@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:22.288067"},{"id":2,"fullName":"Test debater_2_73500","username":"debater_2_73500","age":null,"bio":null,"location":null,"email":"debater_2_73500@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:22.665341"},{"id":3,"fullName":"Test judge_3_55900","username":"judge_3_55900","age":null,"bio":null,"location":null,"email":"judge_3_55900@test.dms","role":"JUDGE","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:22.773676"},{"id":4,"fullName":"New Debater","username":"newdeb","age":null,"bio":null,"location":null,"email":"newdeb@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.06886"},{"id":5,"fullName":"Test organizer_4_72700","username":"organizer_4_72700","age":null,"bio":null,"location":null,"email":"organizer_4_72700@test.dms","role":"ORGANIZER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.204255"},{"id":6,"fullName":"Bad Email","username":"bademail","age":null,"bio":null,"location":null,"email":"not-an-email","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.364135"},{"id":7,"fullName":"Test debater_5_11300","username":"debater_5_11300","age":null,"bio":null,"location":null,"email":"debater_5_11300@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.486488"},{"id":8,"fullName":"Test debater_6_27100","username":"debater_6_27100","age":null,"bio":"hacked by alice","location":null,"email":"debater_6_27100@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.580023"},{"id":9,"fullName":"Test organizer_7_14700","username":"organizer_7_14700","age":null,"bio":null,"location":null,"email":"organizer_7_14700@test.dms","role":"ORGANIZER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.670745"},{"id":10,"fullName":"Test organizer_8_43900","username":"organizer_8_43900","age":null,"bio":null,"location":null,"email":"organizer_8_43900@test.dms","role":"ORGANIZER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.761386"},{"id":11,"fullName":"Test judge_9_29000","username":"judge_9_29000","age":null,"bio":null,"location":null,"email":"judge_9_29000@test.dms","role":"JUDGE","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.849398"}]
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+  <testcase name="cannotDeleteOthersComment" classname="com.dms.integration.OwnershipSecurityIntegrationTest" time="0.034">
+    <failure message="[DELETE bob&apos;s comment as alice] &#10;expected: 403&#10; but was: 204" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+[DELETE bob's comment as alice] 
+expected: 403
+ but was: 204
+	at com.dms.integration.OwnershipSecurityIntegrationTest.cannotDeleteOthersComment(OwnershipSecurityIntegrationTest.java:79)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+]]></failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/discussion
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWJhdGVyXzZfMjcxMDAiLCJyb2xlIjoiREVCQVRFUiIsImlhdCI6MTc5MDM1MDIyMywiZXhwIjoxNzkwMzUzODIzfQ.8s273sFp9vnVFesVGLYQqsNqnl_hDTYJdggX2wOPQ9I", Content-Length:"55"]
+             Body = {"userId":8,"comment":"Bob's opinion","tournamentId":1}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.DiscussionController
+           Method = com.dms.controller.DiscussionController#addComment(Map, Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"id":2,"tournamentId":1,"matchId":null,"user":{"id":8,"fullName":"Test debater_6_27100","username":"debater_6_27100","age":null,"bio":"hacked by alice","location":null,"email":"debater_6_27100@test.dms","role":"DEBATER","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:23.580023"},"comment":"Bob's opinion","createdAt":"2026-09-25T21:00:24.309969","replies":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = DELETE
+      Request URI = /api/discussion/2
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWJhdGVyXzVfMTEzMDAiLCJyb2xlIjoiREVCQVRFUiIsImlhdCI6MTc5MDM1MDIyMywiZXhwIjoxNzkwMzUzODIzfQ.-gjKncPPoxtj6lAKUSfaJK7Ma1XNlH4sxaOb_6t75n4"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.DiscussionController
+           Method = com.dms.controller.DiscussionController#deleteComment(Long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 204
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+  <testcase name="canEditOwnProfile" classname="com.dms.integration.OwnershipSecurityIntegrationTest" time="0.015"/>
+  <testcase name="judgeImpersonationStatusCode" classname="com.dms.integration.OwnershipSecurityIntegrationTest" time="0.13">
+    <failure message="[submitting as another judge] &#10;expected: 403&#10; but was: 400" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+[submitting as another judge] 
+expected: 403
+ but was: 400
+	at com.dms.integration.OwnershipSecurityIntegrationTest.judgeImpersonationStatusCode(OwnershipSecurityIntegrationTest.java:113)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+]]></failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/auth/signup
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"136"]
+             Body = {"username":"judge_11_35700","email":"judge_11_35700@test.dms","fullName":"Test judge_11_35700","role":"JUDGE","password":"password123"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.AuthController
+           Method = com.dms.controller.AuthController#signup(SignupRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWRnZV8xMV8zNTcwMCIsInJvbGUiOiJKVURHRSIsImlhdCI6MTc5MDM1MDIyNCwiZXhwIjoxNzkwMzUzODI0fQ.QfxQM0t4kYsrlt_5lhVdKX7nM3zrUsEZHwOUKvcDweY","user":{"id":12,"fullName":"Test judge_11_35700","username":"judge_11_35700","age":null,"bio":null,"location":null,"email":"judge_11_35700@test.dms","role":"JUDGE","profilePictureUrl":null,"socialLinksJson":null,"privacyStatus":"PUBLIC","language":"en","expertise":null,"yearsOfExperience":null,"createdAt":"2026-09-25T21:00:24.448079"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/score-sheets/submit
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWRnZV8xMV8zNTcwMCIsInJvbGUiOiJKVURHRSIsImlhdCI6MTc5MDM1MDIyNCwiZXhwIjoxNzkwMzUzODI0fQ.QfxQM0t4kYsrlt_5lhVdKX7nM3zrUsEZHwOUKvcDweY", Content-Length:"69"]
+             Body = {"matchId":1,"judgeId":11,"oppositionTotal":60,"propositionTotal":70}
+    Session Attrs = {}
+
+Handler:
+             Type = com.dms.controller.ScoreSheetController
+           Method = com.dms.controller.ScoreSheetController#submit(ScoreSheetSubmissionRequest, Principal)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = java.lang.RuntimeException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"error":"Access denied: you can only submit scores as yourself","timestamp":"2026-09-25T21:00:24.470986200"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+</testsuite>

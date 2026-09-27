@@ -1,16 +1,16 @@
 :root{
-  --bg: #0F172A;
-  --pro: #10B981;
-  --con: #EF4444;
-  --text: #E2E8F0;
-  --muted: rgba(226,232,240,0.72);
-  --card: rgba(226,232,240,0.06);
-  --card2: rgba(226,232,240,0.04);
-  --border: rgba(226,232,240,0.14);
-  --field: rgba(226,232,240,0.08);
+  --bg: #f8fbff;
+  --pro: #06192b;
+  --con: #8a6a00;
+  --text: #06192b;
+  --muted: #4c5664;
+  --card: rgba(255,255,255,0.94);
+  --card2: rgba(238,245,255,0.82);
+  --border: #c9d0dc;
+  --field: rgba(255,255,255,0.92);
   --primary: var(--pro);
-  --primaryDark: #0EA371;
-  --shadow: 0 24px 70px rgba(0,0,0,0.45);
+  --primaryDark: #102a43;
+  --shadow: 0 24px 70px rgba(6,25,43,0.12);
 }
 
 *{ box-sizing: border-box; }
@@ -26,15 +26,17 @@ body{
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(238,245,255,0.92)),
+    radial-gradient(circle at 1px 1px, rgba(6,25,43,0.08) 1px, transparent 0);
+  background-size: auto, 26px 26px;
 }
 
 body::before{
   content: "";
   position: fixed;
   inset: 0;
-  background: linear-gradient(rgba(15,23,42,0.45), rgba(15,23,42,0.45));
-  filter: blur(4px);
-  transform: scale(1.06);
+  background: linear-gradient(90deg, rgba(6,25,43,0.08), transparent 44%, rgba(255,240,189,0.25));
   z-index: -2;
 } 
 
@@ -43,8 +45,10 @@ body::after{
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 20%, rgba(16,185,129,0.18), transparent 40%),
-    radial-gradient(circle at 80% 40%, rgba(239,68,68,0.15), transparent 40%);
+    linear-gradient(90deg, rgba(6,25,43,0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(6,25,43,0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.16;
   z-index: -1;
 }
 
@@ -75,7 +79,7 @@ body::after{
   width: min(760px, 96vw);
   background: linear-gradient(180deg, var(--card), var(--card2));
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 0;
   box-shadow: var(--shadow);
   padding: 42px 48px 84px;
   position: relative;
@@ -85,10 +89,10 @@ body::after{
 .topIcon{
   width: 74px;
   height: 74px;
-  border-radius: 999px;
-  background: rgba(16,185,129,0.18);
+  border-radius: 0;
+  background: #eef5ff;
   color: var(--pro);
-  border: 1px solid rgba(16,185,129,0.38);
+  border: 1px solid var(--border);
   display:grid;
   place-items:center;
   margin: 2px auto 18px;
@@ -100,8 +104,9 @@ h1{
   margin: 0;
   text-align:center;
   font-size: 34px;
-  letter-spacing: -0.3px;
+  letter-spacing: 0;
   color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .subtitle{
@@ -120,9 +125,9 @@ h1{
 
 .tab{
   border: 1px solid var(--border);
-  background: rgba(226,232,240,0.04);
+  background: rgba(255,255,255,0.72);
   color: var(--text);
-  border-radius: 12px;
+  border-radius: 0;
   padding: 10px 14px;
   font-weight: 900;
   cursor:pointer;
@@ -135,9 +140,10 @@ h1{
 }
 
 .tab.active{
-  border-color: rgba(16,185,129,0.55);
-  box-shadow: 0 16px 28px rgba(16,185,129,0.12);
-  background: rgba(16,185,129,0.10);
+  border-color: #06192b;
+  box-shadow: 0 16px 28px rgba(6,25,43,0.10);
+  background: #06192b;
+  color: #ffffff;
 }
 
 .label{
@@ -154,14 +160,14 @@ h1{
   gap: 12px;
   background: var(--field);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 0;
   padding: 14px 14px;
   transition: 160ms ease;
 }
 
 .field:focus-within{
-  border-color: rgba(16,185,129,0.55);
-  box-shadow: 0 0 0 4px rgba(16,185,129,0.14);
+  border-color: #06192b;
+  box-shadow: 0 0 0 4px rgba(219,234,254,0.9);
 }
 
 .icon{
@@ -190,7 +196,7 @@ h1{
   color: rgba(226,232,240,0.78);
   font-weight: 900;
   padding: 6px 10px;
-  border-radius: 10px;
+  border-radius: 0;
 }
 .eyeBtn:hover{
   border-color: rgba(226,232,240,0.18);
@@ -200,20 +206,20 @@ h1{
 .primary{
   width: 100%;
   border: 0;
-  border-radius: 12px;
-  background: rgba(16,185,129,0.18);
-  color: var(--text);
+  border-radius: 0;
+  background: #06192b;
+  color: #ffffff;
   font-weight: 900;
   font-size: 18px;
   padding: 14px 16px;
   cursor:pointer;
-  border: 1px solid rgba(16,185,129,0.55);
-  box-shadow: 0 16px 34px rgba(16,185,129,0.14);
+  border: 1px solid #06192b;
+  box-shadow: 0 16px 34px rgba(6,25,43,0.16);
   margin-top: 16px;
   transition: 160ms ease;
 }
 .primary:hover{
-  background: rgba(16,185,129,0.26);
+  background: #102a43;
   transform: translateY(-1px);
 }
 .primary:active{ transform: translateY(0); }

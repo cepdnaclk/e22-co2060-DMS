@@ -5,12 +5,15 @@
 @layer base {
   :root {
     --ink: #06192b;
+    --ink-soft: #102a43;
     --muted: #4c5664;
     --line: #c9d0dc;
     --paper: #fbfcff;
+    --paper-warm: #fffdf7;
     --paper-blue: #eef5ff;
     --gold: #8a6a00;
     --gold-soft: #fff0bd;
+    --gold-line: #e8d48a;
   }
 
   * {
@@ -20,8 +23,10 @@
   body {
     @apply bg-[#f8fbff] text-[#06192b] font-sans antialiased;
     background-image:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(238, 245, 255, 0.68)),
       radial-gradient(circle at 1px 1px, rgba(6, 25, 43, 0.08) 1px, transparent 0);
-    background-size: 26px 26px;
+    background-size: auto, 26px 26px;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
 
   h1,
@@ -30,6 +35,8 @@
   .font-display {
     font-family: Georgia, 'Times New Roman', serif;
     letter-spacing: 0;
+    color: var(--ink);
+    line-height: 1.05;
   }
 
   ::selection {
@@ -40,15 +47,16 @@
 
 @layer components {
   .glass {
-    @apply bg-white/75 backdrop-blur-md border border-slate-300;
+    @apply bg-white/80 backdrop-blur-md border border-slate-300 shadow-[0_18px_50px_rgba(6,25,43,0.08)];
   }
 
   .glass-dark {
-    @apply bg-white/90 backdrop-blur-md border border-slate-300;
+    @apply bg-white/90 backdrop-blur-md border border-slate-300 shadow-[0_18px_50px_rgba(6,25,43,0.08)];
+    background-color: rgba(255, 255, 255, 0.92);
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 bg-[#06192b] hover:bg-[#102a43] text-white font-bold uppercase tracking-widest px-5 py-3 rounded-none border border-[#06192b] transition-all duration-200 shadow-[0_10px_24px_rgba(6,25,43,0.12)] active:translate-y-px disabled:opacity-60 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 bg-[#06192b] hover:bg-[#102a43] text-white font-bold uppercase tracking-widest px-5 py-3 rounded-none border border-[#06192b] transition-all duration-200 shadow-[0_10px_24px_rgba(6,25,43,0.14)] active:translate-y-px disabled:opacity-60 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
@@ -68,15 +76,16 @@
   }
 
   .input-field {
-    @apply w-full bg-white border border-slate-300 rounded-none px-4 py-3 text-[#06192b] placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#dbeafe] focus:border-[#06192b] transition-all duration-200;
+    @apply w-full bg-white border border-slate-300 rounded-none px-4 py-3 text-[#06192b] placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#dbeafe] focus:border-[#06192b] transition-all duration-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)];
   }
 
   .card {
-    @apply bg-[#06192b] text-white border border-[#102a43] rounded-none p-6 transition-all duration-200;
+    @apply bg-white/90 text-[#06192b] border border-slate-300 rounded-none p-6 transition-all duration-200 shadow-[0_18px_48px_rgba(6,25,43,0.08)];
+    background-color: rgba(255, 255, 255, 0.94);
   }
 
   .card-hover {
-    @apply card hover:bg-[#102a43] hover:border-[#8a6a00] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(6,25,43,0.12)] cursor-pointer;
+    @apply card hover:bg-[#f6f9ff] hover:border-[#8a6a00] hover:-translate-y-0.5 hover:shadow-[0_20px_52px_rgba(6,25,43,0.12)] cursor-pointer;
   }
 
   .badge {
@@ -108,7 +117,7 @@
   .page-bg {
     @apply min-h-screen bg-[#f8fbff] text-[#06192b];
     background-image:
-      linear-gradient(180deg, rgba(238, 245, 255, 0.92), rgba(255, 255, 255, 0.94) 42%, rgba(248, 251, 255, 0.98)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(238, 245, 255, 0.92) 48%, rgba(248, 251, 255, 0.98)),
       radial-gradient(circle at 1px 1px, rgba(6, 25, 43, 0.08) 1px, transparent 0);
     background-size: auto, 26px 26px;
   }
@@ -155,12 +164,97 @@
   }
 
   .paper-panel {
-    @apply bg-white/90 border border-slate-300 rounded-none;
+    @apply bg-white/90 border border-slate-300 rounded-none shadow-[0_18px_48px_rgba(6,25,43,0.07)];
+    background-color: rgba(255, 255, 255, 0.92);
   }
 
   .ink-panel {
     @apply bg-[#06192b] text-white border border-[#06192b];
   }
+}
+
+/* Style-only VIVAATHI polish.
+   This layer intentionally changes only presentation across existing pages:
+   fonts, colors, borders, shadows, and surface treatment. It does not alter
+   routes, API calls, component structure, or button locations. */
+.page-bg nav,
+.page-bg footer {
+  box-shadow: 0 1px 0 rgba(6, 25, 43, 0.06);
+}
+
+.page-bg section,
+.page-bg article,
+.page-bg aside,
+.page-bg form,
+.page-bg table {
+  border-color: var(--line);
+}
+
+.page-bg :where(.card, .paper-panel, .glass, .glass-dark) {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.page-bg :where(.card, .paper-panel, .glass, .glass-dark) :where(h1, h2, h3, h4, h5, h6, p, span, label, td, th, li, small)[class~="text-white"],
+.page-bg :where(.card, .paper-panel, .glass, .glass-dark) :where(h1, h2, h3, h4, h5, h6, p, span, label, td, th, li, small)[class~="text-gray-100"],
+.page-bg :where(.card, .paper-panel, .glass, .glass-dark) :where(h1, h2, h3, h4, h5, h6, p, span, label, td, th, li, small)[class~="text-gray-200"] {
+  color: var(--ink) !important;
+}
+
+.page-bg :where(.card, .paper-panel, .glass, .glass-dark) :where(p, span, label, td, th, li, small)[class*="text-gray-"],
+.page-bg :where(.card, .paper-panel, .glass, .glass-dark) :where(p, span, label, td, th, li, small)[class*="text-slate-"] {
+  color: var(--muted) !important;
+}
+
+.page-bg :where(.ink-panel, [class*="bg-[#06192b]"], [class*="bg-slate-950"], [class*="bg-slate-900"]) {
+  background-color: var(--ink) !important;
+  border-color: var(--ink-soft) !important;
+}
+
+.page-bg :where(.ink-panel, [class*="bg-[#06192b]"], [class*="bg-slate-950"], [class*="bg-slate-900"]) :where(h1, h2, h3, h4, h5, h6, p, span, label, td, th, li, small)[class~="text-white"],
+.page-bg :where(.ink-panel, [class*="bg-[#06192b]"], [class*="bg-slate-950"], [class*="bg-slate-900"]) :where(h1, h2, h3, h4, h5, h6, p, span, label, td, th, li, small)[class~="text-gray-100"],
+.page-bg :where(.ink-panel, [class*="bg-[#06192b]"], [class*="bg-slate-950"], [class*="bg-slate-900"]) :where(h1, h2, h3, h4, h5, h6, p, span, label, td, th, li, small)[class~="text-gray-200"] {
+  color: #ffffff !important;
+}
+
+.page-bg :where(.ink-panel, [class*="bg-[#06192b]"], [class*="bg-slate-950"], [class*="bg-slate-900"]) :where(p, span, label, td, th, li, small)[class*="text-gray-"],
+.page-bg :where(.ink-panel, [class*="bg-[#06192b]"], [class*="bg-slate-950"], [class*="bg-slate-900"]) :where(p, span, label, td, th, li, small)[class*="text-slate-"] {
+  color: #cbd5e1 !important;
+}
+
+.page-bg :where(button, a, input, textarea, select) {
+  letter-spacing: 0;
+}
+
+.page-bg :where(.btn-primary, .btn-secondary, .tab-btn, button[class*="uppercase"], a[class*="uppercase"]) {
+  letter-spacing: 0.12em;
+}
+
+.page-bg :where(input, textarea, select) {
+  border-radius: 0 !important;
+}
+
+.page-bg :where(.rounded-3xl, .rounded-2xl, .rounded-xl, .rounded-lg) {
+  border-radius: 0 !important;
+}
+
+.page-bg :where(.badge, [class*="bg-amber"], [class*="bg-yellow"]) {
+  border-color: var(--gold-line);
+}
+
+.page-bg table thead,
+.page-bg thead tr {
+  background: var(--paper-blue);
+}
+
+.page-bg table th {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--ink);
+}
+
+.page-bg ::placeholder {
+  color: #737f8d;
 }
 
 @layer utilities {
@@ -199,4 +293,3 @@
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
 }
-

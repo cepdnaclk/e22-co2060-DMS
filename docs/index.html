@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vivaathi | Redefining Debate Management</title>
+    <meta name="description" content="Vivaathi - Full-Stack Debate Management Platform built by Department of Computer Engineering, University of Peradeniya. Real-time digital scoring, automated scheduling & analytics.">
+    <meta property="og:title" content="Vivaathi | Redefining Debate Management">
+    <meta property="og:description" content="Seamless digital transition for debate tournaments. Real-time cloud scoring, multi-role access & automatic standings.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#800000">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,16 +27,34 @@
 
 <body>
 
+    <!-- Reading Progress Bar -->
+    <div class="scroll-progress-bar" id="scroll-progress"></div>
+
     <!-- Patterns Background for Hero -->
     <div class="network-bg"></div>
 
-    <!-- Header / Branding -->
+    <!-- Header / Branding & Navigation -->
     <header class="main-header" data-aos="fade-down" data-aos-duration="1000">
-        <div class="header-center">
-            <img src="screenshots/uop-logo.png" alt="University of Peradeniya Logo" class="header-logo">
-            <h1>University of Peradeniya</h1>
-            <span class="header-separator">|</span>
-            <h1>Department of Computer Engineering</h1>
+        <div class="header-container">
+            <div class="header-center">
+                <img src="screenshots/uop-logo.png" alt="University of Peradeniya Logo" class="header-logo">
+                <h1>University of Peradeniya</h1>
+                <span class="header-separator">|</span>
+                <h1>Department of Computer Engineering</h1>
+            </div>
+
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="#hero" class="nav-link active">Overview</a></li>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#structure" class="nav-link">Structure</a></li>
+                    <li><a href="#architecture" class="nav-link">Architecture</a></li>
+                    <li><a href="#eer" class="nav-link">EER Schema</a></li>
+                    <li><a href="#system-logic" class="nav-link">Workflow</a></li>
+                    <li><a href="#showcase" class="nav-link">Walkthrough</a></li>
+                    <li><a href="#team" class="nav-link">Team</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
@@ -46,6 +69,12 @@
                     Move from cumbersome paper-based scoring to a seamless, real-time cloud experience.
                 </p>
 
+                <!-- Action Buttons -->
+                <div class="hero-actions" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#showcase" class="btn btn-primary"><i data-lucide="play-circle"></i> Explore Walkthrough</a>
+                    <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank" class="btn btn-outline"><i data-lucide="code-2"></i> View Codebase</a>
+                </div>
+
                 <!-- Tech Stack Badges -->
                 <div class="tech-stack" data-aos="fade-up" data-aos-delay="400">
                     <span class="badge"><i data-lucide="blocks"></i> React</span>
@@ -57,8 +86,75 @@
                     <span class="badge"><i data-lucide="plug"></i> REST API</span>
                     <span class="badge"><i data-lucide="send"></i> Axios</span>
                 </div>
+
+                <!-- Hero Impact Metrics Bar -->
+                <div class="hero-metrics" data-aos="fade-up" data-aos-delay="600">
+                    <div class="metric-card">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Paperless Scoring</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">3</div>
+                        <div class="metric-label">Dedicated Roles</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">JWT</div>
+                        <div class="metric-label">Secured Access</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">6+</div>
+                        <div class="metric-label">Debate Formats</div>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <!-- Core Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-heading" data-aos="fade-up">Core Capabilities</h2>
+                <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Engineered to eliminate manual administrative friction and automate tournament workflows.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card glass" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-icon"><i data-lucide="users"></i></div>
+                        <h3>Role-Tailored Dashboards</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Personalized interfaces for Debaters, Judges, and Organizers with role-gated permissions and custom metrics.</p>
+                    </div>
+
+                    <div class="feature-card glass" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon"><i data-lucide="sliders"></i></div>
+                        <h3>Dynamic Criteria Builder</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Organizers can dynamically configure score templates with custom max marks for Matter, Manner, Method, and Rebuttal.</p>
+                    </div>
+
+                    <div class="feature-card glass" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-icon"><i data-lucide="bell"></i></div>
+                        <h3>Automated Notifications</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Judges and debaters receive automated real-time alerts whenever new matches, schedules, or score sheets are created.</p>
+                    </div>
+
+                    <div class="feature-card glass" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-icon"><i data-lucide="bar-chart-2"></i></div>
+                        <h3>Instant Leaderboard Sync</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Automatic post-match background sync recalculates wins, losses, win rates, and Best Debater recognitions instantly.</p>
+                    </div>
+
+                    <div class="feature-card glass" data-aos="fade-up" data-aos-delay="500">
+                        <div class="feature-icon"><i data-lucide="trophy"></i></div>
+                        <h3>Multi-Format Engine</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Built-in flexibility supporting Asian Parliamentary (AP), British Parliamentary (BP), Knockout, and League tournaments.</p>
+                    </div>
+
+                    <div class="feature-card glass" data-aos="fade-up" data-aos-delay="600">
+                        <div class="feature-icon"><i data-lucide="shield-check"></i></div>
+                        <h3>Enterprise Spring Security</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Stateless JWT authentication paired with role-based REST controllers ensuring end-to-end data integrity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <!-- Project Structure Section -->
         <section id="structure" class="project-structure">
@@ -68,58 +164,34 @@
                     (Spring Boot) and Frontend (React).</p>
 
                 <div class="structure-box" data-aos="fade-up" data-aos-delay="200">
-                    <div class="tree-container">
-                        DMS/
-                        <span class="tree-branch">├──</span> <span class="tree-node">backend/</span> <span
-                            class="tree-comment"># Spring Boot application</span>
-                        <span class="tree-branch">│ ├──</span> <span class="tree-node">src/main/java/com/dms/</span>
-                        <span class="tree-branch">│ │ ├──</span> <span class="tree-node">entity/</span> <span
-                            class="tree-comment"># JPA entities</span>
-                        <span class="tree-branch">│ │ ├──</span> <span class="tree-node">dto/</span> <span
-                            class="tree-comment"># Data Transfer Objects</span>
-                        <span class="tree-branch">│ │ ├──</span> <span class="tree-node">repository/</span> <span
-                            class="tree-comment"># Spring Data JPA repos</span>
-                        <span class="tree-branch">│ │ ├──</span> <span class="tree-node">service/</span> <span
-                            class="tree-comment"># Business logic layer</span>
-                        <span class="tree-branch">│ │ ├──</span> <span class="tree-node">controller/</span> <span
-                            class="tree-comment"># REST API controllers</span>
-                        <span class="tree-branch">│ │ ├──</span> <span class="tree-node">security/</span> <span
-                            class="tree-comment"># JWT filter & util</span>
-                        <span class="tree-branch">│ │ ├──</span> <span class="tree-node">exception/</span> <span
-                            class="tree-comment"># Global exception handler</span>
-                        <span class="tree-branch">│ │ └──</span> <span class="tree-node">config/</span> <span
-                            class="tree-comment"># Security & CORS config</span>
-                        <span class="tree-branch">│ └──</span> <span class="tree-node">src/main/resources/</span>
-                        <span class="tree-branch">│ ├──</span> <span class="tree-node">application.properties</span>
-                        <span class="tree-comment"># DB & JWT config</span>
-                        <span class="tree-branch">│ └──</span> <span class="tree-node">data.sql</span> <span
-                            class="tree-comment"># Seed data</span>
-                        <span class="tree-branch">└──</span> <span class="tree-node">frontend/</span> <span
-                            class="tree-comment"># React application</span>
-                        <span class="tree-branch"> └──</span> <span class="tree-node">src/</span>
-                        <span class="tree-branch"> ├──</span> <span class="tree-node">components/</span>
-                        <span class="tree-branch"> │ ├──</span> <span class="tree-node">layout/</span> <span
-                            class="tree-comment"># Navbar, Footer, PublicLayout</span>
-                        <span class="tree-branch"> │ └──</span> <span class="tree-node">common/</span> <span
-                            class="tree-comment"># Avatar, Toast, SearchBar, Spinner</span>
-                        <span class="tree-branch"> ├──</span> <span class="tree-node">pages/</span>
-                        <span class="tree-branch"> │ ├──</span> <span class="tree-node">public/</span> <span
-                            class="tree-comment"># Home, Scoring, News, About, Search</span>
-                        <span class="tree-branch"> │ ├──</span> <span class="tree-node">auth/</span> <span
-                            class="tree-comment"># RoleSelect, Login, Signup</span>
-                        <span class="tree-branch"> │ ├──</span> <span class="tree-node">dashboard/</span> <span
-                            class="tree-comment"># Debater, Judge, Organizer dashboards</span>
-                        <span class="tree-branch"> │ ├──</span> <span class="tree-node">tournament/</span> <span
-                            class="tree-comment"># Tournament page, CreateWizard, ScoreSheet</span>
-                        <span class="tree-branch"> │ └──</span> <span class="tree-node">shared/</span> <span
-                            class="tree-comment"># Notifications, Calendar, Settings, Profile</span>
-                        <span class="tree-branch"> ├──</span> <span class="tree-node">context/</span> <span
-                            class="tree-comment"># AuthContext (JWT + user state)</span>
-                        <span class="tree-branch"> ├──</span> <span class="tree-node">api/</span> <span
-                            class="tree-comment"># Axios instance + all API calls</span>
-                        <span class="tree-branch"> └──</span> <span class="tree-node">types/</span> <span
-                            class="tree-comment"># TypeScript interfaces</span>
-                    </div>
+                    <pre class="tree-container"><span class="tree-node">DMS/</span>
+<span class="tree-branch">├── </span><span class="tree-node">backend/</span>                <span class="tree-comment"># Spring Boot application</span>
+<span class="tree-branch">│   ├── </span><span class="tree-node">src/main/java/com/dms/</span>
+<span class="tree-branch">│   │   ├── </span><span class="tree-node">entity/</span>        <span class="tree-comment"># JPA entities</span>
+<span class="tree-branch">│   │   ├── </span><span class="tree-node">dto/</span>           <span class="tree-comment"># Data Transfer Objects</span>
+<span class="tree-branch">│   │   ├── </span><span class="tree-node">repository/</span>    <span class="tree-comment"># Spring Data JPA repos</span>
+<span class="tree-branch">│   │   ├── </span><span class="tree-node">service/</span>       <span class="tree-comment"># Business logic layer</span>
+<span class="tree-branch">│   │   ├── </span><span class="tree-node">controller/</span>    <span class="tree-comment"># REST API controllers</span>
+<span class="tree-branch">│   │   ├── </span><span class="tree-node">security/</span>      <span class="tree-comment"># JWT filter & util</span>
+<span class="tree-branch">│   │   ├── </span><span class="tree-node">exception/</span>     <span class="tree-comment"># Global exception handler</span>
+<span class="tree-branch">│   │   └── </span><span class="tree-node">config/</span>        <span class="tree-comment"># Security & CORS config</span>
+<span class="tree-branch">│   └── </span><span class="tree-node">src/main/resources/</span>
+<span class="tree-branch">│       ├── </span><span class="tree-node">application.properties</span> <span class="tree-comment"># DB & JWT config</span>
+<span class="tree-branch">│       └── </span><span class="tree-node">data.sql</span>             <span class="tree-comment"># Seed data</span>
+<span class="tree-branch">└── </span><span class="tree-node">frontend/</span>               <span class="tree-comment"># React application</span>
+<span class="tree-branch">    └── </span><span class="tree-node">src/</span>
+<span class="tree-branch">        ├── </span><span class="tree-node">components/</span>
+<span class="tree-branch">        │   ├── </span><span class="tree-node">layout/</span>    <span class="tree-comment"># Navbar, Footer, PublicLayout</span>
+<span class="tree-branch">        │   └── </span><span class="tree-node">common/</span>    <span class="tree-comment"># Avatar, Toast, SearchBar, Spinner</span>
+<span class="tree-branch">        ├── </span><span class="tree-node">pages/</span>
+<span class="tree-branch">        │   ├── </span><span class="tree-node">public/</span>    <span class="tree-comment"># Home, Scoring, News, About, Search</span>
+<span class="tree-branch">        │   ├── </span><span class="tree-node">auth/</span>      <span class="tree-comment"># RoleSelect, Login, Signup</span>
+<span class="tree-branch">        │   ├── </span><span class="tree-node">dashboard/</span> <span class="tree-comment"># Debater, Judge, Organizer dashboards</span>
+<span class="tree-branch">        │   ├── </span><span class="tree-node">tournament/</span><span class="tree-comment"># Tournament page, CreateWizard, ScoreSheet</span>
+<span class="tree-branch">        │   └── </span><span class="tree-node">shared/</span>    <span class="tree-comment"># Notifications, Calendar, Settings, Profile</span>
+<span class="tree-branch">        ├── </span><span class="tree-node">context/</span>       <span class="tree-comment"># AuthContext (JWT + user state)</span>
+<span class="tree-branch">        ├── </span><span class="tree-node">api/</span>           <span class="tree-comment"># Axios instance + all API calls</span>
+<span class="tree-branch">        └── </span><span class="tree-node">types/</span>         <span class="tree-comment"># TypeScript interfaces</span></pre>
                 </div>
             </div>
         </section>
@@ -192,6 +264,83 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- REST API Endpoint Showcase -->
+                <div class="api-explorer" data-aos="fade-up" data-aos-delay="200">
+                    <div class="api-tabs">
+                        <button class="api-tab active" onclick="switchApiTab(event, 'tab-tournaments')">POST /api/tournaments</button>
+                        <button class="api-tab" onclick="switchApiTab(event, 'tab-scoring')">POST /api/score-sheets/submit</button>
+                        <button class="api-tab" onclick="switchApiTab(event, 'tab-notifs')">GET /api/notifications</button>
+                        <button class="api-tab" onclick="switchApiTab(event, 'tab-auth')">POST /api/auth/login</button>
+                    </div>
+
+                    <div id="tab-tournaments" class="api-content active">
+                        <div>
+                            <span class="api-method post">POST</span>
+                            <span class="api-url">/api/tournaments/create</span>
+                        </div>
+                        <div class="code-snippet">{
+  "name": "Peradeniya Inter-Faculty Debate 2026",
+  "debateType": "ASIAN_PARLIAMENTARY",
+  "tournamentType": "KNOCKOUT",
+  "schoolIds": [101, 102, 103, 104],
+  "judgeIds": [201, 202],
+  "criteria": [
+    { "category": "Matter", "maxScore": 40 },
+    { "category": "Manner", "maxScore": 40 },
+    { "category": "Method", "maxScore": 20 }
+  ]
+}</div>
+                    </div>
+
+                    <div id="tab-scoring" class="api-content">
+                        <div>
+                            <span class="api-method post">POST</span>
+                            <span class="api-url">/api/score-sheets/submit</span>
+                        </div>
+                        <div class="code-snippet">{
+  "matchId": 45,
+  "judgeId": 201,
+  "propositionScore": 78.5,
+  "oppositionScore": 82.0,
+  "selectedBestSpeakerId": 12,
+  "comments": "Strong rebuttal on third speaker turn."
+}</div>
+                    </div>
+
+                    <div id="tab-notifs" class="api-content">
+                        <div>
+                            <span class="api-method get">GET</span>
+                            <span class="api-url">/api/notifications/user/201</span>
+                        </div>
+                        <div class="code-snippet">[
+  {
+    "id": 901,
+    "message": "Assigned as Judge for Match #45: Engineering vs Science",
+    "readStatus": false,
+    "createdAt": "2026-09-26T14:30:00Z"
+  }
+]</div>
+                    </div>
+
+                    <div id="tab-auth" class="api-content">
+                        <div>
+                            <span class="api-method post">POST</span>
+                            <span class="api-url">/api/auth/login</span>
+                        </div>
+                        <div class="code-snippet">{
+  "username": "jeyanth_judge",
+  "password": "••••••••••••"
+}
+
+// Response: HTTP 200 OK
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZXlhbnRoX2p1ZGdlIiwicm9sZSI6IkpVREdFIn0...",
+  "role": "JUDGE",
+  "userId": 201
+}</div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -201,6 +350,11 @@
                 <h2 class="section-heading" data-aos="fade-up">Database Entity-Relationship (EER)</h2>
                 <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Our optimized relational schema designed
                     for high-performance debate data management.</p>
+
+                <!-- EER Live Search Filter -->
+                <div class="eer-controls" data-aos="fade-up">
+                    <input type="text" id="eer-search" class="eer-search-input" placeholder="🔍 Search database tables (e.g. users, matches)..." oninput="filterEER(this.value)">
+                </div>
 
                 <div class="eer-wrapper" data-aos="fade-up">
                     <div class="eer-container">
@@ -675,25 +829,25 @@
                     platform.</p>
 
                 <div class="team-container">
-
                     <div class="team-grid">
                         <!-- Pathimilan -->
                         <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
                             <div class="avatar"><img src="screenshots/pathimilan.jpg" alt="P. Pathimilan"></div>
                             <h4>P. Pathimilan</h4>
-                            <span class="role">Application Security & Backend Integration Engineer</span>
+                            <span class="e-number">E/22/271</span>
+                            <span class="role">Application Security & Backend Integration</span>
                             <div class="about-section">
                                 <span class="about-label">About</span>
-                                <p class="about-text">Good in application security and authentication systems design.
-                                    Focuses on secure backend logic and access control mechanisms.</p>
+                                <p class="about-text">Expertise in application security and authentication systems design. Focuses on secure backend logic, JWT access controls, and protected REST routes.</p>
+                            </div>
+                            <div class="member-tags">
+                                <span class="member-tag">Spring Security</span>
+                                <span class="member-tag">JWT</span>
+                                <span class="member-tag">REST API</span>
                             </div>
                             <div class="socials">
-                                <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank"
-                                    title="GitHub"><img src="screenshots/gtihub.png" alt="GitHub"></a>
-                                <a href="#" target="_blank" title="LinkedIn"><img src="screenshots/linkedin.png"
-                                        alt="LinkedIn"></a>
-                                <a href="#" target="_blank" title="ePortfolio"><img src="screenshots/portfolio.png"
-                                        alt="ePortfolio"></a>
+                                <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank" title="GitHub"><img src="screenshots/gtihub.png" alt="GitHub"></a>
+                                <a href="mailto:e22271@eng.pdn.ac.lk" title="Email"><i data-lucide="mail"></i></a>
                             </div>
                         </div>
 
@@ -701,19 +855,20 @@
                         <div class="team-card" data-aos="zoom-in" data-aos-delay="400">
                             <div class="avatar"><img src="screenshots/bhaveenthan.jpg" alt="K. Bhaveenthan"></div>
                             <h4>K. Bhaveenthan</h4>
-                            <span class="role">Backend Systems & API Architect</span>
+                            <span class="e-number">E/22/051</span>
+                            <span class="role">Backend Systems & Database Architect</span>
                             <div class="about-section">
                                 <span class="about-label">About</span>
-                                <p class="about-text">An enthusiast in database design and scalable backend systems.
-                                    Developer of efficient data flow and structured API architecture.</p>
+                                <p class="about-text">Enthusiast in relational database design and scalable backend systems. Architect of efficient EER schemas, PostgreSQL JPA repos, and data flow synchronization.</p>
+                            </div>
+                            <div class="member-tags">
+                                <span class="member-tag">PostgreSQL</span>
+                                <span class="member-tag">Spring Data JPA</span>
+                                <span class="member-tag">Data Sync</span>
                             </div>
                             <div class="socials">
-                                <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank"
-                                    title="GitHub"><img src="screenshots/gtihub.png" alt="GitHub"></a>
-                                <a href="#" target="_blank" title="LinkedIn"><img src="screenshots/linkedin.png"
-                                        alt="LinkedIn"></a>
-                                <a href="#" target="_blank" title="ePortfolio"><img src="screenshots/portfolio.png"
-                                        alt="ePortfolio"></a>
+                                <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank" title="GitHub"><img src="screenshots/gtihub.png" alt="GitHub"></a>
+                                <a href="mailto:e22051@eng.pdn.ac.lk" title="Email"><i data-lucide="mail"></i></a>
                             </div>
                         </div>
 
@@ -721,19 +876,20 @@
                         <div class="team-card" data-aos="zoom-in" data-aos-delay="600">
                             <div class="avatar"><img src="screenshots/jeyanth.jpg" alt="A. Lakshigan"></div>
                             <h4>A. Lakshigan</h4>
-                            <span class="role">UI/UX Engineer</span>
+                            <span class="e-number">E/22/176</span>
+                            <span class="role">UI/UX & Frontend Integration Engineer</span>
                             <div class="about-section">
                                 <span class="about-label">About</span>
-                                <p class="about-text">Good in user interface design and experience optimization.
-                                    Skilled in creating responsive layouts and seamless frontend integration.</p>
+                                <p class="about-text">Specialized in modern user interface design and responsive experience optimization. Skilled in component architecture, state handling, and React integration.</p>
+                            </div>
+                            <div class="member-tags">
+                                <span class="member-tag">React</span>
+                                <span class="member-tag">TypeScript</span>
+                                <span class="member-tag">Tailwind CSS</span>
                             </div>
                             <div class="socials">
-                                <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank"
-                                    title="GitHub"><img src="screenshots/gtihub.png" alt="GitHub"></a>
-                                <a href="#" target="_blank" title="LinkedIn"><img src="screenshots/linkedin.png"
-                                        alt="LinkedIn"></a>
-                                <a href="#" target="_blank" title="ePortfolio"><img src="screenshots/portfolio.png"
-                                        alt="ePortfolio"></a>
+                                <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank" title="GitHub"><img src="screenshots/gtihub.png" alt="GitHub"></a>
+                                <a href="mailto:e22176@eng.pdn.ac.lk" title="Email"><i data-lucide="mail"></i></a>
                             </div>
                         </div>
 
@@ -741,19 +897,20 @@
                         <div class="team-card" data-aos="zoom-in" data-aos-delay="800">
                             <div class="avatar"><img src="screenshots/Manojh.jpeg" alt="P. Manojh"></div>
                             <h4>P. Manojh</h4>
+                            <span class="e-number">E/22/227</span>
                             <span class="role">Frontend Developer & QA Engineer</span>
                             <div class="about-section">
                                 <span class="about-label">About</span>
-                                <p class="about-text">Frontend developer ensuring reliable interactive application
-                                    workflows. Ensure user validation and reliable user interactions.</p>
+                                <p class="about-text">Frontend developer focused on reliable interactive application workflows. Ensures thorough form validation, cross-browser responsiveness, and end-to-end user verification.</p>
+                            </div>
+                            <div class="member-tags">
+                                <span class="member-tag">Frontend QA</span>
+                                <span class="member-tag">Form Logic</span>
+                                <span class="member-tag">Vite</span>
                             </div>
                             <div class="socials">
-                                <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank"
-                                    title="GitHub"><img src="screenshots/gtihub.png" alt="GitHub"></a>
-                                <a href="#" target="_blank" title="LinkedIn"><img src="screenshots/linkedin.png"
-                                        alt="LinkedIn"></a>
-                                <a href="#" target="_blank" title="ePortfolio"><img src="screenshots/portfolio.png"
-                                        alt="ePortfolio"></a>
+                                <a href="https://github.com/cepdnaclk/e22-co2060-DMS.git" target="_blank" title="GitHub"><img src="screenshots/gtihub.png" alt="GitHub"></a>
+                                <a href="mailto:e22227@eng.pdn.ac.lk" title="Email"><i data-lucide="mail"></i></a>
                             </div>
                         </div>
                     </div>
@@ -791,6 +948,18 @@
         </div>
     </footer>
 
+    <!-- Image Lightbox Modal -->
+    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <img id="lightbox-img" class="lightbox-img" src="" alt="Enlarged screenshot">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+
+    <!-- Back to Top Floating Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to top" onclick="scrollToTop()">
+        <i data-lucide="arrow-up"></i>
+    </button>
+
     <!-- Scripts -->
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -807,23 +976,140 @@
             offset: 100
         });
 
-        // Animate SVG path on scroll
+        // 1. Reading Progress Bar & Back to Top & Scrollspy
+        const progressBar = document.getElementById('scroll-progress');
+        const backToTopBtn = document.getElementById('back-to-top');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
         window.addEventListener('scroll', () => {
-            const path = document.getElementById('timeline-path');
-            if (path) {
-                const scrollPercentage = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
-                const drawLength = 2000 * scrollPercentage * 2; // Arbitrary multiplier
-                path.style.strokeDashoffset = Math.max(0, 2000 - drawLength);
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            
+            if (progressBar) progressBar.style.width = progress + '%';
+            if (backToTopBtn) {
+                if (scrollTop > 400) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
             }
+
+            // Scrollspy active highlight
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                const sectionHeight = section.offsetHeight;
+                if (scrollTop >= sectionTop && scrollTop < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
         });
 
-        // EER Diagram Relationship Lines
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 2. Lightbox Modal Preview
+        document.querySelectorAll('.step-image img').forEach(img => {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const modal = document.getElementById('lightbox');
+                const modalImg = document.getElementById('lightbox-img');
+                const caption = document.getElementById('lightbox-caption');
+                modalImg.src = img.src;
+                caption.textContent = img.alt || 'Application Screenshot';
+                modal.classList.add('active');
+            });
+        });
+
+        function closeLightbox(e) {
+            const modal = document.getElementById('lightbox');
+            modal.classList.remove('active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // 3. REST API Explorer Tab Switching
+        function switchApiTab(evt, tabId) {
+            document.querySelectorAll('.api-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.api-content').forEach(content => content.classList.remove('active'));
+            evt.currentTarget.classList.add('active');
+            const targetContent = document.getElementById(tabId);
+            if (targetContent) targetContent.classList.add('active');
+        }
+
+        // 4. EER Diagram Real-time Filter & Table Hover Highlight
+        function filterEER(query) {
+            const cleanQuery = query.toLowerCase().trim();
+            const tables = document.querySelectorAll('.eer-table');
+            const paths = document.querySelectorAll('.eer-line-path');
+
+            tables.forEach(table => {
+                const tableName = table.id.replace('table-', '').replace(/-/g, '_');
+                const textContent = table.textContent.toLowerCase();
+                
+                if (!cleanQuery || textContent.includes(cleanQuery) || tableName.includes(cleanQuery)) {
+                    table.classList.remove('dimmed');
+                    if (cleanQuery && tableName.includes(cleanQuery)) {
+                        table.classList.add('highlighted');
+                    } else {
+                        table.classList.remove('highlighted');
+                    }
+                } else {
+                    table.classList.add('dimmed');
+                    table.classList.remove('highlighted');
+                }
+            });
+        }
+
+        // EER Hover relationship highlight
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.eer-table').forEach(table => {
+                table.addEventListener('mouseenter', () => {
+                    const tableId = table.id;
+                    const paths = document.querySelectorAll('.eer-line-path');
+                    
+                    paths.forEach(path => {
+                        const from = path.getAttribute('data-from');
+                        const to = path.getAttribute('data-to');
+                        if (from === tableId || to === tableId) {
+                            path.classList.add('active');
+                            path.classList.remove('dimmed');
+                            const connectedId = from === tableId ? to : from;
+                            const connectedEl = document.getElementById(connectedId);
+                            if (connectedEl) connectedEl.classList.add('highlighted');
+                        } else {
+                            path.classList.add('dimmed');
+                        }
+                    });
+                });
+
+                table.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.eer-line-path').forEach(p => p.classList.remove('active', 'dimmed'));
+                    document.querySelectorAll('.eer-table').forEach(t => t.classList.remove('highlighted'));
+                });
+            });
+        });
+
+        // 5. EER Diagram Relationship Lines Drawing
         function drawEERLines() {
             const svg = document.getElementById('eer-svg');
             if (!svg) return;
 
             svg.innerHTML = '';
             const container = document.querySelector('.eer-container');
+            if (!container) return;
             const cRect = container.getBoundingClientRect();
 
             const relationships = [
@@ -865,7 +1151,6 @@
                     const y2 = (endRect.top + endRect.bottom) / 2 - cRect.top;
 
                     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                    // Create a curved path
                     const dx = x2 - x1;
                     const dy = y2 - y1;
                     const adx = Math.abs(dx);
@@ -887,13 +1172,10 @@
             });
         }
 
-        // Run after layout and on changes
         setTimeout(drawEERLines, 500);
         window.addEventListener('resize', drawEERLines);
-
-        // Redraw when AOS animations might have shifted things
         document.addEventListener('aos:in', drawEERLines);
     </script>
 </body>
 
-</html>
+</html>

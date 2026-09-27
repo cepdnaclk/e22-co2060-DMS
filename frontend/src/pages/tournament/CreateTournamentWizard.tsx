@@ -187,9 +187,9 @@ export default function CreateTournamentWizard() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {DEBATE_TYPES.map(dt => (
                     <button key={dt.value} onClick={() => setDebateType(dt.value)}
-                      className={`text-left px-4 py-3 rounded-xl border text-sm transition-all ${debateType === dt.value
-                          ? 'bg-blue-600/30 border-blue-500 text-white'
-                          : 'glass border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                      className={`text-left px-4 py-3 rounded-xl border text-sm font-medium transition-all ${debateType === dt.value
+                          ? 'bg-blue-600 border-blue-500 text-white shadow-md'
+                          : 'bg-white/5 border-white/15 text-gray-200 hover:bg-white/15 hover:text-white hover:border-white/30'
                         }`}>
                       {dt.label}
                     </button>
@@ -217,11 +217,11 @@ export default function CreateTournamentWizard() {
                 ].map(t => (
                   <button key={t.value} onClick={() => setTournamentType(t.value as any)}
                     className={`p-4 rounded-xl border text-left transition-all ${tournamentType === t.value
-                        ? 'bg-blue-600/20 border-blue-500 text-white'
-                        : 'glass border-white/10 text-gray-400 hover:border-white/20'
+                        ? 'bg-blue-600/30 border-blue-500 text-white shadow-md'
+                        : 'bg-white/5 border-white/15 text-gray-200 hover:bg-white/15 hover:border-white/30'
                       }`}>
-                    <p className="font-bold text-base mb-1">{t.title}</p>
-                    <p className="text-xs text-gray-400">{t.desc}</p>
+                    <p className="font-bold text-base mb-1 text-white">{t.title}</p>
+                    <p className="text-xs text-gray-300">{t.desc}</p>
                   </button>
                 ))}
               </div>
